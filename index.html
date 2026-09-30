@@ -445,6 +445,16 @@
       font-size: 11px;
     }
 
+    .down {
+      color: #F87171;
+      font-size: 11px;
+    }
+
+    .market-loading {
+      color: #71717A;
+      font-size: 12px;
+    }
+
     @keyframes ticker {
       from {
         transform: translateX(0);
@@ -1120,80 +1130,105 @@
       </div>
     </section>
 
+    <!-- LIVE MARKET TICKER -->
     <div class="ticker">
 
-      <div class="ticker-track">
+      <div class="ticker-track" id="tickerTrack">
 
         <div class="ticker-item">
           <span class="ticker-name">BTC</span>
-          <span class="ticker-price">$67,240</span>
-          <span class="up">+2.14%</span>
+          <span class="ticker-price" data-ticker-price="BTC">Loading...</span>
+          <span class="market-loading" data-ticker-change="BTC">...</span>
         </div>
 
         <div class="ticker-item">
           <span class="ticker-name">ETH</span>
-          <span class="ticker-price">$2,612</span>
-          <span class="up">+1.83%</span>
+          <span class="ticker-price" data-ticker-price="ETH">Loading...</span>
+          <span class="market-loading" data-ticker-change="ETH">...</span>
         </div>
 
         <div class="ticker-item">
           <span class="ticker-name">BNB</span>
-          <span class="ticker-price">$612</span>
-          <span class="up">+1.12%</span>
+          <span class="ticker-price" data-ticker-price="BNB">Loading...</span>
+          <span class="market-loading" data-ticker-change="BNB">...</span>
         </div>
 
         <div class="ticker-item">
           <span class="ticker-name">SOL</span>
-          <span class="ticker-price">$148</span>
-          <span class="up">+3.41%</span>
+          <span class="ticker-price" data-ticker-price="SOL">Loading...</span>
+          <span class="market-loading" data-ticker-change="SOL">...</span>
         </div>
 
         <div class="ticker-item">
           <span class="ticker-name">XRP</span>
-          <span class="ticker-price">$0.52</span>
-          <span class="up">+0.94%</span>
+          <span class="ticker-price" data-ticker-price="XRP">Loading...</span>
+          <span class="market-loading" data-ticker-change="XRP">...</span>
         </div>
 
         <div class="ticker-item">
-          <span class="ticker-name">GOLD</span>
-          <span class="ticker-price">$2,650</span>
-          <span class="up">+0.61%</span>
+          <span class="ticker-name">TRX</span>
+          <span class="ticker-price" data-ticker-price="TRX">Loading...</span>
+          <span class="market-loading" data-ticker-change="TRX">...</span>
+        </div>
+
+        <div class="ticker-item">
+          <span class="ticker-name">USDT</span>
+          <span class="ticker-price" data-ticker-price="USDT">Loading...</span>
+          <span class="market-loading" data-ticker-change="USDT">...</span>
+        </div>
+
+        <div class="ticker-item">
+          <span class="ticker-name">USDC</span>
+          <span class="ticker-price" data-ticker-price="USDC">Loading...</span>
+          <span class="market-loading" data-ticker-change="USDC">...</span>
         </div>
 
         <div class="ticker-item">
           <span class="ticker-name">BTC</span>
-          <span class="ticker-price">$67,240</span>
-          <span class="up">+2.14%</span>
+          <span class="ticker-price" data-ticker-price="BTC">Loading...</span>
+          <span class="market-loading" data-ticker-change="BTC">...</span>
         </div>
 
         <div class="ticker-item">
           <span class="ticker-name">ETH</span>
-          <span class="ticker-price">$2,612</span>
-          <span class="up">+1.83%</span>
+          <span class="ticker-price" data-ticker-price="ETH">Loading...</span>
+          <span class="market-loading" data-ticker-change="ETH">...</span>
         </div>
 
         <div class="ticker-item">
           <span class="ticker-name">BNB</span>
-          <span class="ticker-price">$612</span>
-          <span class="up">+1.12%</span>
+          <span class="ticker-price" data-ticker-price="BNB">Loading...</span>
+          <span class="market-loading" data-ticker-change="BNB">...</span>
         </div>
 
         <div class="ticker-item">
           <span class="ticker-name">SOL</span>
-          <span class="ticker-price">$148</span>
-          <span class="up">+3.41%</span>
+          <span class="ticker-price" data-ticker-price="SOL">Loading...</span>
+          <span class="market-loading" data-ticker-change="SOL">...</span>
         </div>
 
         <div class="ticker-item">
           <span class="ticker-name">XRP</span>
-          <span class="ticker-price">$0.52</span>
-          <span class="up">+0.94%</span>
+          <span class="ticker-price" data-ticker-price="XRP">Loading...</span>
+          <span class="market-loading" data-ticker-change="XRP">...</span>
         </div>
 
         <div class="ticker-item">
-          <span class="ticker-name">GOLD</span>
-          <span class="ticker-price">$2,650</span>
-          <span class="up">+0.61%</span>
+          <span class="ticker-name">TRX</span>
+          <span class="ticker-price" data-ticker-price="TRX">Loading...</span>
+          <span class="market-loading" data-ticker-change="TRX">...</span>
+        </div>
+
+        <div class="ticker-item">
+          <span class="ticker-name">USDT</span>
+          <span class="ticker-price" data-ticker-price="USDT">Loading...</span>
+          <span class="market-loading" data-ticker-change="USDT">...</span>
+        </div>
+
+        <div class="ticker-item">
+          <span class="ticker-name">USDC</span>
+          <span class="ticker-price" data-ticker-price="USDC">Loading...</span>
+          <span class="market-loading" data-ticker-change="USDC">...</span>
         </div>
 
       </div>
@@ -1496,8 +1531,8 @@
         </h2>
 
         <p class="section-description">
-          AUREUM will connect to verified market-data providers so
-          users can monitor asset prices from within the platform.
+          Live digital-asset market information powered through the
+          AUREUM Market API.
         </p>
 
         <div class="market-panel">
@@ -1509,7 +1544,7 @@
             <div>Status</div>
           </div>
 
-          <div class="market-row">
+          <div class="market-row" data-market-row="BTC">
             <div class="asset">
               <div class="asset-icon">BTC</div>
               <div>
@@ -1518,12 +1553,20 @@
               </div>
             </div>
 
-            <div class="market-price">$67,240</div>
-            <div class="up">+2.14%</div>
-            <div class="up">Active</div>
+            <div class="market-price" data-price="BTC">
+              Loading...
+            </div>
+
+            <div class="market-loading" data-change="BTC">
+              ...
+            </div>
+
+            <div class="up">
+              Live
+            </div>
           </div>
 
-          <div class="market-row">
+          <div class="market-row" data-market-row="ETH">
             <div class="asset">
               <div class="asset-icon">ETH</div>
               <div>
@@ -1532,40 +1575,20 @@
               </div>
             </div>
 
-            <div class="market-price">$2,612</div>
-            <div class="up">+1.83%</div>
-            <div class="up">Active</div>
-          </div>
-
-          <div class="market-row">
-            <div class="asset">
-              <div class="asset-icon">SOL</div>
-              <div>
-                <div class="asset-name">Solana</div>
-                <div class="asset-symbol">SOL</div>
-              </div>
+            <div class="market-price" data-price="ETH">
+              Loading...
             </div>
 
-            <div class="market-price">$148</div>
-            <div class="up">+3.41%</div>
-            <div class="up">Active</div>
-          </div>
-
-          <div class="market-row">
-            <div class="asset">
-              <div class="asset-icon">XRP</div>
-              <div>
-                <div class="asset-name">XRP</div>
-                <div class="asset-symbol">XRP</div>
-              </div>
+            <div class="market-loading" data-change="ETH">
+              ...
             </div>
 
-            <div class="market-price">$0.52</div>
-            <div class="up">+0.94%</div>
-            <div class="up">Active</div>
+            <div class="up">
+              Live
+            </div>
           </div>
 
-          <div class="market-row">
+          <div class="market-row" data-market-row="BNB">
             <div class="asset">
               <div class="asset-icon">BNB</div>
               <div>
@@ -1574,9 +1597,127 @@
               </div>
             </div>
 
-            <div class="market-price">$612</div>
-            <div class="up">+1.12%</div>
-            <div class="up">Active</div>
+            <div class="market-price" data-price="BNB">
+              Loading...
+            </div>
+
+            <div class="market-loading" data-change="BNB">
+              ...
+            </div>
+
+            <div class="up">
+              Live
+            </div>
+          </div>
+
+          <div class="market-row" data-market-row="XRP">
+            <div class="asset">
+              <div class="asset-icon">XRP</div>
+              <div>
+                <div class="asset-name">XRP</div>
+                <div class="asset-symbol">XRP</div>
+              </div>
+            </div>
+
+            <div class="market-price" data-price="XRP">
+              Loading...
+            </div>
+
+            <div class="market-loading" data-change="XRP">
+              ...
+            </div>
+
+            <div class="up">
+              Live
+            </div>
+          </div>
+
+          <div class="market-row" data-market-row="SOL">
+            <div class="asset">
+              <div class="asset-icon">SOL</div>
+              <div>
+                <div class="asset-name">Solana</div>
+                <div class="asset-symbol">SOL</div>
+              </div>
+            </div>
+
+            <div class="market-price" data-price="SOL">
+              Loading...
+            </div>
+
+            <div class="market-loading" data-change="SOL">
+              ...
+            </div>
+
+            <div class="up">
+              Live
+            </div>
+          </div>
+
+          <div class="market-row" data-market-row="TRX">
+            <div class="asset">
+              <div class="asset-icon">TRX</div>
+              <div>
+                <div class="asset-name">TRON</div>
+                <div class="asset-symbol">TRX</div>
+              </div>
+            </div>
+
+            <div class="market-price" data-price="TRX">
+              Loading...
+            </div>
+
+            <div class="market-loading" data-change="TRX">
+              ...
+            </div>
+
+            <div class="up">
+              Live
+            </div>
+          </div>
+
+          <div class="market-row" data-market-row="USDT">
+            <div class="asset">
+              <div class="asset-icon">USDT</div>
+              <div>
+                <div class="asset-name">Tether USD</div>
+                <div class="asset-symbol">USDT</div>
+              </div>
+            </div>
+
+            <div class="market-price" data-price="USDT">
+              Loading...
+            </div>
+
+            <div class="market-loading" data-change="USDT">
+              ...
+            </div>
+
+            <div class="up">
+              Live
+            </div>
+          </div>
+
+          <div class="market-row" data-market-row="USDC">
+            <div class="asset">
+              <div class="asset-icon">USDC</div>
+              <div>
+                <div class="asset-name">USD Coin</div>
+                <div class="asset-symbol">USDC</div>
+              </div>
+            </div>
+
+            <div class="market-price" data-price="USDC">
+              Loading...
+            </div>
+
+            <div class="market-loading" data-change="USDC">
+              ...
+            </div>
+
+            <div class="up">
+              Live
+            </div>
           </div>
 
         </div>
@@ -1777,6 +1918,14 @@
 
 
     /* ==========================================
+       AUREUM MARKET API
+       ========================================== */
+
+    const MARKET_API_URL =
+      "https://aureum-platform.onrender.com/api/markets";
+
+
+    /* ==========================================
        CURRENT YEAR
        ========================================== */
 
@@ -1847,6 +1996,267 @@
 
 
     /* ==========================================
+       MARKET FORMATTING
+       ========================================== */
+
+    function formatMarketPrice(price) {
+
+      if (typeof price !== "number") {
+        return "—";
+      }
+
+      if (price >= 1000) {
+        return "$" + price.toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        });
+      }
+
+      if (price >= 1) {
+        return "$" + price.toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 4
+        });
+      }
+
+      return "$" + price.toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 6
+      });
+
+    }
+
+
+    function formatMarketChange(change) {
+
+      if (typeof change !== "number") {
+        return {
+          text: "—",
+          className: "market-loading"
+        };
+      }
+
+      const prefix =
+        change >= 0 ? "+" : "";
+
+      return {
+        text: prefix + change.toFixed(2) + "%",
+        className:
+          change >= 0 ? "up" : "down"
+      };
+
+    }
+
+
+    /* ==========================================
+       UPDATE MARKET TICKER
+       ========================================== */
+
+    function updateTicker(data) {
+
+      const symbols = [
+        "BTC",
+        "ETH",
+        "BNB",
+        "SOL",
+        "XRP",
+        "TRX",
+        "USDT",
+        "USDC"
+      ];
+
+      symbols.forEach(symbol => {
+
+        const asset = data?.[symbol];
+
+        if (!asset || !asset.quote || !asset.quote.USD) {
+          return;
+        }
+
+        const quote =
+          asset.quote.USD;
+
+        const prices =
+          document.querySelectorAll(
+            `[data-ticker-price="${symbol}"]`
+          );
+
+        const changes =
+          document.querySelectorAll(
+            `[data-ticker-change="${symbol}"]`
+          );
+
+        prices.forEach(element => {
+
+          element.textContent =
+            formatMarketPrice(quote.price);
+
+        });
+
+        changes.forEach(element => {
+
+          const formatted =
+            formatMarketChange(
+              quote.percent_change_24h
+            );
+
+          element.textContent =
+            formatted.text;
+
+          element.className =
+            formatted.className;
+
+        });
+
+      });
+
+    }
+
+
+    /* ==========================================
+       UPDATE MARKET TABLE
+       ========================================== */
+
+    function updateMarketTable(data) {
+
+      const symbols = [
+        "BTC",
+        "ETH",
+        "BNB",
+        "XRP",
+        "SOL",
+        "TRX",
+        "USDT",
+        "USDC"
+      ];
+
+      symbols.forEach(symbol => {
+
+        const asset = data?.[symbol];
+
+        if (!asset || !asset.quote || !asset.quote.USD) {
+          return;
+        }
+
+        const quote =
+          asset.quote.USD;
+
+        const priceElement =
+          document.querySelector(
+            `[data-price="${symbol}"]`
+          );
+
+        const changeElement =
+          document.querySelector(
+            `[data-change="${symbol}"]`
+          );
+
+        if (priceElement) {
+
+          priceElement.textContent =
+            formatMarketPrice(
+              quote.price
+            );
+
+        }
+
+        if (changeElement) {
+
+          const formatted =
+            formatMarketChange(
+              quote.percent_change_24h
+            );
+
+          changeElement.textContent =
+            formatted.text;
+
+          changeElement.className =
+            formatted.className;
+
+        }
+
+      });
+
+    }
+
+
+    /* ==========================================
+       LOAD LIVE MARKET DATA
+       ========================================== */
+
+    async function loadLiveMarkets() {
+
+      try {
+
+        const response =
+          await fetch(MARKET_API_URL, {
+            method: "GET",
+            headers: {
+              "Accept": "application/json"
+            },
+            cache: "no-store"
+          });
+
+        if (!response.ok) {
+
+          throw new Error(
+            `Market API returned ${response.status}`
+          );
+
+        }
+
+        const result =
+          await response.json();
+
+        if (!result.data) {
+
+          throw new Error(
+            "Market API returned no data"
+          );
+
+        }
+
+        updateTicker(result.data);
+
+        updateMarketTable(result.data);
+
+        console.log(
+          "AUREUM live market data updated:",
+          result.data
+        );
+
+      } catch (error) {
+
+        console.error(
+          "Live market data error:",
+          error
+        );
+
+        const loadingElements =
+          document.querySelectorAll(
+            ".market-loading"
+          );
+
+        loadingElements.forEach(element => {
+
+          if (
+            element.textContent === "..." ||
+            element.textContent === "Loading..."
+          ) {
+
+            element.textContent =
+              "Unavailable";
+
+          }
+
+        });
+
+      }
+
+    }
+
+
+    /* ==========================================
        LOGIN
        ========================================== */
 
@@ -1871,7 +2281,9 @@
         });
 
       if (error) {
+
         showMessage(error.message);
+
         return;
       }
 
@@ -2208,6 +2620,13 @@
         loadInvestmentPlans();
 
         loadSupportedAssets();
+
+        loadLiveMarkets();
+
+        setInterval(
+          loadLiveMarkets,
+          60000
+        );
 
       }
     );
