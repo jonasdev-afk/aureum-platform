@@ -1,0 +1,12 @@
+{
+  "name": "aureum-market-api",
+  "version": "1.0.0",
+  "description": "AUREUM live crypto market API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
