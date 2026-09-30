@@ -13,6 +13,9 @@
 
   <meta name="theme-color" content="#18181B" />
 
+  <!-- Supabase browser client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
     :root {
       --black: #18181B;
@@ -59,10 +62,6 @@
     button {
       font: inherit;
     }
-
-    /* =========================
-       LOADING SCREEN
-    ========================= */
 
     .loader {
       position: fixed;
@@ -124,10 +123,6 @@
         pointer-events: none;
       }
     }
-
-    /* =========================
-       BACKGROUND
-    ========================= */
 
     .background-grid {
       position: fixed;
@@ -193,10 +188,6 @@
         transform: translate(100px, -70px);
       }
     }
-
-    /* =========================
-       NAVIGATION
-    ========================= */
 
     header {
       position: fixed;
@@ -311,10 +302,6 @@
       cursor: pointer;
     }
 
-    /* =========================
-       HERO
-    ========================= */
-
     .hero {
       min-height: 100vh;
       position: relative;
@@ -420,10 +407,6 @@
       }
     }
 
-    /* =========================
-       MARKET TICKER
-    ========================= */
-
     .ticker {
       border-top: 1px solid rgba(255,255,255,0.07);
       border-bottom: 1px solid rgba(255,255,255,0.07);
@@ -472,10 +455,6 @@
       }
     }
 
-    /* =========================
-       SECTIONS
-    ========================= */
-
     section {
       padding: 120px 5%;
     }
@@ -506,10 +485,6 @@
       max-width: 600px;
       margin-top: 20px;
     }
-
-    /* =========================
-       ECOSYSTEM
-    ========================= */
 
     .ecosystem {
       background: var(--sand);
@@ -587,10 +562,6 @@
       font-size: 13px;
       max-width: 330px;
     }
-
-    /* =========================
-       INVESTMENT PLANS
-    ========================= */
 
     .plans {
       background: var(--black);
@@ -687,10 +658,6 @@
       color: var(--black);
     }
 
-    /* =========================
-       MARKET SECTION
-    ========================= */
-
     .market {
       background: #111113;
     }
@@ -763,10 +730,6 @@
       color: var(--sand);
     }
 
-    /* =========================
-       HOW IT WORKS
-    ========================= */
-
     .how {
       background: var(--sand);
       color: var(--black);
@@ -806,10 +769,6 @@
       margin-top: 12px;
     }
 
-    /* =========================
-       CTA
-    ========================= */
-
     .cta {
       text-align: center;
       background:
@@ -836,10 +795,6 @@
       color: var(--muted);
       line-height: 1.8;
     }
-
-    /* =========================
-       FOOTER
-    ========================= */
 
     footer {
       border-top: 1px solid rgba(255,255,255,0.07);
@@ -897,9 +852,29 @@
       gap: 20px;
     }
 
-    /* =========================
-       RESPONSIVE
-    ========================= */
+    .notification {
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #18181B;
+      color: #F5F5F4;
+      border: 1px solid #D4AF37;
+      padding: 15px 20px;
+      border-radius: 4px;
+      z-index: 99999;
+      font-size: 13px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.35);
+      max-width: 90%;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.3s ease;
+    }
+
+    .notification.show {
+      opacity: 1;
+    }
 
     @media (max-width: 1000px) {
       .nav-links {
@@ -1021,10 +996,6 @@
 
 <body>
 
-  <!-- =========================
-       LOADING SCREEN
-  ========================= -->
-
   <div class="loader">
     <div class="loader-inner">
       <div class="loader-logo">
@@ -1034,51 +1005,42 @@
     </div>
   </div>
 
-  <!-- Animated background -->
   <div class="background-grid"></div>
   <div class="orb orb-one"></div>
   <div class="orb orb-two"></div>
 
-  <!-- =========================
-       NAVIGATION
-  ========================= -->
+  <div id="notification" class="notification"></div>
 
   <header id="header">
-
     <nav class="nav">
 
       <a href="#home" class="brand">
-
         <div class="brand-mark">
           <span>A</span>
         </div>
-
         <span>AUREUM</span>
-
       </a>
 
       <div class="nav-links">
-
         <a href="#ecosystem">Ecosystem</a>
         <a href="#plans">Plans</a>
         <a href="#markets">Markets</a>
         <a href="#how">How It Works</a>
         <a href="#about">About</a>
-
       </div>
 
       <div class="nav-actions">
 
         <button
           class="btn btn-outline"
-          onclick="showMessage('Login will be connected to Supabase in the next stage.')"
+          onclick="openLogin()"
         >
           Login
         </button>
 
         <button
           class="btn btn-gold"
-          onclick="showMessage('Account creation will be connected to Supabase in the next stage.')"
+          onclick="openSignup()"
         >
           Get Started
         </button>
@@ -1092,15 +1054,8 @@
         </button>
 
       </div>
-
     </nav>
-
   </header>
-
-
-  <!-- =========================
-       HERO
-  ========================= -->
 
   <main>
 
@@ -1163,13 +1118,7 @@
         </div>
 
       </div>
-
     </section>
-
-
-    <!-- =========================
-         MARKET TICKER
-    ========================= -->
 
     <div class="ticker">
 
@@ -1211,8 +1160,6 @@
           <span class="up">+0.61%</span>
         </div>
 
-        <!-- Duplicate for seamless animation -->
-
         <div class="ticker-item">
           <span class="ticker-name">BTC</span>
           <span class="ticker-price">$67,240</span>
@@ -1250,13 +1197,7 @@
         </div>
 
       </div>
-
     </div>
-
-
-    <!-- =========================
-         ECOSYSTEM
-    ========================= -->
 
     <section class="ecosystem" id="ecosystem">
 
@@ -1277,114 +1218,71 @@
           work together through one experience.
         </p>
 
-
         <div class="ecosystem-grid">
 
           <div class="eco-card">
-
             <div class="eco-number">01</div>
-
             <div class="eco-icon">◈</div>
-
             <h3>AUREUM INVEST</h3>
-
             <p>
               Explore structured Gold and Crypto investment opportunities
               through the AUREUM platform.
             </p>
-
           </div>
 
-
           <div class="eco-card">
-
             <div class="eco-number">02</div>
-
             <div class="eco-icon">◇</div>
-
             <h3>AUREUM MARKETS</h3>
-
             <p>
               Monitor digital asset markets, price movements and
               market intelligence from one interface.
             </p>
-
           </div>
 
-
           <div class="eco-card">
-
             <div class="eco-number">03</div>
-
             <div class="eco-icon">▣</div>
-
             <h3>AUREUM WALLET</h3>
-
             <p>
               A unified environment for viewing balances, deposits,
               withdrawals and transaction history.
             </p>
-
           </div>
 
-
           <div class="eco-card">
-
             <div class="eco-number">04</div>
-
             <div class="eco-icon">△</div>
-
             <h3>AUREUM TRADE</h3>
-
             <p>
               A future professional trading environment built around
               market information and portfolio visibility.
             </p>
-
           </div>
 
-
           <div class="eco-card">
-
             <div class="eco-number">05</div>
-
             <div class="eco-icon">◎</div>
-
             <h3>AUREUM WEALTH</h3>
-
             <p>
               A consolidated view of assets, investments and portfolio
               performance.
             </p>
-
           </div>
 
-
           <div class="eco-card">
-
             <div class="eco-number">06</div>
-
             <div class="eco-icon">✦</div>
-
             <h3>AUREUM INTELLIGENCE</h3>
-
             <p>
               Analytics, portfolio metrics, market alerts and reporting
               tools designed to improve visibility.
             </p>
-
           </div>
 
         </div>
-
       </div>
-
     </section>
-
-
-    <!-- =========================
-         INVESTMENT PLANS
-    ========================= -->
 
     <section class="plans" id="plans">
 
@@ -1404,29 +1302,13 @@
           authenticated platform.
         </p>
 
-
         <div class="plans-grid">
 
-          <!-- GOLD DAWN -->
-
           <div class="plan-card">
-
-            <div class="plan-tag">
-              AUREUM GOLD
-            </div>
-
-            <div class="plan-name">
-              DAWN
-            </div>
-
-            <div class="plan-return">
-              7%
-            </div>
-
-            <div class="plan-time">
-              after 48 hours
-            </div>
-
+            <div class="plan-tag">AUREUM GOLD</div>
+            <div class="plan-name">DAWN</div>
+            <div class="plan-return">7%</div>
+            <div class="plan-time">after 48 hours</div>
             <div class="plan-line"></div>
 
             <div class="plan-row">
@@ -1445,30 +1327,13 @@
             >
               View Plan
             </button>
-
           </div>
 
-
-          <!-- GOLD CREST -->
-
           <div class="plan-card">
-
-            <div class="plan-tag">
-              AUREUM GOLD
-            </div>
-
-            <div class="plan-name">
-              CREST
-            </div>
-
-            <div class="plan-return">
-              9%
-            </div>
-
-            <div class="plan-time">
-              after 72 hours
-            </div>
-
+            <div class="plan-tag">AUREUM GOLD</div>
+            <div class="plan-name">CREST</div>
+            <div class="plan-return">9%</div>
+            <div class="plan-time">after 72 hours</div>
             <div class="plan-line"></div>
 
             <div class="plan-row">
@@ -1487,30 +1352,63 @@
             >
               View Plan
             </button>
-
           </div>
 
+          <div class="plan-card">
+            <div class="plan-tag">AUREUM GOLD</div>
+            <div class="plan-name">CROWN</div>
+            <div class="plan-return">7%</div>
+            <div class="plan-time">after 72 hours</div>
+            <div class="plan-line"></div>
 
-          <!-- CRYPTO PULSE -->
+            <div class="plan-row">
+              <span>Minimum</span>
+              <strong>1 Troy oz</strong>
+            </div>
+
+            <div class="plan-row">
+              <span>Maximum</span>
+              <strong>5 Troy oz</strong>
+            </div>
+
+            <button
+              class="plan-button"
+              onclick="showMessage('AUREUM CROWN will be available through the investment dashboard.')"
+            >
+              View Plan
+            </button>
+          </div>
+
+          <div class="plan-card">
+            <div class="plan-tag">AUREUM GOLD</div>
+            <div class="plan-name">BLACK</div>
+            <div class="plan-return">16.5%</div>
+            <div class="plan-time">weekly</div>
+            <div class="plan-line"></div>
+
+            <div class="plan-row">
+              <span>Minimum</span>
+              <strong>5 Troy oz</strong>
+            </div>
+
+            <div class="plan-row">
+              <span>Maximum</span>
+              <strong>99 Troy oz</strong>
+            </div>
+
+            <button
+              class="plan-button"
+              onclick="showMessage('AUREUM BLACK will be available through the investment dashboard.')"
+            >
+              View Plan
+            </button>
+          </div>
 
           <div class="plan-card featured">
-
-            <div class="plan-tag">
-              AUREUM CRYPTO
-            </div>
-
-            <div class="plan-name">
-              PULSE
-            </div>
-
-            <div class="plan-return">
-              4.5%
-            </div>
-
-            <div class="plan-time">
-              daily
-            </div>
-
+            <div class="plan-tag">AUREUM CRYPTO</div>
+            <div class="plan-name">PULSE</div>
+            <div class="plan-return">4.5%</div>
+            <div class="plan-time">daily</div>
             <div class="plan-line"></div>
 
             <div class="plan-row">
@@ -1529,30 +1427,13 @@
             >
               View Plan
             </button>
-
           </div>
 
-
-          <!-- CRYPTO PRIME -->
-
           <div class="plan-card">
-
-            <div class="plan-tag">
-              AUREUM CRYPTO
-            </div>
-
-            <div class="plan-name">
-              PRIME
-            </div>
-
-            <div class="plan-return">
-              7%
-            </div>
-
-            <div class="plan-time">
-              after 48 hours
-            </div>
-
+            <div class="plan-tag">AUREUM CRYPTO</div>
+            <div class="plan-name">PRIME</div>
+            <div class="plan-return">7%</div>
+            <div class="plan-time">after 48 hours</div>
             <div class="plan-line"></div>
 
             <div class="plan-row">
@@ -1571,19 +1452,36 @@
             >
               View Plan
             </button>
+          </div>
 
+          <div class="plan-card">
+            <div class="plan-tag">AUREUM CRYPTO</div>
+            <div class="plan-name">APEX</div>
+            <div class="plan-return">10%</div>
+            <div class="plan-time">weekly</div>
+            <div class="plan-line"></div>
+
+            <div class="plan-row">
+              <span>Minimum</span>
+              <strong>$10,000</strong>
+            </div>
+
+            <div class="plan-row">
+              <span>Maximum</span>
+              <strong>Unlimited</strong>
+            </div>
+
+            <button
+              class="plan-button"
+              onclick="showMessage('AUREUM APEX will be available through the investment dashboard.')"
+            >
+              View Plan
+            </button>
           </div>
 
         </div>
-
       </div>
-
     </section>
-
-
-    <!-- =========================
-         MARKETS
-    ========================= -->
 
     <section class="market" id="markets">
 
@@ -1602,203 +1500,88 @@
           users can monitor asset prices from within the platform.
         </p>
 
-
         <div class="market-panel">
 
           <div class="market-head">
-
             <div>Asset</div>
             <div>Price</div>
             <div>24H</div>
             <div>Status</div>
-
           </div>
 
-
           <div class="market-row">
-
             <div class="asset">
-
-              <div class="asset-icon">
-                BTC
-              </div>
-
+              <div class="asset-icon">BTC</div>
               <div>
-                <div class="asset-name">
-                  Bitcoin
-                </div>
-
-                <div class="asset-symbol">
-                  BTC
-                </div>
+                <div class="asset-name">Bitcoin</div>
+                <div class="asset-symbol">BTC</div>
               </div>
-
             </div>
 
-            <div class="market-price">
-              $67,240
-            </div>
-
-            <div class="up">
-              +2.14%
-            </div>
-
-            <div class="up">
-              Active
-            </div>
-
+            <div class="market-price">$67,240</div>
+            <div class="up">+2.14%</div>
+            <div class="up">Active</div>
           </div>
 
-
           <div class="market-row">
-
             <div class="asset">
-
-              <div class="asset-icon">
-                ETH
-              </div>
-
+              <div class="asset-icon">ETH</div>
               <div>
-                <div class="asset-name">
-                  Ethereum
-                </div>
-
-                <div class="asset-symbol">
-                  ETH
-                </div>
+                <div class="asset-name">Ethereum</div>
+                <div class="asset-symbol">ETH</div>
               </div>
-
             </div>
 
-            <div class="market-price">
-              $2,612
-            </div>
-
-            <div class="up">
-              +1.83%
-            </div>
-
-            <div class="up">
-              Active
-            </div>
-
+            <div class="market-price">$2,612</div>
+            <div class="up">+1.83%</div>
+            <div class="up">Active</div>
           </div>
 
-
           <div class="market-row">
-
             <div class="asset">
-
-              <div class="asset-icon">
-                SOL
-              </div>
-
+              <div class="asset-icon">SOL</div>
               <div>
-                <div class="asset-name">
-                  Solana
-                </div>
-
-                <div class="asset-symbol">
-                  SOL
-                </div>
+                <div class="asset-name">Solana</div>
+                <div class="asset-symbol">SOL</div>
               </div>
-
             </div>
 
-            <div class="market-price">
-              $148
-            </div>
-
-            <div class="up">
-              +3.41%
-            </div>
-
-            <div class="up">
-              Active
-            </div>
-
+            <div class="market-price">$148</div>
+            <div class="up">+3.41%</div>
+            <div class="up">Active</div>
           </div>
 
-
           <div class="market-row">
-
             <div class="asset">
-
-              <div class="asset-icon">
-                XRP
-              </div>
-
+              <div class="asset-icon">XRP</div>
               <div>
-                <div class="asset-name">
-                  XRP
-                </div>
-
-                <div class="asset-symbol">
-                  XRP
-                </div>
+                <div class="asset-name">XRP</div>
+                <div class="asset-symbol">XRP</div>
               </div>
-
             </div>
 
-            <div class="market-price">
-              $0.52
-            </div>
-
-            <div class="up">
-              +0.94%
-            </div>
-
-            <div class="up">
-              Active
-            </div>
-
+            <div class="market-price">$0.52</div>
+            <div class="up">+0.94%</div>
+            <div class="up">Active</div>
           </div>
 
-
           <div class="market-row">
-
             <div class="asset">
-
-              <div class="asset-icon">
-                BNB
-              </div>
-
+              <div class="asset-icon">BNB</div>
               <div>
-                <div class="asset-name">
-                  BNB
-                </div>
-
-                <div class="asset-symbol">
-                  BNB
-                </div>
+                <div class="asset-name">BNB</div>
+                <div class="asset-symbol">BNB</div>
               </div>
-
             </div>
 
-            <div class="market-price">
-              $612
-            </div>
-
-            <div class="up">
-              +1.12%
-            </div>
-
-            <div class="up">
-              Active
-            </div>
-
+            <div class="market-price">$612</div>
+            <div class="up">+1.12%</div>
+            <div class="up">Active</div>
           </div>
 
         </div>
-
       </div>
-
     </section>
-
-
-    <!-- =========================
-         HOW IT WORKS
-    ========================= -->
 
     <section class="how" id="how">
 
@@ -1818,82 +1601,47 @@
           stages.
         </p>
 
-
         <div class="steps">
 
           <div class="step">
-
-            <div class="step-number">
-              01 — ACCOUNT
-            </div>
-
+            <div class="step-number">01 — ACCOUNT</div>
             <h3>Create your account</h3>
-
             <p>
               Register for an AUREUM account and complete the required
               account verification steps.
             </p>
-
           </div>
 
-
           <div class="step">
-
-            <div class="step-number">
-              02 — FUND
-            </div>
-
+            <div class="step-number">02 — FUND</div>
             <h3>Fund your wallet</h3>
-
             <p>
               Select an available digital asset and follow the
               displayed deposit instructions.
             </p>
-
           </div>
 
-
           <div class="step">
-
-            <div class="step-number">
-              03 — INVEST
-            </div>
-
+            <div class="step-number">03 — INVEST</div>
             <h3>Select a plan</h3>
-
             <p>
               Review available investment plans and select one that
               matches your chosen strategy.
             </p>
-
           </div>
 
-
           <div class="step">
-
-            <div class="step-number">
-              04 — MANAGE
-            </div>
-
+            <div class="step-number">04 — MANAGE</div>
             <h3>Monitor your portfolio</h3>
-
             <p>
               Track investments, balances, transactions and market
               information from your dashboard.
             </p>
-
           </div>
 
         </div>
-
       </div>
-
     </section>
-
-
-    <!-- =========================
-         ABOUT / CTA
-    ========================= -->
 
     <section class="cta" id="about">
 
@@ -1922,15 +1670,9 @@
         </button>
 
       </div>
-
     </section>
 
   </main>
-
-
-  <!-- =========================
-       FOOTER
-  ========================= -->
 
   <footer>
 
@@ -1955,7 +1697,6 @@
 
       </div>
 
-
       <div>
 
         <div class="footer-title">
@@ -1963,16 +1704,13 @@
         </div>
 
         <div class="footer-links">
-
           <a href="#ecosystem">Ecosystem</a>
           <a href="#plans">Investment Plans</a>
           <a href="#markets">Markets</a>
           <a href="#how">How It Works</a>
-
         </div>
 
       </div>
-
 
       <div>
 
@@ -1981,16 +1719,13 @@
         </div>
 
         <div class="footer-links">
-
           <a href="#about">About</a>
-          <a href="#">Contact</a>
-          <a href="#">FAQ</a>
-          <a href="#">Security</a>
-
+          <a href="#" onclick="showMessage('Contact section coming next.')">Contact</a>
+          <a href="#" onclick="showMessage('FAQ section coming next.')">FAQ</a>
+          <a href="#" onclick="showMessage('Security section coming next.')">Security</a>
         </div>
 
       </div>
-
 
       <div>
 
@@ -1999,17 +1734,14 @@
         </div>
 
         <div class="footer-links">
-
-          <a href="#">Terms</a>
-          <a href="#">Privacy</a>
-          <a href="#">Risk Disclosure</a>
-
+          <a href="#" onclick="showMessage('Terms section coming next.')">Terms</a>
+          <a href="#" onclick="showMessage('Privacy section coming next.')">Privacy</a>
+          <a href="#" onclick="showMessage('Risk Disclosure section coming next.')">Risk Disclosure</a>
         </div>
 
       </div>
 
     </div>
-
 
     <div class="copyright">
 
@@ -2025,22 +1757,39 @@
 
   </footer>
 
-
-  <!-- =========================
-       JAVASCRIPT
-  ========================= -->
-
   <script>
 
-    /* Current year */
+    /* ==========================================
+       SUPABASE
+       ========================================== */
+
+    const SUPABASE_URL =
+      "https://zyvmnnsnrxnxbpvskyga.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_rHz9N-CdhKuiuKQPFL6MFg_Wo65Uo1z";
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+
+
+    /* ==========================================
+       CURRENT YEAR
+       ========================================== */
 
     document.getElementById("year").textContent =
       new Date().getFullYear();
 
 
-    /* Header on scroll */
+    /* ==========================================
+       HEADER ON SCROLL
+       ========================================== */
 
-    const header = document.getElementById("header");
+    const header =
+      document.getElementById("header");
 
     window.addEventListener("scroll", () => {
 
@@ -2053,11 +1802,14 @@
     });
 
 
-    /* Smooth section navigation */
+    /* ==========================================
+       SMOOTH SECTION NAVIGATION
+       ========================================== */
 
     function scrollToSection(id) {
 
-      const element = document.getElementById(id);
+      const element =
+        document.getElementById(id);
 
       if (!element) return;
 
@@ -2068,49 +1820,316 @@
     }
 
 
-    /* Temporary button message */
+    /* ==========================================
+       NOTIFICATION
+       ========================================== */
+
+    let notificationTimer;
 
     function showMessage(message) {
 
-      const notification = document.createElement("div");
+      const notification =
+        document.getElementById("notification");
 
-      notification.textContent = message;
+      notification.textContent =
+        message;
 
-      notification.style.position = "fixed";
-      notification.style.bottom = "25px";
-      notification.style.left = "50%";
-      notification.style.transform = "translateX(-50%)";
-      notification.style.background = "#18181B";
-      notification.style.color = "#F5F5F4";
-      notification.style.border = "1px solid #D4AF37";
-      notification.style.padding = "15px 20px";
-      notification.style.borderRadius = "4px";
-      notification.style.zIndex = "99999";
-      notification.style.fontSize = "13px";
-      notification.style.boxShadow =
-        "0 20px 50px rgba(0,0,0,.35)";
+      notification.classList.add("show");
 
-      document.body.appendChild(notification);
+      clearTimeout(notificationTimer);
 
-      setTimeout(() => {
-
-        notification.style.opacity = "0";
-        notification.style.transition = "0.3s ease";
-
+      notificationTimer =
         setTimeout(() => {
-          notification.remove();
-        }, 350);
-
-      }, 2500);
+          notification.classList.remove("show");
+        }, 3000);
 
     }
 
 
-    /* Mobile navigation */
+    /* ==========================================
+       LOGIN
+       ========================================== */
+
+    async function openLogin() {
+
+      const email =
+        prompt("Enter your AUREUM email:");
+
+      if (!email) return;
+
+      const password =
+        prompt("Enter your password:");
+
+      if (!password) return;
+
+      showMessage("Signing you in...");
+
+      const { data, error } =
+        await supabaseClient.auth.signInWithPassword({
+          email,
+          password
+        });
+
+      if (error) {
+        showMessage(error.message);
+        return;
+      }
+
+      showMessage(
+        "Login successful. Dashboard connection is next."
+      );
+
+      console.log(
+        "Authenticated user:",
+        data.user
+      );
+
+    }
+
+
+    /* ==========================================
+       SIGN UP
+       ========================================== */
+
+    async function openSignup() {
+
+      const fullName =
+        prompt("Enter your full name:");
+
+      if (!fullName) return;
+
+      const email =
+        prompt("Enter your email:");
+
+      if (!email) return;
+
+      const password =
+        prompt(
+          "Create a password (minimum 6 characters):"
+        );
+
+      if (!password) return;
+
+      if (password.length < 6) {
+
+        showMessage(
+          "Password must be at least 6 characters."
+        );
+
+        return;
+      }
+
+      showMessage(
+        "Creating your AUREUM account..."
+      );
+
+      const { data, error } =
+        await supabaseClient.auth.signUp({
+          email,
+          password,
+          options: {
+            data: {
+              full_name: fullName
+            }
+          }
+        });
+
+      if (error) {
+
+        showMessage(error.message);
+
+        return;
+      }
+
+      if (data.user && data.session) {
+
+        const { error: profileError } =
+          await supabaseClient
+            .from("profiles")
+            .insert({
+              id: data.user.id,
+              full_name: fullName,
+              email: email
+            });
+
+        if (profileError) {
+
+          console.error(
+            "Profile creation error:",
+            profileError
+          );
+
+        }
+
+      }
+
+      if (!data.session) {
+
+        showMessage(
+          "Account created. Check your email to verify your account."
+        );
+
+      } else {
+
+        showMessage(
+          "Account created successfully."
+        );
+
+      }
+
+    }
+
+
+    /* ==========================================
+       LOAD INVESTMENT PLANS
+       ========================================== */
+
+    async function loadInvestmentPlans() {
+
+      try {
+
+        const { data, error } =
+          await supabaseClient
+            .from("investment_plans")
+            .select("*")
+            .eq("active", true)
+            .order("id");
+
+        if (error) {
+
+          console.error(
+            "Investment plans error:",
+            error
+          );
+
+          return;
+        }
+
+        console.log(
+          "AUREUM investment plans:",
+          data
+        );
+
+      } catch (error) {
+
+        console.error(error);
+
+      }
+
+    }
+
+
+    /* ==========================================
+       LOAD SUPPORTED ASSETS
+       ========================================== */
+
+    async function loadSupportedAssets() {
+
+      try {
+
+        const { data, error } =
+          await supabaseClient
+            .from("supported_assets")
+            .select("*")
+            .eq("active", true)
+            .order("symbol");
+
+        if (error) {
+
+          console.error(
+            "Supported assets error:",
+            error
+          );
+
+          return;
+        }
+
+        console.log(
+          "AUREUM supported assets:",
+          data
+        );
+
+      } catch (error) {
+
+        console.error(error);
+
+      }
+
+    }
+
+
+    /* ==========================================
+       CHECK CURRENT SESSION
+       ========================================== */
+
+    async function checkSession() {
+
+      try {
+
+        const { data, error } =
+          await supabaseClient.auth.getSession();
+
+        if (error) {
+
+          console.error(
+            "Session error:",
+            error
+          );
+
+          return;
+        }
+
+        if (data.session) {
+
+          console.log(
+            "AUREUM user session active:",
+            data.session.user.email
+          );
+
+        }
+
+      } catch (error) {
+
+        console.error(error);
+
+      }
+
+    }
+
+
+    /* ==========================================
+       AUTH STATE LISTENER
+       ========================================== */
+
+    supabaseClient.auth.onAuthStateChange(
+      (event, session) => {
+
+        console.log(
+          "AUREUM auth event:",
+          event
+        );
+
+        if (session) {
+
+          console.log(
+            "Authenticated:",
+            session.user.email
+          );
+
+        }
+
+      }
+    );
+
+
+    /* ==========================================
+       MOBILE NAVIGATION
+       ========================================== */
 
     function toggleMobileMenu() {
 
-      const links = document.querySelector(".nav-links");
+      const links =
+        document.querySelector(".nav-links");
 
       if (links.style.display === "flex") {
 
@@ -2128,7 +2147,8 @@
         links.style.gap = "18px";
         links.style.padding = "25px";
         links.style.background = "#18181B";
-        links.style.border = "1px solid rgba(212,175,55,.2)";
+        links.style.border =
+          "1px solid rgba(212,175,55,.2)";
         links.style.borderRadius = "5px";
 
       }
@@ -2136,26 +2156,61 @@
     }
 
 
-    /* Subtle mouse movement on hero */
+    /* ==========================================
+       SUBTLE HERO MOUSE MOVEMENT
+       ========================================== */
 
-    const hero = document.querySelector(".hero");
+    const hero =
+      document.querySelector(".hero");
 
     if (hero) {
 
-      hero.addEventListener("mousemove", (event) => {
+      hero.addEventListener(
+        "mousemove",
+        (event) => {
 
-        const x =
-          (event.clientX / window.innerWidth - 0.5) * 8;
+          const x =
+            (event.clientX /
+              window.innerWidth -
+              0.5) * 8;
 
-        const y =
-          (event.clientY / window.innerHeight - 0.5) * 8;
+          const y =
+            (event.clientY /
+              window.innerHeight -
+              0.5) * 8;
 
-        document.querySelector(".orb-one").style.transform =
-          `translate(${x}px, ${y}px)`;
+          const orb =
+            document.querySelector(".orb-one");
 
-      });
+          if (orb) {
+
+            orb.style.transform =
+              `translate(${x}px, ${y}px)`;
+
+          }
+
+        }
+      );
 
     }
+
+
+    /* ==========================================
+       INITIALIZE
+       ========================================== */
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      () => {
+
+        checkSession();
+
+        loadInvestmentPlans();
+
+        loadSupportedAssets();
+
+      }
+    );
 
   </script>
 
