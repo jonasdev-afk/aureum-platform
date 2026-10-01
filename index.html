@@ -64,9 +64,9 @@ button{
   cursor:pointer;
 }
 
-/* =========================
+/* =========================================================
    GOLD ATMOSPHERE
-========================= */
+========================================================= */
 
 body::before{
   content:"";
@@ -132,9 +132,9 @@ body::before{
   mask-image:linear-gradient(to bottom,black,transparent 75%);
 }
 
-/* =========================
+/* =========================================================
    LOADER
-========================= */
+========================================================= */
 
 #loader{
   position:fixed;
@@ -181,12 +181,13 @@ body::before{
 
 @keyframes loading{
   from{transform:translateX(-120%)}
+
   to{transform:translateX(300%)}
 }
 
-/* =========================
+/* =========================================================
    NAV
-========================= */
+========================================================= */
 
 nav{
   position:fixed;
@@ -265,9 +266,9 @@ nav{
   font-size:25px;
 }
 
-/* =========================
+/* =========================================================
    HERO
-========================= */
+========================================================= */
 
 .hero{
   min-height:100vh;
@@ -326,9 +327,9 @@ nav{
   flex-wrap:wrap;
 }
 
-/* =========================
+/* =========================================================
    MARKET SNAPSHOT
-========================= */
+========================================================= */
 
 .snapshot{
   border:1px solid rgba(212,175,55,.35);
@@ -373,6 +374,7 @@ nav{
   padding:25px 20px 22px;
   min-width:0;
   border-right:1px solid rgba(255,255,255,.08);
+  position:relative;
 }
 
 .asset-card:last-child{
@@ -420,29 +422,42 @@ nav{
   font-size:11px;
 }
 
-.chart{
+.asset-chart{
   width:100%;
-  height:45px;
-  margin-top:10px;
+  height:65px;
+  margin-top:12px;
+  position:relative;
+  overflow:hidden;
 }
 
-.chart svg{
+.asset-chart canvas{
   width:100%;
   height:100%;
+  display:block;
 }
 
-.chart-line{
-  fill:none;
-  stroke:var(--green);
-  stroke-width:1.8;
-  stroke-linecap:round;
-  stroke-linejoin:round;
-  filter:drop-shadow(0 0 4px rgba(73,229,138,.35));
+.chart-empty{
+  height:65px;
+  margin-top:12px;
+  display:flex;
+  align-items:center;
+  color:#55524d;
+  font-size:9px;
+  letter-spacing:1px;
+  text-transform:uppercase;
 }
 
-.gold-chart .chart-line{
-  stroke:var(--gold2);
-  filter:drop-shadow(0 0 4px rgba(212,175,55,.35));
+.gold-mini-stats{
+  display:flex;
+  gap:12px;
+  margin-top:8px;
+  font-size:9px;
+  color:var(--muted2);
+}
+
+.gold-mini-stats strong{
+  color:#bcb8ae;
+  font-weight:500;
 }
 
 .snapshot-footer{
@@ -452,9 +467,190 @@ nav{
   font-size:10px;
 }
 
-/* =========================
+/* =========================================================
+   PROFESSIONAL CHART
+========================================================= */
+
+.chart-panel{
+  margin-top:30px;
+  border:1px solid rgba(212,175,55,.22);
+  border-radius:20px;
+  background:
+    radial-gradient(
+      circle at 90% 0%,
+      rgba(212,175,55,.07),
+      transparent 32%
+    ),
+    rgba(8,8,8,.9);
+  overflow:hidden;
+  box-shadow:
+    0 25px 80px rgba(0,0,0,.35);
+}
+
+.chart-panel-head{
+  padding:22px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+
+.chart-heading{
+  display:flex;
+  align-items:center;
+  gap:13px;
+}
+
+.chart-symbol{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:rgba(212,175,55,.1);
+  border:1px solid rgba(212,175,55,.2);
+  color:var(--gold2);
+  font-size:11px;
+  font-weight:800;
+}
+
+.chart-name{
+  font-size:13px;
+  font-weight:700;
+}
+
+.chart-pair{
+  color:var(--muted2);
+  font-size:10px;
+  margin-top:2px;
+}
+
+.chart-current{
+  text-align:right;
+}
+
+.chart-current-price{
+  font-size:23px;
+  font-weight:700;
+}
+
+.chart-current-change{
+  font-size:10px;
+  margin-top:2px;
+}
+
+.chart-controls{
+  padding:14px 20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.period-buttons{
+  display:flex;
+  gap:5px;
+  flex-wrap:wrap;
+}
+
+.period-btn{
+  border:1px solid transparent;
+  background:rgba(255,255,255,.025);
+  color:#77746e;
+  padding:7px 11px;
+  border-radius:7px;
+  font-size:10px;
+  transition:.2s;
+}
+
+.period-btn:hover{
+  color:#ddd;
+  background:rgba(255,255,255,.05);
+}
+
+.period-btn.active{
+  color:#080808;
+  background:var(--gold2);
+  border-color:var(--gold2);
+}
+
+.chart-meta{
+  display:flex;
+  gap:16px;
+  color:var(--muted2);
+  font-size:9px;
+  white-space:nowrap;
+}
+
+.chart-meta strong{
+  color:#bcb8ae;
+  font-weight:500;
+}
+
+.chart-area{
+  height:330px;
+  padding:20px 18px 10px;
+  position:relative;
+}
+
+.chart-area canvas{
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+.chart-loading{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgba(5,5,5,.55);
+  backdrop-filter:blur(2px);
+  color:var(--gold2);
+  font-size:10px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  pointer-events:none;
+  transition:.25s;
+}
+
+.chart-loading.hidden{
+  opacity:0;
+  visibility:hidden;
+}
+
+.chart-error{
+  position:absolute;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:#77746e;
+  font-size:11px;
+  padding:30px;
+}
+
+.chart-error.show{
+  display:flex;
+}
+
+.chart-footer{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  padding:13px 20px;
+  border-top:1px solid rgba(255,255,255,.05);
+  color:#5e5b56;
+  font-size:9px;
+}
+
+/* =========================================================
    TICKER
-========================= */
+========================================================= */
 
 .ticker-wrap{
   border-top:1px solid rgba(255,255,255,.06);
@@ -487,9 +683,9 @@ nav{
   to{transform:translateX(-50%)}
 }
 
-/* =========================
+/* =========================================================
    SECTIONS
-========================= */
+========================================================= */
 
 section{
   padding:115px 6%;
@@ -515,9 +711,9 @@ section{
   line-height:1.8;
 }
 
-/* =========================
+/* =========================================================
    MARKETS TABLE
-========================= */
+========================================================= */
 
 .market-table-wrap{
   overflow-x:auto;
@@ -553,6 +749,14 @@ tbody tr:last-child td{
   border-bottom:0;
 }
 
+tbody tr{
+  transition:.2s;
+}
+
+tbody tr:hover{
+  background:rgba(212,175,55,.025);
+}
+
 .positive{
   color:var(--green);
 }
@@ -579,9 +783,9 @@ tbody tr:last-child td{
   box-shadow:0 0 12px var(--green);
 }
 
-/* =========================
+/* =========================================================
    PLANS
-========================= */
+========================================================= */
 
 .plans{
   display:grid;
@@ -672,9 +876,9 @@ tbody tr:last-child td{
   margin-top:20px;
 }
 
-/* =========================
+/* =========================================================
    ABOUT / VISION / MISSION
-========================= */
+========================================================= */
 
 .editorial{
   max-width:1000px;
@@ -725,9 +929,9 @@ tbody tr:last-child td{
   font-size:15px;
 }
 
-/* =========================
+/* =========================================================
    ECOSYSTEM
-========================= */
+========================================================= */
 
 .ecosystem{
   display:grid;
@@ -767,9 +971,9 @@ tbody tr:last-child td{
   margin-top:9px;
 }
 
-/* =========================
+/* =========================================================
    CTA
-========================= */
+========================================================= */
 
 .cta{
   margin:20px 6% 100px;
@@ -803,9 +1007,9 @@ tbody tr:last-child td{
   margin:18px auto 30px;
 }
 
-/* =========================
+/* =========================================================
    FOOTER
-========================= */
+========================================================= */
 
 footer{
   padding:55px 6%;
@@ -857,9 +1061,9 @@ footer{
   font-size:10px;
 }
 
-/* =========================
+/* =========================================================
    AUTH
-========================= */
+========================================================= */
 
 .modal{
   position:fixed;
@@ -982,11 +1186,12 @@ footer{
   width:100%;
 }
 
-/* =========================
+/* =========================================================
    RESPONSIVE
-========================= */
+========================================================= */
 
 @media(max-width:1050px){
+
   .hero{
     grid-template-columns:1fr;
   }
@@ -998,9 +1203,14 @@ footer{
   .ecosystem{
     grid-template-columns:repeat(2,1fr);
   }
+
+  .chart-panel{
+    margin-top:25px;
+  }
 }
 
 @media(max-width:760px){
+
   nav{
     padding:0 5%;
   }
@@ -1093,6 +1303,35 @@ footer{
 
   .footer-bottom{
     flex-direction:column;
+    gap:8px;
+  }
+
+  .chart-panel-head{
+    align-items:flex-start;
+  }
+
+  .chart-current-price{
+    font-size:18px;
+  }
+
+  .chart-controls{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .chart-meta{
+    width:100%;
+    justify-content:space-between;
+  }
+
+  .chart-area{
+    height:260px;
+    padding:15px 10px 8px;
+  }
+
+  .chart-footer{
+    flex-direction:column;
+    gap:6px;
   }
 }
 </style>
@@ -1110,33 +1349,57 @@ footer{
 <div class="background-grid"></div>
 <div class="gold-light"></div>
 
-<!-- NAV -->
+<!-- =======================================================
+     NAV
+======================================================= -->
 
 <nav>
+
   <a href="#home" class="logo">AUREUM</a>
 
   <div class="nav-links" id="navLinks">
+
     <a href="#markets">Markets</a>
     <a href="#plans">Investment</a>
     <a href="#ecosystem">Ecosystem</a>
     <a href="#about">About</a>
     <a href="#contact">Contact</a>
+
   </div>
 
   <div class="nav-actions">
-    <button class="btn" onclick="openAuth('login')">Log in</button>
-    <button class="btn btn-gold" onclick="openAuth('signup')">
+
+    <button
+      class="btn"
+      onclick="openAuth('login')"
+    >
+      Log in
+    </button>
+
+    <button
+      class="btn btn-gold"
+      onclick="openAuth('signup')"
+    >
       Get Started
     </button>
+
   </div>
 
-  <button class="menu-btn" id="menuBtn">☰</button>
+  <button
+    class="menu-btn"
+    id="menuBtn"
+  >
+    ☰
+  </button>
+
 </nav>
 
 
 <main id="home">
 
-<!-- HERO -->
+<!-- =======================================================
+     HERO
+======================================================= -->
 
 <section class="hero">
 
@@ -1158,31 +1421,47 @@ footer{
     </p>
 
     <div class="hero-buttons">
-      <button class="btn btn-gold" onclick="openAuth('signup')">
+
+      <button
+        class="btn btn-gold"
+        onclick="openAuth('signup')"
+      >
         Get Started
       </button>
 
-      <a href="#markets" class="btn">
+      <a
+        href="#markets"
+        class="btn"
+      >
         Explore Markets →
       </a>
+
     </div>
 
   </div>
 
 
-  <!-- MARKET SNAPSHOT -->
+  <!-- =====================================================
+       MARKET SNAPSHOT
+  ====================================================== -->
 
   <div class="snapshot">
 
     <div class="snapshot-head">
+
       <div class="snapshot-title">
         Market Snapshot
       </div>
 
-      <a href="#markets" class="view-all">
+      <a
+        href="#markets"
+        class="view-all"
+      >
         View All →
       </a>
+
     </div>
+
 
     <div class="snapshot-assets">
 
@@ -1191,29 +1470,45 @@ footer{
       <div class="asset-card">
 
         <div class="asset-top">
-          <div class="asset-icon">₿</div>
+
+          <div class="asset-icon">
+            ₿
+          </div>
 
           <div>
-            <div class="asset-name">Bitcoin</div>
-            <div class="asset-symbol">BTC</div>
+
+            <div class="asset-name">
+              Bitcoin
+            </div>
+
+            <div class="asset-symbol">
+              BTC
+            </div>
+
           </div>
+
         </div>
 
-        <div class="asset-price" id="snapshot-BTC">
+        <div
+          class="asset-price"
+          id="snapshot-BTC"
+        >
           Loading...
         </div>
 
-        <div class="asset-change" id="snapshot-BTC-change">
+        <div
+          class="asset-change"
+          id="snapshot-BTC-change"
+        >
           —
         </div>
 
-        <div class="chart">
-          <svg viewBox="0 0 180 50" preserveAspectRatio="none">
-            <polyline
-              class="chart-line"
-              points="0,42 15,36 30,39 45,27 60,31 75,21 90,25 105,15 120,20 135,12 150,18 165,8 180,13"
-            />
-          </svg>
+        <div class="asset-chart">
+
+          <canvas
+            id="mini-BTC"
+          ></canvas>
+
         </div>
 
       </div>
@@ -1224,29 +1519,45 @@ footer{
       <div class="asset-card">
 
         <div class="asset-top">
-          <div class="asset-icon">Ξ</div>
+
+          <div class="asset-icon">
+            Ξ
+          </div>
 
           <div>
-            <div class="asset-name">Ethereum</div>
-            <div class="asset-symbol">ETH</div>
+
+            <div class="asset-name">
+              Ethereum
+            </div>
+
+            <div class="asset-symbol">
+              ETH
+            </div>
+
           </div>
+
         </div>
 
-        <div class="asset-price" id="snapshot-ETH">
+        <div
+          class="asset-price"
+          id="snapshot-ETH"
+        >
           Loading...
         </div>
 
-        <div class="asset-change" id="snapshot-ETH-change">
+        <div
+          class="asset-change"
+          id="snapshot-ETH-change"
+        >
           —
         </div>
 
-        <div class="chart">
-          <svg viewBox="0 0 180 50" preserveAspectRatio="none">
-            <polyline
-              class="chart-line"
-              points="0,40 15,35 30,38 45,25 60,29 75,24 90,27 105,16 120,22 135,15 150,18 165,10 180,15"
-            />
-          </svg>
+        <div class="asset-chart">
+
+          <canvas
+            id="mini-ETH"
+          ></canvas>
+
         </div>
 
       </div>
@@ -1257,15 +1568,29 @@ footer{
       <div class="asset-card">
 
         <div class="asset-top">
-          <div class="asset-icon">Au</div>
+
+          <div class="asset-icon">
+            Au
+          </div>
 
           <div>
-            <div class="asset-name">Gold</div>
-            <div class="asset-symbol">XAU / USD</div>
+
+            <div class="asset-name">
+              Gold
+            </div>
+
+            <div class="asset-symbol">
+              XAU / USD
+            </div>
+
           </div>
+
         </div>
 
-        <div class="asset-price" id="snapshot-GOLD">
+        <div
+          class="asset-price"
+          id="snapshot-GOLD"
+        >
           —
         </div>
 
@@ -1277,20 +1602,33 @@ footer{
           Live feed pending
         </div>
 
-        <div class="chart gold-chart">
-          <svg viewBox="0 0 180 50" preserveAspectRatio="none">
-            <polyline
-              class="chart-line"
-              points="0,38 15,35 30,37 45,28 60,31 75,21 90,26 105,18 120,20 135,13 150,17 165,9 180,12"
-            />
-          </svg>
+        <div class="gold-mini-stats">
+
+          <span>
+            High
+            <strong id="goldHigh">—</strong>
+          </span>
+
+          <span>
+            Low
+            <strong id="goldLow">—</strong>
+          </span>
+
+        </div>
+
+        <div class="chart-empty">
+          Live XAU/USD
         </div>
 
       </div>
 
     </div>
 
-    <div class="snapshot-footer" id="marketUpdated">
+
+    <div
+      class="snapshot-footer"
+      id="marketUpdated"
+    >
       Connecting to live market data...
     </div>
 
@@ -1299,14 +1637,23 @@ footer{
 </section>
 
 
-<!-- TICKER -->
+<!-- =======================================================
+     TICKER
+======================================================= -->
 
 <div class="ticker-wrap">
-  <div class="ticker" id="ticker"></div>
+
+  <div
+    class="ticker"
+    id="ticker"
+  ></div>
+
 </div>
 
 
-<!-- MARKETS -->
+<!-- =======================================================
+     MARKETS
+======================================================= -->
 
 <section id="markets">
 
@@ -1321,41 +1668,204 @@ footer{
     </h2>
 
     <p>
-      Monitor selected digital assets with live pricing and
-      24-hour market movement.
+      Monitor selected digital assets with live pricing,
+      historical market movement and 24-hour performance.
     </p>
 
   </div>
+
 
   <div class="market-table-wrap">
 
     <table>
 
       <thead>
+
         <tr>
           <th>Asset</th>
           <th>Price</th>
           <th>24H Change</th>
           <th>Status</th>
         </tr>
+
       </thead>
 
       <tbody id="marketTableBody">
+
         <tr>
           <td colspan="4">
             Loading live market data...
           </td>
         </tr>
+
       </tbody>
 
     </table>
 
   </div>
 
+
+  <!-- =====================================================
+       PROFESSIONAL MARKET CHART
+  ====================================================== -->
+
+  <div class="chart-panel">
+
+    <div class="chart-panel-head">
+
+      <div class="chart-heading">
+
+        <div
+          class="chart-symbol"
+          id="chartSymbol"
+        >
+          ₿
+        </div>
+
+        <div>
+
+          <div
+            class="chart-name"
+            id="chartName"
+          >
+            Bitcoin
+          </div>
+
+          <div
+            class="chart-pair"
+            id="chartPair"
+          >
+            BTC / USD
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="chart-current">
+
+        <div
+          class="chart-current-price"
+          id="chartCurrentPrice"
+        >
+          —
+        </div>
+
+        <div
+          class="chart-current-change"
+          id="chartCurrentChange"
+        >
+          —
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="chart-controls">
+
+      <div class="period-buttons">
+
+        <button
+          class="period-btn"
+          data-period="1H"
+        >
+          1H
+        </button>
+
+        <button
+          class="period-btn"
+          data-period="4H"
+        >
+          4H
+        </button>
+
+        <button
+          class="period-btn active"
+          data-period="1D"
+        >
+          1D
+        </button>
+
+        <button
+          class="period-btn"
+          data-period="1W"
+        >
+          1W
+        </button>
+
+        <button
+          class="period-btn"
+          data-period="1M"
+        >
+          1M
+        </button>
+
+      </div>
+
+
+      <div class="chart-meta">
+
+        <span>
+          High
+          <strong id="chartHigh">—</strong>
+        </span>
+
+        <span>
+          Low
+          <strong id="chartLow">—</strong>
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <div class="chart-area">
+
+      <canvas
+        id="mainChart"
+      ></canvas>
+
+      <div
+        class="chart-loading hidden"
+        id="chartLoading"
+      >
+        Loading market data
+      </div>
+
+      <div
+        class="chart-error"
+        id="chartError"
+      >
+        Historical chart data is temporarily unavailable.
+      </div>
+
+    </div>
+
+
+    <div class="chart-footer">
+
+      <span id="chartUpdated">
+        Historical market data
+      </span>
+
+      <span>
+        Source: AUREUM Market API
+      </span>
+
+    </div>
+
+  </div>
+
 </section>
 
 
-<!-- INVESTMENT -->
+<!-- =======================================================
+     INVESTMENT
+======================================================= -->
 
 <section id="plans">
 
@@ -1376,171 +1886,334 @@ footer{
 
   </div>
 
+
   <div class="plans">
 
     <article class="plan">
-      <div class="plan-category">Gold</div>
-      <h3>AUREUM DAWN</h3>
+
+      <div class="plan-category">
+        Gold
+      </div>
+
+      <h3>
+        AUREUM DAWN
+      </h3>
 
       <div class="plan-return">
-        7% <small>after 48 hours</small>
+        7%
+        <small>
+          after 48 hours
+        </small>
       </div>
 
       <div class="plan-info">
-        <div><span>Minimum</span><strong>0.025 Troy oz</strong></div>
-        <div><span>Maximum</span><strong>0.25 Troy oz</strong></div>
+
+        <div>
+          <span>Minimum</span>
+          <strong>0.025 Troy oz</strong>
+        </div>
+
+        <div>
+          <span>Maximum</span>
+          <strong>0.25 Troy oz</strong>
+        </div>
+
       </div>
 
       <p class="plan-description">
         Designed for users taking their first step into AUREUM.
       </p>
 
-      <button class="btn btn-gold" onclick="openAuth('signup')">
+      <button
+        class="btn btn-gold"
+        onclick="openAuth('signup')"
+      >
         Start
       </button>
+
     </article>
 
 
     <article class="plan featured">
-      <div class="plan-category">Gold</div>
-      <h3>AUREUM CREST</h3>
+
+      <div class="plan-category">
+        Gold
+      </div>
+
+      <h3>
+        AUREUM CREST
+      </h3>
 
       <div class="plan-return">
-        9% <small>after 72 hours</small>
+        9%
+        <small>
+          after 72 hours
+        </small>
       </div>
 
       <div class="plan-info">
-        <div><span>Minimum</span><strong>0.25 Troy oz</strong></div>
-        <div><span>Maximum</span><strong>1 Troy oz</strong></div>
+
+        <div>
+          <span>Minimum</span>
+          <strong>0.25 Troy oz</strong>
+        </div>
+
+        <div>
+          <span>Maximum</span>
+          <strong>1 Troy oz</strong>
+        </div>
+
       </div>
 
       <p class="plan-description">
         A structured AUREUM Gold investment plan.
       </p>
 
-      <button class="btn btn-gold" onclick="openAuth('signup')">
+      <button
+        class="btn btn-gold"
+        onclick="openAuth('signup')"
+      >
         Start
       </button>
+
     </article>
 
 
     <article class="plan">
-      <div class="plan-category">Gold</div>
-      <h3>AUREUM CROWN</h3>
+
+      <div class="plan-category">
+        Gold
+      </div>
+
+      <h3>
+        AUREUM CROWN
+      </h3>
 
       <div class="plan-return">
-        7% <small>after 72 hours</small>
+        7%
+        <small>
+          after 72 hours
+        </small>
       </div>
 
       <div class="plan-info">
-        <div><span>Minimum</span><strong>1 Troy oz</strong></div>
-        <div><span>Maximum</span><strong>5 Troy oz</strong></div>
+
+        <div>
+          <span>Minimum</span>
+          <strong>1 Troy oz</strong>
+        </div>
+
+        <div>
+          <span>Maximum</span>
+          <strong>5 Troy oz</strong>
+        </div>
+
       </div>
 
       <p class="plan-description">
         A structured AUREUM Gold investment plan.
       </p>
 
-      <button class="btn btn-gold" onclick="openAuth('signup')">
+      <button
+        class="btn btn-gold"
+        onclick="openAuth('signup')"
+      >
         Start
       </button>
+
     </article>
 
 
     <article class="plan">
-      <div class="plan-category">Gold</div>
-      <h3>AUREUM BLACK</h3>
+
+      <div class="plan-category">
+        Gold
+      </div>
+
+      <h3>
+        AUREUM BLACK
+      </h3>
 
       <div class="plan-return">
-        16.5% <small>weekly</small>
+        16.5%
+        <small>
+          weekly
+        </small>
       </div>
 
       <div class="plan-info">
-        <div><span>Minimum</span><strong>5 Troy oz</strong></div>
-        <div><span>Maximum</span><strong>99 Troy oz</strong></div>
+
+        <div>
+          <span>Minimum</span>
+          <strong>5 Troy oz</strong>
+        </div>
+
+        <div>
+          <span>Maximum</span>
+          <strong>99 Troy oz</strong>
+        </div>
+
       </div>
 
       <p class="plan-description">
         AUREUM premium Gold investment plan.
       </p>
 
-      <button class="btn btn-gold" onclick="openAuth('signup')">
+      <button
+        class="btn btn-gold"
+        onclick="openAuth('signup')"
+      >
         Start
       </button>
+
     </article>
 
 
     <article class="plan">
-      <div class="plan-category">Crypto</div>
-      <h3>AUREUM PULSE</h3>
+
+      <div class="plan-category">
+        Crypto
+      </div>
+
+      <h3>
+        AUREUM PULSE
+      </h3>
 
       <div class="plan-return">
-        4.5% <small>daily</small>
+        4.5%
+        <small>
+          daily
+        </small>
       </div>
 
       <div class="plan-info">
-        <div><span>Minimum</span><strong>$99</strong></div>
-        <div><span>Maximum</span><strong>$1,000</strong></div>
+
+        <div>
+          <span>Minimum</span>
+          <strong>$99</strong>
+        </div>
+
+        <div>
+          <span>Maximum</span>
+          <strong>$1,000</strong>
+        </div>
+
       </div>
 
       <p class="plan-description">
         AUREUM Crypto investment plan.
       </p>
 
-      <button class="btn btn-gold" onclick="openAuth('signup')">
+      <button
+        class="btn btn-gold"
+        onclick="openAuth('signup')"
+      >
         Start
       </button>
+
     </article>
 
 
     <article class="plan featured">
-      <div class="plan-category">Crypto</div>
-      <h3>AUREUM PRIME</h3>
+
+      <div class="plan-category">
+        Crypto
+      </div>
+
+      <h3>
+        AUREUM PRIME
+      </h3>
 
       <div class="plan-return">
-        7% <small>after 48 hours</small>
+        7%
+        <small>
+          after 48 hours
+        </small>
       </div>
 
       <div class="plan-info">
-        <div><span>Minimum</span><strong>$1,000</strong></div>
-        <div><span>Maximum</span><strong>$10,000</strong></div>
+
+        <div>
+          <span>Minimum</span>
+          <strong>$1,000</strong>
+        </div>
+
+        <div>
+          <span>Maximum</span>
+          <strong>$10,000</strong>
+        </div>
+
       </div>
 
       <p class="plan-description">
         AUREUM Crypto investment plan.
       </p>
 
-      <button class="btn btn-gold" onclick="openAuth('signup')">
+      <button
+        class="btn btn-gold"
+        onclick="openAuth('signup')"
+      >
         Start
       </button>
+
     </article>
 
 
     <article class="plan">
-      <div class="plan-category">Crypto</div>
-      <h3>AUREUM APEX</h3>
+
+      <div class="plan-category">
+        Crypto
+      </div>
+
+      <h3>
+        AUREUM APEX
+      </h3>
 
       <div class="plan-return">
-        10% <small>weekly</small>
+        10%
+        <small>
+          weekly
+        </small>
       </div>
 
       <div class="plan-info">
-        <div><span>Minimum</span><strong>$10,000</strong></div>
-        <div><span>Maximum</span><strong>Unlimited</strong></div>
+
+        <div>
+          <span>Minimum</span>
+          <strong>$10,000</strong>
+        </div>
+
+        <div>
+          <span>Maximum</span>
+          <strong>Unlimited</strong>
+        </div>
+
       </div>
 
       <p class="plan-description">
         AUREUM Crypto investment plan.
       </p>
 
-      <button class="btn btn-gold" onclick="openAuth('signup')">
+      <button
+        class="btn btn-gold"
+        onclick="openAuth('signup')"
+      >
         Start
       </button>
+
     </article>
 
   </div>
 
-  <p style="color:#66635e;font-size:10px;margin-top:25px;line-height:1.7;">
+
+  <p
+    style="
+      color:#66635e;
+      font-size:10px;
+      margin-top:25px;
+      line-height:1.7;
+    "
+  >
     Displayed investment rates and terms are configured by AUREUM
     and are subject to applicable terms, eligibility requirements,
     disclosures and changes.
@@ -1549,7 +2222,9 @@ footer{
 </section>
 
 
-<!-- ECOSYSTEM -->
+<!-- =======================================================
+     ECOSYSTEM
+======================================================= -->
 
 <section id="ecosystem">
 
@@ -1570,54 +2245,142 @@ footer{
 
   </div>
 
+
   <div class="ecosystem">
 
     <div class="eco-card">
-      <div class="eco-number">01</div>
-      <h3>AUREUM INVEST</h3>
-      <p>Structured Gold and Crypto investment products.</p>
+
+      <div class="eco-number">
+        01
+      </div>
+
+      <h3>
+        AUREUM INVEST
+      </h3>
+
+      <p>
+        Structured Gold and Crypto investment products.
+      </p>
+
     </div>
 
-    <div class="eco-card">
-      <div class="eco-number">02</div>
-      <h3>AUREUM MARKETS</h3>
-      <p>Live digital-asset market intelligence and pricing.</p>
-    </div>
 
     <div class="eco-card">
-      <div class="eco-number">03</div>
-      <h3>AUREUM WALLET</h3>
-      <p>Digital balances, deposits, withdrawals and transaction history.</p>
+
+      <div class="eco-number">
+        02
+      </div>
+
+      <h3>
+        AUREUM MARKETS
+      </h3>
+
+      <p>
+        Live digital-asset market intelligence and pricing.
+      </p>
+
     </div>
 
-    <div class="eco-card">
-      <div class="eco-number">04</div>
-      <h3>AUREUM TRADE</h3>
-      <p>A professional trading experience planned for the ecosystem.</p>
-    </div>
 
     <div class="eco-card">
-      <div class="eco-number">05</div>
-      <h3>AUREUM WEALTH</h3>
-      <p>Unified portfolio visibility across the ecosystem.</p>
+
+      <div class="eco-number">
+        03
+      </div>
+
+      <h3>
+        AUREUM WALLET
+      </h3>
+
+      <p>
+        Digital balances, deposits, withdrawals and transaction history.
+      </p>
+
     </div>
 
-    <div class="eco-card">
-      <div class="eco-number">06</div>
-      <h3>AUREUM INTELLIGENCE</h3>
-      <p>Analytics, alerts, reporting and portfolio insights.</p>
-    </div>
 
     <div class="eco-card">
-      <div class="eco-number">07</div>
-      <h3>AUREUM PAY</h3>
-      <p>Future digital payment capabilities subject to infrastructure availability.</p>
+
+      <div class="eco-number">
+        04
+      </div>
+
+      <h3>
+        AUREUM TRADE
+      </h3>
+
+      <p>
+        A professional trading experience planned for the ecosystem.
+      </p>
+
     </div>
 
+
     <div class="eco-card">
-      <div class="eco-number">08</div>
-      <h3>AUREUM SECURITY</h3>
-      <p>Account security, verification and controlled transaction flows.</p>
+
+      <div class="eco-number">
+        05
+      </div>
+
+      <h3>
+        AUREUM WEALTH
+      </h3>
+
+      <p>
+        Unified portfolio visibility across the ecosystem.
+      </p>
+
+    </div>
+
+
+    <div class="eco-card">
+
+      <div class="eco-number">
+        06
+      </div>
+
+      <h3>
+        AUREUM INTELLIGENCE
+      </h3>
+
+      <p>
+        Analytics, alerts, reporting and portfolio insights.
+      </p>
+
+    </div>
+
+
+    <div class="eco-card">
+
+      <div class="eco-number">
+        07
+      </div>
+
+      <h3>
+        AUREUM PAY
+      </h3>
+
+      <p>
+        Future digital payment capabilities subject to infrastructure availability.
+      </p>
+
+    </div>
+
+
+    <div class="eco-card">
+
+      <div class="eco-number">
+        08
+      </div>
+
+      <h3>
+        AUREUM SECURITY
+      </h3>
+
+      <p>
+        Account security, verification and controlled transaction flows.
+      </p>
+
     </div>
 
   </div>
@@ -1625,7 +2388,9 @@ footer{
 </section>
 
 
-<!-- ABOUT -->
+<!-- =======================================================
+     ABOUT
+======================================================= -->
 
 <section id="about">
 
@@ -1664,8 +2429,6 @@ footer{
     </div>
 
 
-    <!-- VISION -->
-
     <div class="statement">
 
       <div class="eyebrow">
@@ -1686,8 +2449,6 @@ footer{
     </div>
 
 
-    <!-- MISSION -->
-
     <div class="statement">
 
       <div class="eyebrow">
@@ -1707,9 +2468,14 @@ footer{
 </section>
 
 
-<!-- CTA -->
+<!-- =======================================================
+     CTA
+======================================================= -->
 
-<div class="cta" id="contact">
+<div
+  class="cta"
+  id="contact"
+>
 
   <div class="eyebrow">
     AUREUM
@@ -1724,7 +2490,10 @@ footer{
     the ecosystem continues to expand.
   </p>
 
-  <button class="btn btn-gold" onclick="openAuth('signup')">
+  <button
+    class="btn btn-gold"
+    onclick="openAuth('signup')"
+  >
     Create Account
   </button>
 
@@ -1733,7 +2502,9 @@ footer{
 </main>
 
 
-<!-- FOOTER -->
+<!-- =======================================================
+     FOOTER
+======================================================= -->
 
 <footer>
 
@@ -1741,7 +2512,9 @@ footer{
 
     <div class="footer-brand">
 
-      <div class="logo">AUREUM</div>
+      <div class="logo">
+        AUREUM
+      </div>
 
       <p>
         The New Standard of Wealth.
@@ -1749,46 +2522,106 @@ footer{
 
     </div>
 
+
     <div class="footer-links">
 
       <div>
-        <strong>Platform</strong>
-        <a href="#markets">Markets</a>
-        <a href="#plans">Investment</a>
-        <a href="#ecosystem">Ecosystem</a>
+
+        <strong>
+          Platform
+        </strong>
+
+        <a href="#markets">
+          Markets
+        </a>
+
+        <a href="#plans">
+          Investment
+        </a>
+
+        <a href="#ecosystem">
+          Ecosystem
+        </a>
+
       </div>
 
-      <div>
-        <strong>Company</strong>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-      </div>
 
       <div>
-        <strong>Account</strong>
-        <a href="#" onclick="openAuth('login');return false;">Log in</a>
-        <a href="#" onclick="openAuth('signup');return false;">Create Account</a>
+
+        <strong>
+          Company
+        </strong>
+
+        <a href="#about">
+          About
+        </a>
+
+        <a href="#contact">
+          Contact
+        </a>
+
+      </div>
+
+
+      <div>
+
+        <strong>
+          Account
+        </strong>
+
+        <a
+          href="#"
+          onclick="openAuth('login');return false;"
+        >
+          Log in
+        </a>
+
+        <a
+          href="#"
+          onclick="openAuth('signup');return false;"
+        >
+          Create Account
+        </a>
+
       </div>
 
     </div>
 
   </div>
 
+
   <div class="footer-bottom">
-    <span>© 2026 AUREUM. All rights reserved.</span>
-    <span>The New Standard of Wealth.</span>
+
+    <span>
+      © 2026 AUREUM. All rights reserved.
+    </span>
+
+    <span>
+      The New Standard of Wealth.
+    </span>
+
   </div>
 
 </footer>
 
 
-<!-- AUTH MODAL -->
+<!-- =======================================================
+     AUTH MODAL
+======================================================= -->
 
-<div class="modal" id="authModal">
+<div
+  class="modal"
+  id="authModal"
+>
 
   <div class="modal-card">
 
-    <button class="close-modal" onclick="closeAuth()">×</button>
+    <button
+      class="close-modal"
+      onclick="closeAuth()"
+    >
+      ×
+    </button>
 
     <h2 id="authTitle">
       Welcome back
@@ -1797,6 +2630,7 @@ footer{
     <p id="authSubtitle">
       Sign in to access your AUREUM account.
     </p>
+
 
     <div class="auth-tabs">
 
@@ -1818,6 +2652,7 @@ footer{
 
     </div>
 
+
     <form id="authForm">
 
       <div
@@ -1825,17 +2660,27 @@ footer{
         id="fullNameGroup"
         style="display:none;"
       >
-        <label>Full name</label>
+
+        <label>
+          Full name
+        </label>
+
         <input
           id="fullName"
           type="text"
           autocomplete="name"
           placeholder="Your full name"
         >
+
       </div>
 
+
       <div class="form-group">
-        <label>Email address</label>
+
+        <label>
+          Email address
+        </label>
+
         <input
           id="email"
           type="email"
@@ -1843,10 +2688,16 @@ footer{
           placeholder="you@example.com"
           required
         >
+
       </div>
 
+
       <div class="form-group">
-        <label>Password</label>
+
+        <label>
+          Password
+        </label>
+
         <input
           id="password"
           type="password"
@@ -1855,9 +2706,15 @@ footer{
           minlength="6"
           required
         >
+
       </div>
 
-      <div class="auth-message" id="authMessage"></div>
+
+      <div
+        class="auth-message"
+        id="authMessage"
+      ></div>
+
 
       <button
         type="submit"
@@ -1889,6 +2746,13 @@ const SUPABASE_PUBLISHABLE_KEY =
 const MARKET_API_URL =
   "https://aureum-platform.onrender.com/api/markets";
 
+const CHART_API_URL =
+  "https://aureum-platform.onrender.com/api/chart";
+
+const GOLD_API_URL =
+  "https://aureum-platform.onrender.com/api/chart/gold";
+
+
 const supabaseClient =
   window.supabase.createClient(
     SUPABASE_URL,
@@ -1903,13 +2767,20 @@ const supabaseClient =
 const loader =
   document.getElementById("loader");
 
+
 function hideLoader(){
+
   if(loader){
     loader.classList.add("hidden");
   }
+
 }
 
-setTimeout(hideLoader,2500);
+
+setTimeout(
+  hideLoader,
+  2500
+);
 
 
 /* =========================================================
@@ -1922,19 +2793,31 @@ const menuBtn =
 const navLinks =
   document.getElementById("navLinks");
 
-menuBtn.addEventListener("click",()=>{
-  navLinks.classList.toggle("open");
-});
 
-document.querySelectorAll(".nav-links a").forEach(link=>{
-  link.addEventListener("click",()=>{
-    navLinks.classList.remove("open");
+menuBtn.addEventListener(
+  "click",
+  ()=>{
+    navLinks.classList.toggle("open");
+  }
+);
+
+
+document
+  .querySelectorAll(".nav-links a")
+  .forEach(link=>{
+
+    link.addEventListener(
+      "click",
+      ()=>{
+        navLinks.classList.remove("open");
+      }
+    );
+
   });
-});
 
 
 /* =========================================================
-   MARKET DATA
+   MARKET CONFIGURATION
 ========================================================= */
 
 const SYMBOLS=[
@@ -1948,6 +2831,7 @@ const SYMBOLS=[
   "USDC"
 ];
 
+
 const COIN_NAMES={
   BTC:"Bitcoin",
   ETH:"Ethereum",
@@ -1959,8 +2843,22 @@ const COIN_NAMES={
   USDC:"USD Coin"
 };
 
+
 const marketState={};
 
+
+let goldState=null;
+
+let chartSymbol="BTC";
+
+let chartPeriod="1D";
+
+let chartPoints=[];
+
+
+/* =========================================================
+   FORMATTERS
+========================================================= */
 
 function formatPrice(price){
 
@@ -1971,23 +2869,80 @@ function formatPrice(price){
   }
 
   if(value>=1000){
-    return "$"+value.toLocaleString("en-US",{
-      minimumFractionDigits:2,
-      maximumFractionDigits:2
-    });
+
+    return "$"+value.toLocaleString(
+      "en-US",
+      {
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+      }
+    );
+
   }
 
   if(value>=1){
-    return "$"+value.toLocaleString("en-US",{
-      minimumFractionDigits:2,
-      maximumFractionDigits:4
-    });
+
+    return "$"+value.toLocaleString(
+      "en-US",
+      {
+        minimumFractionDigits:2,
+        maximumFractionDigits:4
+      }
+    );
+
   }
 
-  return "$"+value.toLocaleString("en-US",{
-    minimumFractionDigits:4,
-    maximumFractionDigits:6
-  });
+  return "$"+value.toLocaleString(
+    "en-US",
+    {
+      minimumFractionDigits:4,
+      maximumFractionDigits:6
+    }
+  );
+
+}
+
+
+function formatChartPrice(price){
+
+  const value=Number(price);
+
+  if(!Number.isFinite(value)){
+    return "—";
+  }
+
+  if(value>=1000){
+
+    return "$"+value.toLocaleString(
+      "en-US",
+      {
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+      }
+    );
+
+  }
+
+  if(value>=1){
+
+    return "$"+value.toLocaleString(
+      "en-US",
+      {
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+      }
+    );
+
+  }
+
+  return "$"+value.toLocaleString(
+    "en-US",
+    {
+      minimumFractionDigits:4,
+      maximumFractionDigits:6
+    }
+  );
+
 }
 
 
@@ -1999,7 +2954,14 @@ function formatChange(change){
     return "—";
   }
 
-  return (value>0?"+":"")+value.toFixed(2)+"%";
+  return (
+    value>0
+      ? "+"
+      : ""
+  )+
+  value.toFixed(2)+
+  "%";
+
 }
 
 
@@ -2007,16 +2969,24 @@ function changeClass(change){
 
   const value=Number(change);
 
-  if(value>0) return "positive";
-  if(value<0) return "negative";
+  if(value>0){
+    return "positive";
+  }
+
+  if(value<0){
+    return "negative";
+  }
 
   return "";
+
 }
 
 
 function formatUpdatedTime(timestamp){
 
-  if(!timestamp) return "";
+  if(!timestamp){
+    return "";
+  }
 
   const date=new Date(timestamp);
 
@@ -2024,90 +2994,194 @@ function formatUpdatedTime(timestamp){
     return "";
   }
 
-  return date.toLocaleTimeString([],{
-    hour:"2-digit",
-    minute:"2-digit",
-    second:"2-digit"
-  });
+  return date.toLocaleTimeString(
+    [],
+    {
+      hour:"2-digit",
+      minute:"2-digit",
+      second:"2-digit"
+    }
+  );
+
 }
 
 
+/* =========================================================
+   LIVE MARKET DATA
+========================================================= */
+
 async function loadMarkets(){
 
-  const controller=new AbortController();
+  const controller=
+    new AbortController();
 
-  const timeout=setTimeout(()=>{
-    controller.abort();
-  },10000);
+  const timeout=
+    setTimeout(
+      ()=>{
+        controller.abort();
+      },
+      10000
+    );
+
 
   try{
 
-    const response=await fetch(
-      MARKET_API_URL,
-      {
-        method:"GET",
-        headers:{
-          "Accept":"application/json"
-        },
-        signal:controller.signal
-      }
-    );
+    const response=
+      await fetch(
+        MARKET_API_URL,
+        {
+          method:"GET",
+          headers:{
+            "Accept":"application/json"
+          },
+          signal:controller.signal
+        }
+      );
+
 
     if(!response.ok){
+
       throw new Error(
-        "Market API returned HTTP "+response.status
+        "Market API returned HTTP "+
+        response.status
       );
+
     }
 
-    const apiData=await response.json();
+
+    const apiData=
+      await response.json();
+
+
+    /*
+      IMPORTANT:
+
+      Your backend returns:
+
+      {
+        status,
+        crypto,
+        gold
+      }
+
+      CryptoMarketCap data is inside:
+
+      apiData.crypto.data
+    */
+
+    const cryptoData=
+      apiData?.crypto?.data;
+
 
     if(
-      !apiData ||
-      !apiData.data ||
-      typeof apiData.data!=="object"
+      !cryptoData ||
+      typeof cryptoData!=="object"
     ){
-      throw new Error("Invalid market API response");
+
+      throw new Error(
+        "Invalid crypto market response"
+      );
+
     }
+
 
     let latestTimestamp=null;
 
-    SYMBOLS.forEach(symbol=>{
 
-      const quote=
-        apiData?.data?.[symbol]?.quote?.USD;
+    SYMBOLS.forEach(
+      symbol=>{
 
-      if(!quote) return;
+        const quote=
+          cryptoData?.[symbol]?.quote?.USD;
 
-      marketState[symbol]={
-        price:quote.price,
-        change:quote.percent_change_24h,
-        updatedAt:
-          quote.last_updated ||
-          apiData?.status?.timestamp
+
+        if(!quote){
+          return;
+        }
+
+
+        marketState[symbol]={
+          price:quote.price,
+          change:quote.percent_change_24h,
+          updatedAt:
+            quote.last_updated ||
+            apiData?.crypto?.status?.timestamp
+        };
+
+
+        if(
+          marketState[symbol].updatedAt
+        ){
+
+          latestTimestamp=
+            marketState[symbol].updatedAt;
+
+        }
+
+      }
+    );
+
+
+    /*
+      GOLD
+    */
+
+    if(apiData?.gold){
+
+      goldState={
+        price:apiData.gold.price,
+        change:apiData.gold.changePercent,
+        high:apiData.gold.high,
+        low:apiData.gold.low,
+        bid:apiData.gold.bid,
+        ask:apiData.gold.ask,
+        timestamp:apiData.gold.timestamp
       };
 
-      if(marketState[symbol].updatedAt){
-        latestTimestamp=
-          marketState[symbol].updatedAt;
-      }
+    }
 
-    });
 
     renderMarkets();
 
+    renderGold();
+
+
     const updatedText=
-      formatUpdatedTime(latestTimestamp);
+      formatUpdatedTime(
+        latestTimestamp
+      );
+
 
     const updatedElement=
-      document.getElementById("marketUpdated");
+      document.getElementById(
+        "marketUpdated"
+      );
+
 
     if(updatedElement){
 
       updatedElement.textContent=
         updatedText
-          ? "Live data • Updated "+updatedText
+          ? "Live data • Updated "+
+            updatedText
           : "Live market data connected";
+
     }
+
+
+    /*
+      Load initial chart.
+    */
+
+    if(chartPoints.length===0){
+
+      await loadChart(
+        chartSymbol,
+        chartPeriod
+      );
+
+    }
+
 
   }catch(error){
 
@@ -2116,8 +3190,12 @@ async function loadMarkets(){
       error
     );
 
+
     const updatedElement=
-      document.getElementById("marketUpdated");
+      document.getElementById(
+        "marketUpdated"
+      );
+
 
     if(updatedElement){
 
@@ -2125,55 +3203,164 @@ async function loadMarkets(){
         Object.keys(marketState).length
           ? "Live data temporarily unavailable • Showing last update"
           : "Live market data could not be loaded.";
+
     }
 
   }finally{
 
     clearTimeout(timeout);
+
     hideLoader();
 
   }
+
 }
 
+
+/* =========================================================
+   RENDER GOLD
+========================================================= */
+
+function renderGold(){
+
+  if(!goldState){
+    return;
+  }
+
+
+  const price=
+    document.getElementById(
+      "snapshot-GOLD"
+    );
+
+
+  const change=
+    document.getElementById(
+      "snapshot-GOLD-change"
+    );
+
+
+  const high=
+    document.getElementById(
+      "goldHigh"
+    );
+
+
+  const low=
+    document.getElementById(
+      "goldLow"
+    );
+
+
+  if(price){
+
+    price.textContent=
+      formatPrice(
+        goldState.price
+      );
+
+  }
+
+
+  if(change){
+
+    change.textContent=
+      formatChange(
+        goldState.change
+      );
+
+    change.className=
+      "asset-change "+
+      changeClass(
+        goldState.change
+      );
+
+  }
+
+
+  if(high){
+
+    high.textContent=
+      formatPrice(
+        goldState.high
+      );
+
+  }
+
+
+  if(low){
+
+    low.textContent=
+      formatPrice(
+        goldState.low
+      );
+
+  }
+
+}
+
+
+/* =========================================================
+   RENDER MARKETS
+========================================================= */
 
 function renderMarkets(){
 
   /*
-    HERO / SNAPSHOT
+    HERO BTC / ETH
   */
 
-  ["BTC","ETH"].forEach(symbol=>{
+  ["BTC","ETH"].forEach(
+    symbol=>{
 
-    const item=marketState[symbol];
+      const item=
+        marketState[symbol];
 
-    if(!item) return;
 
-    const price=
-      document.getElementById(
-        "snapshot-"+symbol
-      );
+      if(!item){
+        return;
+      }
 
-    const change=
-      document.getElementById(
-        "snapshot-"+symbol+"-change"
-      );
 
-    if(price){
-      price.textContent=
-        formatPrice(item.price);
+      const price=
+        document.getElementById(
+          "snapshot-"+symbol
+        );
+
+
+      const change=
+        document.getElementById(
+          "snapshot-"+symbol+"-change"
+        );
+
+
+      if(price){
+
+        price.textContent=
+          formatPrice(
+            item.price
+          );
+
+      }
+
+
+      if(change){
+
+        change.textContent=
+          formatChange(
+            item.change
+          );
+
+        change.className=
+          "asset-change "+
+          changeClass(
+            item.change
+          );
+
+      }
+
     }
-
-    if(change){
-
-      change.textContent=
-        formatChange(item.change);
-
-      change.className=
-        "asset-change "+
-        changeClass(item.change);
-    }
-
-  });
+  );
 
 
   /*
@@ -2185,92 +3372,1579 @@ function renderMarkets(){
       "marketTableBody"
     );
 
-  if(!tableBody) return;
+
+  if(!tableBody){
+    return;
+  }
+
 
   tableBody.innerHTML="";
 
-  SYMBOLS.forEach(symbol=>{
 
-    const item=marketState[symbol];
+  SYMBOLS.forEach(
+    symbol=>{
 
-    if(!item) return;
+      const item=
+        marketState[symbol];
 
-    const row=
-      document.createElement("tr");
 
-    row.innerHTML=`
-      <td>
-        <strong>${symbol}</strong>
-        <div style="color:#66635e;font-size:10px;margin-top:3px;">
-          ${COIN_NAMES[symbol]}
-        </div>
-      </td>
+      if(!item){
+        return;
+      }
 
-      <td>${formatPrice(item.price)}</td>
 
-      <td class="${changeClass(item.change)}">
-        ${formatChange(item.change)}
-      </td>
+      const row=
+        document.createElement("tr");
 
-      <td>
-        <span class="live-indicator">
-          <span class="live-dot"></span>
-          Live
-        </span>
-      </td>
-    `;
 
-    tableBody.appendChild(row);
+      row.innerHTML=`
 
-  });
+        <td>
+
+          <strong>
+            ${symbol}
+          </strong>
+
+          <div
+            style="
+              color:#66635e;
+              font-size:10px;
+              margin-top:3px;
+            "
+          >
+            ${COIN_NAMES[symbol]}
+          </div>
+
+        </td>
+
+
+        <td>
+          ${formatPrice(item.price)}
+        </td>
+
+
+        <td
+          class="${changeClass(item.change)}"
+        >
+          ${formatChange(item.change)}
+        </td>
+
+
+        <td>
+
+          <span class="live-indicator">
+
+            <span class="live-dot"></span>
+
+            Live
+
+          </span>
+
+        </td>
+
+      `;
+
+
+      tableBody.appendChild(row);
+
+    }
+  );
 
 
   renderTicker();
+
 }
 
+
+/* =========================================================
+   TICKER
+========================================================= */
 
 function renderTicker(){
 
   const ticker=
-    document.getElementById("ticker");
+    document.getElementById(
+      "ticker"
+    );
 
-  if(!ticker) return;
+
+  if(!ticker){
+    return;
+  }
+
 
   let html="";
 
-  SYMBOLS.forEach(symbol=>{
 
-    const item=marketState[symbol];
+  SYMBOLS.forEach(
+    symbol=>{
 
-    if(!item) return;
+      const item=
+        marketState[symbol];
 
-    html+=`
-      <div class="ticker-item">
-        <span class="ticker-symbol">
-          ${symbol}
-        </span>
 
-        ${formatPrice(item.price)}
+      if(!item){
+        return;
+      }
 
-        &nbsp;
 
-        <span class="${changeClass(item.change)}">
-          ${formatChange(item.change)}
-        </span>
-      </div>
-    `;
+      html+=`
 
-  });
+        <div class="ticker-item">
 
-  ticker.innerHTML=html+html;
+          <span class="ticker-symbol">
+            ${symbol}
+          </span>
+
+          ${formatPrice(item.price)}
+
+          &nbsp;
+
+          <span
+            class="${changeClass(item.change)}"
+          >
+            ${formatChange(item.change)}
+          </span>
+
+        </div>
+
+      `;
+
+    }
+  );
+
+
+  ticker.innerHTML=
+    html+
+    html;
+
 }
 
 
-/*
-  Start live market feed.
-*/
+/* =========================================================
+   CHART SYMBOL SETTINGS
+========================================================= */
+
+const CHART_SYMBOLS={
+
+  BTC:{
+    name:"Bitcoin",
+    pair:"BTC / USD",
+    icon:"₿"
+  },
+
+  ETH:{
+    name:"Ethereum",
+    pair:"ETH / USD",
+    icon:"Ξ"
+  }
+
+};
+
+
+/* =========================================================
+   LOAD HISTORICAL CHART
+========================================================= */
+
+async function loadChart(
+  symbol,
+  period
+){
+
+  if(
+    !CHART_SYMBOLS[symbol]
+  ){
+    return;
+  }
+
+
+  chartSymbol=
+    symbol;
+
+  chartPeriod=
+    period;
+
+
+  setChartHeader();
+
+
+  const loading=
+    document.getElementById(
+      "chartLoading"
+    );
+
+
+  const errorBox=
+    document.getElementById(
+      "chartError"
+    );
+
+
+  if(loading){
+
+    loading.classList.remove(
+      "hidden"
+    );
+
+  }
+
+
+  if(errorBox){
+
+    errorBox.classList.remove(
+      "show"
+    );
+
+  }
+
+
+  try{
+
+    const response=
+      await fetch(
+        CHART_API_URL+
+        "/"+
+        encodeURIComponent(symbol)+
+        "?period="+
+        encodeURIComponent(period),
+        {
+          method:"GET",
+          headers:{
+            "Accept":"application/json"
+          }
+        }
+      );
+
+
+    if(!response.ok){
+
+      throw new Error(
+        "Chart API returned HTTP "+
+        response.status
+      );
+
+    }
+
+
+    const data=
+      await response.json();
+
+
+    if(
+      !data ||
+      !Array.isArray(data.points) ||
+      data.points.length<2
+    ){
+
+      throw new Error(
+        "No usable chart data"
+      );
+
+    }
+
+
+    chartPoints=
+      data.points
+      .filter(point=>
+        Number.isFinite(
+          Number(point.price)
+        )
+      )
+      .map(point=>({
+        time:new Date(
+          point.time
+        ).getTime(),
+
+        price:Number(
+          point.price
+        )
+      }))
+      .filter(point=>
+        Number.isFinite(point.time)
+      );
+
+
+    updateChartStats();
+
+    drawMainChart();
+
+    drawMiniChart(
+      "BTC",
+      document.getElementById("mini-BTC")
+    );
+
+    drawMiniChart(
+      "ETH",
+      document.getElementById("mini-ETH")
+    );
+
+
+    const updated=
+      document.getElementById(
+        "chartUpdated"
+      );
+
+
+    if(updated){
+
+      updated.textContent=
+        "Historical "+
+        symbol+
+        " data • "+
+        period;
+
+    }
+
+
+  }catch(error){
+
+    console.error(
+      "AUREUM chart error:",
+      error
+    );
+
+
+    chartPoints=[];
+
+
+    const errorBox=
+      document.getElementById(
+        "chartError"
+      );
+
+
+    if(errorBox){
+
+      errorBox.textContent=
+        "Historical "+
+        symbol+
+        " chart data is temporarily unavailable.";
+
+      errorBox.classList.add(
+        "show"
+      );
+
+    }
+
+
+    clearMainChart();
+
+  }finally{
+
+    if(loading){
+
+      loading.classList.add(
+        "hidden"
+      );
+
+    }
+
+  }
+
+}
+
+
+/* =========================================================
+   CHART HEADER
+========================================================= */
+
+function setChartHeader(){
+
+  const config=
+    CHART_SYMBOLS[chartSymbol];
+
+
+  if(!config){
+    return;
+  }
+
+
+  const symbol=
+    document.getElementById(
+      "chartSymbol"
+    );
+
+
+  const name=
+    document.getElementById(
+      "chartName"
+    );
+
+
+  const pair=
+    document.getElementById(
+      "chartPair"
+    );
+
+
+  if(symbol){
+
+    symbol.textContent=
+      config.icon;
+
+  }
+
+
+  if(name){
+
+    name.textContent=
+      config.name;
+
+  }
+
+
+  if(pair){
+
+    pair.textContent=
+      config.pair;
+
+  }
+
+
+  document
+    .querySelectorAll(".period-btn")
+    .forEach(button=>{
+
+      button.classList.toggle(
+        "active",
+        button.dataset.period===
+        chartPeriod
+      );
+
+    });
+
+}
+
+
+/* =========================================================
+   CHART STATS
+========================================================= */
+
+function updateChartStats(){
+
+  if(!chartPoints.length){
+    return;
+  }
+
+
+  const prices=
+    chartPoints.map(
+      point=>point.price
+    );
+
+
+  const high=
+    Math.max(
+      ...prices
+    );
+
+
+  const low=
+    Math.min(
+      ...prices
+    );
+
+
+  const last=
+    prices[prices.length-1];
+
+
+  const first=
+    prices[0];
+
+
+  const movement=
+    first
+      ? ((last-first)/first)*100
+      : 0;
+
+
+  const highElement=
+    document.getElementById(
+      "chartHigh"
+    );
+
+
+  const lowElement=
+    document.getElementById(
+      "chartLow"
+    );
+
+
+  const priceElement=
+    document.getElementById(
+      "chartCurrentPrice"
+    );
+
+
+  const changeElement=
+    document.getElementById(
+      "chartCurrentChange"
+    );
+
+
+  if(highElement){
+
+    highElement.textContent=
+      formatChartPrice(high);
+
+  }
+
+
+  if(lowElement){
+
+    lowElement.textContent=
+      formatChartPrice(low);
+
+  }
+
+
+  if(priceElement){
+
+    priceElement.textContent=
+      formatChartPrice(last);
+
+  }
+
+
+  if(changeElement){
+
+    changeElement.textContent=
+      (
+        movement>=0
+          ? "+"
+          : ""
+      )+
+      movement.toFixed(2)+
+      "%";
+
+
+    changeElement.className=
+      "chart-current-change "+
+      changeClass(movement);
+
+  }
+
+}
+
+
+/* =========================================================
+   MAIN PROFESSIONAL CHART
+========================================================= */
+
+function drawMainChart(){
+
+  const canvas=
+    document.getElementById(
+      "mainChart"
+    );
+
+
+  if(!canvas){
+    return;
+  }
+
+
+  const container=
+    canvas.parentElement;
+
+
+  const width=
+    container.clientWidth;
+
+
+  const height=
+    container.clientHeight;
+
+
+  if(width<=0 || height<=0){
+    return;
+  }
+
+
+  const dpr=
+    window.devicePixelRatio ||
+    1;
+
+
+  canvas.width=
+    width*dpr;
+
+  canvas.height=
+    height*dpr;
+
+
+  canvas.style.width=
+    width+"px";
+
+  canvas.style.height=
+    height+"px";
+
+
+  const ctx=
+    canvas.getContext("2d");
+
+
+  ctx.setTransform(
+    dpr,
+    0,
+    0,
+    dpr,
+    0,
+    0
+  );
+
+
+  ctx.clearRect(
+    0,
+    0,
+    width,
+    height
+  );
+
+
+  if(chartPoints.length<2){
+    return;
+  }
+
+
+  const padding={
+    left:62,
+    right:72,
+    top:18,
+    bottom:30
+  };
+
+
+  const chartWidth=
+    width-
+    padding.left-
+    padding.right;
+
+
+  const chartHeight=
+    height-
+    padding.top-
+    padding.bottom;
+
+
+  const prices=
+    chartPoints.map(
+      point=>point.price
+    );
+
+
+  let min=
+    Math.min(...prices);
+
+  let max=
+    Math.max(...prices);
+
+
+  const range=
+    max-min || max*.01;
+
+
+  min-=
+    range*.08;
+
+  max+=
+    range*.08;
+
+
+  const xFor=
+    index=>
+      padding.left+
+      (
+        index/
+        (chartPoints.length-1)
+      )*
+      chartWidth;
+
+
+  const yFor=
+    price=>
+      padding.top+
+      (
+        1-
+        (
+          (price-min)/
+          (max-min)
+        )
+      )*
+      chartHeight;
+
+
+  /* =====================================================
+     GRID
+  ====================================================== */
+
+  ctx.strokeStyle=
+    "rgba(255,255,255,.055)";
+
+  ctx.lineWidth=1;
+
+
+  const gridRows=5;
+
+
+  for(
+    let i=0;
+    i<=gridRows;
+    i++
+  ){
+
+    const y=
+      padding.top+
+      (
+        i/gridRows
+      )*
+      chartHeight;
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      padding.left,
+      y
+    );
+
+    ctx.lineTo(
+      width-padding.right,
+      y
+    );
+
+    ctx.stroke();
+
+  }
+
+
+  const gridColumns=6;
+
+
+  for(
+    let i=0;
+    i<=gridColumns;
+    i++
+  ){
+
+    const x=
+      padding.left+
+      (
+        i/gridColumns
+      )*
+      chartWidth;
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      x,
+      padding.top
+    );
+
+    ctx.lineTo(
+      x,
+      height-padding.bottom
+    );
+
+    ctx.stroke();
+
+  }
+
+
+  /* =====================================================
+     PRICE LABELS
+  ====================================================== */
+
+  ctx.fillStyle=
+    "#68655f";
+
+  ctx.font=
+    "10px Inter, sans-serif";
+
+  ctx.textAlign=
+    "right";
+
+
+  for(
+    let i=0;
+    i<=gridRows;
+    i++
+  ){
+
+    const value=
+      max-
+      (
+        i/gridRows
+      )*
+      (max-min);
+
+
+    const y=
+      padding.top+
+      (
+        i/gridRows
+      )*
+      chartHeight;
+
+
+    ctx.fillText(
+      formatChartPrice(value),
+      width-10,
+      y+3
+    );
+
+  }
+
+
+  /* =====================================================
+     AREA
+  ====================================================== */
+
+  const firstPoint=
+    chartPoints[0];
+
+
+  const lastIndex=
+    chartPoints.length-1;
+
+
+  ctx.beginPath();
+
+
+  chartPoints.forEach(
+    (point,index)=>{
+
+      const x=
+        xFor(index);
+
+      const y=
+        yFor(point.price);
+
+
+      if(index===0){
+
+        ctx.moveTo(
+          x,
+          y
+        );
+
+      }else{
+
+        const previous=
+          chartPoints[index-1];
+
+
+        const previousX=
+          xFor(index-1);
+
+        const previousY=
+          yFor(
+            previous.price
+          );
+
+
+        const controlX=
+          (
+            previousX+
+            x
+          )/2;
+
+
+        ctx.bezierCurveTo(
+          controlX,
+          previousY,
+          controlX,
+          y,
+          x,
+          y
+        );
+
+      }
+
+    }
+  );
+
+
+  const areaBottom=
+    height-padding.bottom;
+
+
+  ctx.lineTo(
+    xFor(lastIndex),
+    areaBottom
+  );
+
+  ctx.lineTo(
+    xFor(0),
+    areaBottom
+  );
+
+  ctx.closePath();
+
+
+  const gradient=
+    ctx.createLinearGradient(
+      0,
+      padding.top,
+      0,
+      areaBottom
+    );
+
+
+  gradient.addColorStop(
+    0,
+    "rgba(212,175,55,.18)"
+  );
+
+  gradient.addColorStop(
+    .55,
+    "rgba(212,175,55,.055)"
+  );
+
+  gradient.addColorStop(
+    1,
+    "rgba(212,175,55,0)"
+  );
+
+
+  ctx.fillStyle=
+    gradient;
+
+  ctx.fill();
+
+
+  /* =====================================================
+     LINE
+  ====================================================== */
+
+  ctx.beginPath();
+
+
+  chartPoints.forEach(
+    (point,index)=>{
+
+      const x=
+        xFor(index);
+
+      const y=
+        yFor(point.price);
+
+
+      if(index===0){
+
+        ctx.moveTo(
+          x,
+          y
+        );
+
+      }else{
+
+        const previous=
+          chartPoints[index-1];
+
+
+        const previousX=
+          xFor(index-1);
+
+        const previousY=
+          yFor(
+            previous.price
+          );
+
+
+        const controlX=
+          (
+            previousX+
+            x
+          )/2;
+
+
+        ctx.bezierCurveTo(
+          controlX,
+          previousY,
+          controlX,
+          y,
+          x,
+          y
+        );
+
+      }
+
+    }
+  );
+
+
+  ctx.strokeStyle=
+    "#d4af37";
+
+  ctx.lineWidth=2;
+
+  ctx.lineCap=
+    "round";
+
+  ctx.lineJoin=
+    "round";
+
+  ctx.shadowColor=
+    "rgba(212,175,55,.35)";
+
+  ctx.shadowBlur=8;
+
+  ctx.stroke();
+
+  ctx.shadowBlur=0;
+
+
+  /* =====================================================
+     CURRENT PRICE
+  ====================================================== */
+
+  const current=
+    chartPoints[lastIndex];
+
+
+  const currentX=
+    xFor(lastIndex);
+
+  const currentY=
+    yFor(current.price);
+
+
+  ctx.setLineDash([
+    5,
+    5
+  ]);
+
+  ctx.strokeStyle=
+    "rgba(212,175,55,.28)";
+
+  ctx.lineWidth=1;
+
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    padding.left,
+    currentY
+  );
+
+  ctx.lineTo(
+    width-padding.right,
+    currentY
+  );
+
+  ctx.stroke();
+
+
+  ctx.setLineDash([]);
+
+
+  /* =====================================================
+     CURRENT DOT
+  ====================================================== */
+
+  ctx.beginPath();
+
+  ctx.arc(
+    currentX,
+    currentY,
+    4,
+    0,
+    Math.PI*2
+  );
+
+
+  ctx.fillStyle=
+    "#f2d47a";
+
+  ctx.fill();
+
+
+  ctx.beginPath();
+
+  ctx.arc(
+    currentX,
+    currentY,
+    8,
+    0,
+    Math.PI*2
+  );
+
+
+  ctx.strokeStyle=
+    "rgba(242,212,122,.25)";
+
+  ctx.lineWidth=1;
+
+  ctx.stroke();
+
+
+  /* =====================================================
+     TIME LABELS
+  ====================================================== */
+
+  ctx.fillStyle=
+    "#5f5c56";
+
+  ctx.font=
+    "9px Inter, sans-serif";
+
+  ctx.textAlign=
+    "center";
+
+
+  const labelCount=5;
+
+
+  for(
+    let i=0;
+    i<=labelCount;
+    i++
+  ){
+
+    const index=
+      Math.round(
+        (
+          i/labelCount
+        )*
+        lastIndex
+      );
+
+
+    const point=
+      chartPoints[index];
+
+
+    if(!point){
+      continue;
+    }
+
+
+    const date=
+      new Date(point.time);
+
+
+    let label;
+
+
+    if(chartPeriod==="1M"){
+
+      label=
+        date.toLocaleDateString(
+          [],
+          {
+            month:"short",
+            day:"numeric"
+          }
+        );
+
+    }else{
+
+      label=
+        date.toLocaleTimeString(
+          [],
+          {
+            hour:"2-digit",
+            minute:"2-digit"
+          }
+        );
+
+    }
+
+
+    ctx.fillText(
+      label,
+      xFor(index),
+      height-9
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   MINI CHARTS
+========================================================= */
+
+function drawMiniChart(
+  symbol,
+  canvas
+){
+
+  if(!canvas){
+    return;
+  }
+
+
+  const item=
+    marketState[symbol];
+
+
+  if(!item){
+    return;
+  }
+
+
+  /*
+    The small cards use the same historical data
+    as the main BTC/ETH chart.
+  */
+
+  if(
+    chartPoints.length<2 ||
+    chartSymbol!==symbol
+  ){
+    return;
+  }
+
+
+  const width=
+    canvas.clientWidth;
+
+  const height=
+    canvas.clientHeight;
+
+
+  if(width<=0 || height<=0){
+    return;
+  }
+
+
+  const dpr=
+    window.devicePixelRatio ||
+    1;
+
+
+  canvas.width=
+    width*dpr;
+
+  canvas.height=
+    height*dpr;
+
+
+  const ctx=
+    canvas.getContext("2d");
+
+
+  ctx.setTransform(
+    dpr,
+    0,
+    0,
+    dpr,
+    0,
+    0
+  );
+
+
+  ctx.clearRect(
+    0,
+    0,
+    width,
+    height
+  );
+
+
+  const prices=
+    chartPoints.map(
+      point=>point.price
+    );
+
+
+  let min=
+    Math.min(...prices);
+
+  let max=
+    Math.max(...prices);
+
+
+  const range=
+    max-min || max*.01;
+
+
+  min-=
+    range*.1;
+
+  max+=
+    range*.1;
+
+
+  const xFor=
+    index=>
+      (
+        index/
+        (chartPoints.length-1)
+      )*
+      width;
+
+
+  const yFor=
+    price=>
+      (
+        1-
+        (
+          (price-min)/
+          (max-min)
+        )
+      )*
+      height;
+
+
+  ctx.beginPath();
+
+
+  chartPoints.forEach(
+    (point,index)=>{
+
+      const x=
+        xFor(index);
+
+      const y=
+        yFor(point.price);
+
+
+      if(index===0){
+
+        ctx.moveTo(
+          x,
+          y
+        );
+
+      }else{
+
+        const previous=
+          chartPoints[index-1];
+
+
+        const previousX=
+          xFor(index-1);
+
+        const previousY=
+          yFor(
+            previous.price
+          );
+
+
+        const controlX=
+          (
+            previousX+
+            x
+          )/2;
+
+
+        ctx.bezierCurveTo(
+          controlX,
+          previousY,
+          controlX,
+          y,
+          x,
+          y
+        );
+
+      }
+
+    }
+  );
+
+
+  ctx.strokeStyle=
+    symbol==="BTC"
+      ? "#d4af37"
+      : "#f2d47a";
+
+  ctx.lineWidth=1.7;
+
+  ctx.lineCap=
+    "round";
+
+  ctx.lineJoin=
+    "round";
+
+  ctx.shadowColor=
+    "rgba(212,175,55,.35)";
+
+  ctx.shadowBlur=5;
+
+  ctx.stroke();
+
+  ctx.shadowBlur=0;
+
+
+  /* Area */
+
+  ctx.lineTo(
+    width,
+    height
+  );
+
+  ctx.lineTo(
+    0,
+    height
+  );
+
+  ctx.closePath();
+
+
+  const gradient=
+    ctx.createLinearGradient(
+      0,
+      0,
+      0,
+      height
+    );
+
+
+  gradient.addColorStop(
+    0,
+    "rgba(212,175,55,.10)"
+  );
+
+  gradient.addColorStop(
+    1,
+    "rgba(212,175,55,0)"
+  );
+
+
+  ctx.fillStyle=
+    gradient;
+
+  ctx.fill();
+
+}
+
+
+/* =========================================================
+   CLEAR MAIN CHART
+========================================================= */
+
+function clearMainChart(){
+
+  const canvas=
+    document.getElementById(
+      "mainChart"
+    );
+
+
+  if(!canvas){
+    return;
+  }
+
+
+  const ctx=
+    canvas.getContext("2d");
+
+
+  ctx.clearRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+}
+
+
+/* =========================================================
+   PERIOD BUTTONS
+========================================================= */
+
+document
+  .querySelectorAll(".period-btn")
+  .forEach(button=>{
+
+    button.addEventListener(
+      "click",
+      async ()=>{
+
+        const period=
+          button.dataset.period;
+
+
+        document
+          .querySelectorAll(".period-btn")
+          .forEach(btn=>{
+            btn.classList.remove(
+              "active"
+            );
+          });
+
+
+        button.classList.add(
+          "active"
+        );
+
+
+        await loadChart(
+          chartSymbol,
+          period
+        );
+
+      }
+    );
+
+  });
+
+
+/* =========================================================
+   RESIZE CHART
+========================================================= */
+
+let resizeTimer;
+
+
+window.addEventListener(
+  "resize",
+  ()=>{
+
+    clearTimeout(
+      resizeTimer
+    );
+
+
+    resizeTimer=
+      setTimeout(
+        ()=>{
+
+          drawMainChart();
+
+          if(chartSymbol==="BTC"){
+
+            drawMiniChart(
+              "BTC",
+              document.getElementById(
+                "mini-BTC"
+              )
+            );
+
+          }
+
+          if(chartSymbol==="ETH"){
+
+            drawMiniChart(
+              "ETH",
+              document.getElementById(
+                "mini-ETH"
+              )
+            );
+
+          }
+
+        },
+        150
+      );
+
+  }
+);
+
+
+/* =========================================================
+   INITIAL MARKET LOAD
+========================================================= */
 
 loadMarkets();
+
 
 setInterval(
   loadMarkets,
@@ -2283,56 +4957,95 @@ setInterval(
 ========================================================= */
 
 const authModal=
-  document.getElementById("authModal");
+  document.getElementById(
+    "authModal"
+  );
+
 
 const authForm=
-  document.getElementById("authForm");
+  document.getElementById(
+    "authForm"
+  );
+
 
 const authTitle=
-  document.getElementById("authTitle");
+  document.getElementById(
+    "authTitle"
+  );
+
 
 const authSubtitle=
-  document.getElementById("authSubtitle");
+  document.getElementById(
+    "authSubtitle"
+  );
+
 
 const authSubmit=
-  document.getElementById("authSubmit");
+  document.getElementById(
+    "authSubmit"
+  );
+
 
 const fullNameGroup=
-  document.getElementById("fullNameGroup");
+  document.getElementById(
+    "fullNameGroup"
+  );
+
 
 const loginTab=
-  document.getElementById("loginTab");
+  document.getElementById(
+    "loginTab"
+  );
+
 
 const signupTab=
-  document.getElementById("signupTab");
+  document.getElementById(
+    "signupTab"
+  );
+
 
 const authMessage=
-  document.getElementById("authMessage");
+  document.getElementById(
+    "authMessage"
+  );
+
 
 let authMode="login";
 
 
-function openAuth(mode="login"){
+function openAuth(
+  mode="login"
+){
 
-  authModal.classList.add("active");
+  authModal.classList.add(
+    "active"
+  );
 
   switchAuth(mode);
+
 }
 
 
 function closeAuth(){
 
-  authModal.classList.remove("active");
+  authModal.classList.remove(
+    "active"
+  );
 
   clearAuthMessage();
+
 }
 
 
-function switchAuth(mode){
+function switchAuth(
+  mode
+){
 
-  authMode=mode;
+  authMode=
+    mode;
 
   clearAuthMessage();
+
 
   if(mode==="signup"){
 
@@ -2348,8 +5061,13 @@ function switchAuth(mode){
     fullNameGroup.style.display=
       "block";
 
-    loginTab.classList.remove("active");
-    signupTab.classList.add("active");
+    loginTab.classList.remove(
+      "active"
+    );
+
+    signupTab.classList.add(
+      "active"
+    );
 
   }else{
 
@@ -2365,18 +5083,31 @@ function switchAuth(mode){
     fullNameGroup.style.display=
       "none";
 
-    loginTab.classList.add("active");
-    signupTab.classList.remove("active");
+    loginTab.classList.add(
+      "active"
+    );
+
+    signupTab.classList.remove(
+      "active"
+    );
+
   }
+
 }
 
 
-function showAuthMessage(message,type){
+function showAuthMessage(
+  message,
+  type
+){
 
-  authMessage.textContent=message;
+  authMessage.textContent=
+    message;
 
   authMessage.className=
-    "auth-message show "+type;
+    "auth-message show "+
+    type;
+
 }
 
 
@@ -2386,6 +5117,7 @@ function clearAuthMessage(){
 
   authMessage.className=
     "auth-message";
+
 }
 
 
@@ -2397,17 +5129,26 @@ authForm.addEventListener(
 
     clearAuthMessage();
 
+
     const email=
-      document.getElementById("email")
-      .value.trim();
+      document
+        .getElementById("email")
+        .value
+        .trim();
+
 
     const password=
-      document.getElementById("password")
-      .value;
+      document
+        .getElementById("password")
+        .value;
+
 
     const fullName=
-      document.getElementById("fullName")
-      .value.trim();
+      document
+        .getElementById("fullName")
+        .value
+        .trim();
+
 
     if(!email || !password){
 
@@ -2417,14 +5158,19 @@ authForm.addEventListener(
       );
 
       return;
+
     }
 
-    authSubmit.disabled=true;
+
+    authSubmit.disabled=
+      true;
+
 
     authSubmit.textContent=
       authMode==="signup"
         ? "Creating account..."
         : "Signing in...";
+
 
     try{
 
@@ -2438,44 +5184,61 @@ authForm.addEventListener(
           );
 
           return;
+
         }
+
 
         const {
           data,
           error
         }=
-          await supabaseClient.auth.signUp({
-            email,
-            password,
-            options:{
-              data:{
-                full_name:fullName
+          await supabaseClient
+            .auth
+            .signUp({
+              email,
+              password,
+              options:{
+                data:{
+                  full_name:
+                    fullName
+                }
               }
-            }
-          });
+            });
+
 
         if(error){
           throw error;
         }
 
-        if(data?.user && data?.session){
 
-          const {error:profileError}=
+        if(
+          data?.user &&
+          data?.session
+        ){
+
+          const {
+            error:profileError
+          }=
             await supabaseClient
-            .from("profiles")
-            .upsert({
-              id:data.user.id,
-              full_name:fullName,
-              email:email
-            });
+              .from("profiles")
+              .upsert({
+                id:data.user.id,
+                full_name:fullName,
+                email:email
+              });
+
 
           if(profileError){
+
             console.error(
               "Profile creation error:",
               profileError
             );
+
           }
+
         }
+
 
         if(data?.session){
 
@@ -2483,6 +5246,7 @@ authForm.addEventListener(
             "Account created successfully.",
             "success"
           );
+
 
           setTimeout(
             closeAuth,
@@ -2495,7 +5259,9 @@ authForm.addEventListener(
             "Account created. Please check your email to confirm your account.",
             "success"
           );
+
         }
+
 
       }else{
 
@@ -2503,28 +5269,40 @@ authForm.addEventListener(
           data,
           error
         }=
-          await supabaseClient.auth
-          .signInWithPassword({
-            email,
-            password
-          });
+          await supabaseClient
+            .auth
+            .signInWithPassword({
+              email,
+              password
+            });
+
 
         if(error){
           throw error;
         }
 
+
         if(!data?.user){
+
           throw new Error(
             "Login could not be completed."
           );
+
         }
 
-        const {data:existingProfile}=
+
+        const {
+          data:existingProfile
+        }=
           await supabaseClient
-          .from("profiles")
-          .select("id")
-          .eq("id",data.user.id)
-          .maybeSingle();
+            .from("profiles")
+            .select("id")
+            .eq(
+              "id",
+              data.user.id
+            )
+            .maybeSingle();
+
 
         if(!existingProfile){
 
@@ -2533,24 +5311,31 @@ authForm.addEventListener(
             .insert({
               id:data.user.id,
               full_name:
-                data.user.user_metadata?.full_name ||
+                data.user
+                  .user_metadata
+                  ?.full_name ||
                 "",
               email:
                 data.user.email ||
                 email
             });
+
         }
+
 
         showAuthMessage(
           "Login successful.",
           "success"
         );
 
+
         setTimeout(
           closeAuth,
           800
         );
+
       }
+
 
     }catch(error){
 
@@ -2559,20 +5344,25 @@ authForm.addEventListener(
         error
       );
 
+
       showAuthMessage(
         error.message ||
         "Something went wrong. Please try again.",
         "error"
       );
 
+
     }finally{
 
-      authSubmit.disabled=false;
+      authSubmit.disabled=
+        false;
+
 
       authSubmit.textContent=
         authMode==="signup"
           ? "Create Account"
           : "Log in";
+
     }
 
   }
@@ -2586,18 +5376,30 @@ authForm.addEventListener(
 authModal.addEventListener(
   "click",
   event=>{
-    if(event.target===authModal){
+
+    if(
+      event.target===
+      authModal
+    ){
+
       closeAuth();
+
     }
+
   }
 );
+
 
 document.addEventListener(
   "keydown",
   event=>{
+
     if(event.key==="Escape"){
+
       closeAuth();
+
     }
+
   }
 );
 
@@ -2606,25 +5408,28 @@ document.addEventListener(
    SUPABASE SESSION
 ========================================================= */
 
-supabaseClient.auth.onAuthStateChange(
-  (event,session)=>{
-
-    console.log(
-      "AUREUM auth event:",
-      event
-    );
-
-    if(session?.user){
+supabaseClient
+  .auth
+  .onAuthStateChange(
+    (event,session)=>{
 
       console.log(
-        "Authenticated user:",
-        session.user.email
+        "AUREUM auth event:",
+        event
       );
 
-    }
 
-  }
-);
+      if(session?.user){
+
+        console.log(
+          "Authenticated user:",
+          session.user.email
+        );
+
+      }
+
+    }
+  );
 
 
 /* =========================================================
@@ -2634,14 +5439,16 @@ supabaseClient.auth.onAuthStateChange(
 window.addEventListener(
   "load",
   ()=>{
+
     setTimeout(
       hideLoader,
       300
     );
+
   }
 );
 
 </script>
 
 </body>
-                           </html>
+      </html>
