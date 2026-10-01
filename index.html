@@ -1917,6 +1917,7 @@ setTimeout(hideLoader,2500);
 ========================================================= */
 
 const menuBtn =
+const menuBtn =
   document.getElementById("menuBtn");
 
 const navLinks =
@@ -1929,6 +1930,8 @@ menuBtn.addEventListener("click",()=>{
 document.querySelectorAll(".nav-links a").forEach(link=>{
   link.addEventListener("click",()=>{
     navLinks.classList.remove("open");
+  });
+});
   /* =========================================================
    MARKET DATA
 ========================================================= */
@@ -1954,7 +1957,6 @@ const COIN_NAMES={
   USDT:"Tether USD",
   USDC:"USD Coin"
 };
-
 const marketState={};
 let goldState=null;
 
