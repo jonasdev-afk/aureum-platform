@@ -1979,8 +1979,9 @@
     const SUPABASE_PUBLISHABLE_KEY =
       "sb_publishable_rHz9N-CdhKuiuKQPFL6MFg_Wo65Uo1z";
 
+    /* CORRECT AUREUM MARKET API */
     const MARKET_API_URL =
-      "https://aureum-u22d.onrender.com/api/markets";
+      "https://aureum-platform.onrender.com/api/markets";
 
     let supabaseClient = null;
 
@@ -2032,11 +2033,6 @@
       loader.classList.add("hidden");
 
     }
-
-    /*
-      Safety timeout:
-      The website MUST NOT remain stuck on Loading forever.
-    */
 
     setTimeout(hideLoader, 2500);
 
@@ -2303,11 +2299,6 @@
           return;
 
         }
-
-        /*
-          If email confirmation is enabled in Supabase,
-          session will normally be null here.
-        */
 
         if (!data.session) {
 
@@ -2715,6 +2706,8 @@
 
     async function loadMarkets() {
 
+      let timeout;
+
       try {
 
         updateMarketStatus(
@@ -2724,7 +2717,7 @@
         const controller =
           new AbortController();
 
-        const timeout =
+        timeout =
           setTimeout(
             () => controller.abort(),
             10000
@@ -2815,6 +2808,12 @@
             </tr>
           `;
 
+        }
+
+      } finally {
+
+        if (timeout) {
+          clearTimeout(timeout);
         }
 
       }
@@ -2934,26 +2933,11 @@
 
       } finally {
 
-        /*
-          CRITICAL:
-          Regardless of whether Supabase fails,
-          the website is allowed to load.
-        */
-
         hideLoader();
 
       }
 
-      /*
-        Market data is deliberately loaded separately.
-        A market API failure cannot freeze the website.
-      */
-
       loadMarkets();
-
-      /*
-        Refresh live market data every 60 seconds.
-      */
 
       setInterval(
         loadMarkets,
@@ -2989,12 +2973,6 @@
       }
     );
 
-    /*
-      Final safety mechanism.
-      Even if some unexpected JavaScript error occurs,
-      the loading screen will never remain forever.
-    */
-
     window.addEventListener(
       "load",
       () => {
@@ -3010,4 +2988,4 @@
   </script>
 
 </body>
-  </html>
+              </html>
