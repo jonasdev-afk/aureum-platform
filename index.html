@@ -1,13 +1,22 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>AUREUM — The New Standard of Wealth.</title><meta
-name="description"
-content="AUREUM — The New Standard of Wealth. Gold, digital assets and modern wealth technology."
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-«»
+<title>AUREUM — The New Standard of Wealth.</title>
 
-<meta name="theme-color" content="#050505"><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
+<meta
+  name="description"
+  content="AUREUM — The New Standard of Wealth. Gold, digital assets and modern wealth technology."
+>
+
+<meta name="theme-color" content="#050505">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+
 *{
   box-sizing:border-box;
   margin:0;
@@ -572,6 +581,78 @@ tbody tr:last-child td{
 }
 
 /* =========================
+   INDUSTRY & MARKET RESOURCES
+========================= */
+
+.resource-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+}
+
+.resource-card{
+  min-height:95px;
+  padding:20px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:16px;
+  background:rgba(255,255,255,.016);
+  transition:
+    transform .3s ease,
+    border-color .3s ease,
+    background .3s ease,
+    box-shadow .3s ease;
+}
+
+.resource-card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(212,175,55,.35);
+  background:
+    radial-gradient(
+      circle at 100% 0,
+      rgba(212,175,55,.08),
+      transparent 55%
+    ),
+    rgba(255,255,255,.018);
+  box-shadow:0 15px 45px rgba(0,0,0,.25);
+}
+
+.resource-logo{
+  width:42px;
+  height:42px;
+  flex-shrink:0;
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  background:#111;
+  border:1px solid rgba(212,175,55,.16);
+}
+
+.resource-logo img{
+  width:28px;
+  height:28px;
+  object-fit:contain;
+}
+
+.resource-name{
+  color:var(--white);
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:.2px;
+}
+
+.resource-type{
+  margin-top:3px;
+  color:var(--muted2);
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+/* =========================
    PLANS
 ========================= */
 
@@ -990,6 +1071,7 @@ footer{
 ========================= */
 
 @media(max-width:1050px){
+
   .hero{
     grid-template-columns:1fr;
   }
@@ -1001,9 +1083,15 @@ footer{
   .ecosystem{
     grid-template-columns:repeat(2,1fr);
   }
+
+  .resource-grid{
+    grid-template-columns:repeat(3,1fr);
+  }
+
 }
 
 @media(max-width:760px){
+
   nav{
     padding:0 5%;
   }
@@ -1076,6 +1164,10 @@ footer{
     grid-template-columns:1fr;
   }
 
+  .resource-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
   .editorial-copy{
     font-size:15px;
   }
@@ -1097,657 +1189,1676 @@ footer{
   .footer-bottom{
     flex-direction:column;
   }
+
 }
-</style></head><body><div id="loader">
+
+@media(max-width:430px){
+
+  .resource-grid{
+    grid-template-columns:1fr;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="loader">
   <div class="loader-inner">
     <div class="loader-logo">AUREUM</div>
     <div class="loader-line"><span></span></div>
   </div>
-</div><div class="background-grid"></div>
-<div class="gold-light"></div><!-- NAV --><nav>
-  <a href="#home" class="logo">AUREUM</a>  <div class="nav-links" id="navLinks">
+</div>
+
+<div class="background-grid"></div>
+<div class="gold-light"></div>
+
+<!-- NAV -->
+
+<nav>
+
+  <a href="#home" class="logo">AUREUM</a>
+
+  <div class="nav-links" id="navLinks">
+
     <a href="#markets">Markets</a>
+
+    <a href="#resources">Resources</a>
+
     <a href="#plans">Investment</a>
+
     <a href="#ecosystem">Ecosystem</a>
+
     <a href="#about">About</a>
+
     <a href="#contact">Contact</a>
-  </div>  <div class="nav-actions">
-    <button class="btn" onclick="openAuth('login')">Log in</button>
-    <button class="btn btn-gold" onclick="openAuth('signup')">
+
+  </div>
+
+  <div class="nav-actions">
+
+    <button
+      class="btn"
+      onclick="openAuth('login')"
+    >
+      Log in
+    </button>
+
+    <button
+      class="btn btn-gold"
+      onclick="openAuth('signup')"
+    >
       Get Started
     </button>
-  </div><button class="menu-btn" id="menuBtn">☰</button>
 
-</nav><main id="home"><!-- HERO --><section class="hero">  <div><div class="eyebrow">
-  Digital Wealth Ecosystem
-</div>
+  </div>
 
-<h1>
-  The New<br>
-  Standard of<br>
-  <span>Wealth.</span>
-</h1>
-
-<p>
-  AUREUM brings gold, digital assets and modern wealth-building
-  technology together through one premium financial ecosystem.
-</p>
-
-<div class="hero-buttons">
-  <button class="btn btn-gold" onclick="openAuth('signup')">
-    Get Started
+  <button
+    class="menu-btn"
+    id="menuBtn"
+  >
+    ☰
   </button>
 
-  <a href="#markets" class="btn">
-    Explore Markets →
-  </a>
-</div>
+</nav>
 
-  </div>  <!-- MARKET SNAPSHOT -->  <div class="snapshot"><div class="snapshot-head">
-  <div class="snapshot-title">
-    Market Snapshot
-  </div>
 
-  <a href="#markets" class="view-all">
-    View All →
-  </a>
-</div>
+<main id="home">
 
-<div class="snapshot-assets">
+<!-- =====================================================
+     HERO
+===================================================== -->
 
-  <!-- BTC -->
+<section class="hero">
 
-  <div class="asset-card">
+  <div>
 
-    <div class="asset-top">
-      <div class="asset-icon">₿</div>
-
-      <div>
-        <div class="asset-name">Bitcoin</div>
-        <div class="asset-symbol">BTC</div>
-      </div>
+    <div class="eyebrow">
+      Digital Wealth Ecosystem
     </div>
 
-    <div class="asset-price" id="snapshot-BTC">
-      Loading...
-    </div>
+    <h1>
+      The New<br>
+      Standard of<br>
+      <span>Wealth.</span>
+    </h1>
 
-    <div class="asset-change" id="snapshot-BTC-change">
-      —
-    </div>
+    <p>
+      AUREUM brings gold, digital assets and modern wealth-building
+      technology together through one premium financial ecosystem.
+    </p>
 
-    <div class="chart">
-      <svg viewBox="0 0 180 50" preserveAspectRatio="none">
-        <polyline
-          class="chart-line"
-          points="0,42 15,36 30,39 45,27 60,31 75,21 90,25 105,15 120,20 135,12 150,18 165,8 180,13"
-        />
-      </svg>
-    </div>
+    <div class="hero-buttons">
 
-  </div>
+      <button
+        class="btn btn-gold"
+        onclick="openAuth('signup')"
+      >
+        Get Started
+      </button>
 
+      <a
+        href="#markets"
+        class="btn"
+      >
+        Explore Markets →
+      </a>
 
-  <!-- ETH -->
-
-  <div class="asset-card">
-
-    <div class="asset-top">
-      <div class="asset-icon">Ξ</div>
-
-      <div>
-        <div class="asset-name">Ethereum</div>
-        <div class="asset-symbol">ETH</div>
-      </div>
-    </div>
-
-    <div class="asset-price" id="snapshot-ETH">
-      Loading...
-    </div>
-
-    <div class="asset-change" id="snapshot-ETH-change">
-      —
-    </div>
-
-    <div class="chart">
-      <svg viewBox="0 0 180 50" preserveAspectRatio="none">
-        <polyline
-          class="chart-line"
-          points="0,40 15,35 30,38 45,25 60,29 75,24 90,27 105,16 120,22 135,15 150,18 165,10 180,15"
-        />
-      </svg>
     </div>
 
   </div>
 
 
-  <!-- GOLD -->
+  <!-- MARKET SNAPSHOT -->
 
-  <div class="asset-card">
+  <div class="snapshot">
 
-    <div class="asset-top">
-      <div class="asset-icon">Au</div>
+    <div class="snapshot-head">
 
-      <div>
-        <div class="asset-name">Gold</div>
-        <div class="asset-symbol">XAU / USD</div>
+      <div class="snapshot-title">
+        Market Snapshot
       </div>
+
+      <a
+        href="#markets"
+        class="view-all"
+      >
+        View All →
+      </a>
+
     </div>
 
-    <div class="asset-price" id="snapshot-GOLD">
-      —
+
+    <div class="snapshot-assets">
+
+      <!-- BTC -->
+
+      <div class="asset-card">
+
+        <div class="asset-top">
+
+          <div class="asset-icon">
+            ₿
+          </div>
+
+          <div>
+
+            <div class="asset-name">
+              Bitcoin
+            </div>
+
+            <div class="asset-symbol">
+              BTC
+            </div>
+
+          </div>
+
+        </div>
+
+        <div
+          class="asset-price"
+          id="snapshot-BTC"
+        >
+          Loading...
+        </div>
+
+        <div
+          class="asset-change"
+          id="snapshot-BTC-change"
+        >
+          —
+        </div>
+
+        <div class="chart">
+
+          <svg
+            viewBox="0 0 180 50"
+            preserveAspectRatio="none"
+          >
+
+            <polyline
+              class="chart-line"
+              points="0,42 15,36 30,39 45,27 60,31 75,21 90,25 105,15 120,20 135,12 150,18 165,8 180,13"
+            />
+
+          </svg>
+
+        </div>
+
+      </div>
+
+
+      <!-- ETH -->
+
+      <div class="asset-card">
+
+        <div class="asset-top">
+
+          <div class="asset-icon">
+            Ξ
+          </div>
+
+          <div>
+
+            <div class="asset-name">
+              Ethereum
+            </div>
+
+            <div class="asset-symbol">
+              ETH
+            </div>
+
+          </div>
+
+        </div>
+
+        <div
+          class="asset-price"
+          id="snapshot-ETH"
+        >
+          Loading...
+        </div>
+
+        <div
+          class="asset-change"
+          id="snapshot-ETH-change"
+        >
+          —
+        </div>
+
+        <div class="chart">
+
+          <svg
+            viewBox="0 0 180 50"
+            preserveAspectRatio="none"
+          >
+
+            <polyline
+              class="chart-line"
+              points="0,40 15,35 30,38 45,25 60,29 75,24 90,27 105,16 120,22 135,15 150,18 165,10 180,15"
+            />
+
+          </svg>
+
+        </div>
+
+      </div>
+
+
+      <!-- GOLD -->
+
+      <div class="asset-card">
+
+        <div class="asset-top">
+
+          <div class="asset-icon">
+            Au
+          </div>
+
+          <div>
+
+            <div class="asset-name">
+              Gold
+            </div>
+
+            <div class="asset-symbol">
+              XAU / USD
+            </div>
+
+          </div>
+
+        </div>
+
+        <div
+          class="asset-price"
+          id="snapshot-GOLD"
+        >
+          —
+        </div>
+
+        <div
+          class="asset-change"
+          id="snapshot-GOLD-change"
+        >
+          Live feed pending
+        </div>
+
+        <div class="chart gold-chart">
+
+          <svg
+            viewBox="0 0 180 50"
+            preserveAspectRatio="none"
+          >
+
+            <polyline
+              class="chart-line"
+              points="0,38 15,35 30,37 45,28 60,31 75,21 90,26 105,18 120,20 135,13 150,17 165,9 180,12"
+            />
+
+          </svg>
+
+        </div>
+
+      </div>
+
     </div>
+
 
     <div
-      class="asset-change"
-      id="snapshot-GOLD-change"
+      class="snapshot-footer"
+      id="marketUpdated"
     >
-      Live feed pending
-    </div>
-
-    <div class="chart gold-chart">
-      <svg viewBox="0 0 180 50" preserveAspectRatio="none">
-        <polyline
-          class="chart-line"
-          points="0,38 15,35 30,37 45,28 60,31 75,21 90,26 105,18 120,20 135,13 150,17 165,9 180,12"
-        />
-      </svg>
+      Connecting to live market data...
     </div>
 
   </div>
 
+</section>
+
+
+<!-- TICKER -->
+
+<div class="ticker-wrap">
+
+  <div
+    class="ticker"
+    id="ticker"
+  ></div>
+
 </div>
 
-<div class="snapshot-footer" id="marketUpdated">
-  Connecting to live market data...
-</div>
 
-  </div></section><!-- TICKER --><div class="ticker-wrap">
-  <div class="ticker" id="ticker"></div>
-</div><!-- MARKETS --><section id="markets">  <div class="section-header"><div class="eyebrow">
-  AUREUM MARKETS
-</div>
+<!-- =====================================================
+     MARKETS
+===================================================== -->
 
-<h2>
-  Markets in real time.
-</h2>
+<section id="markets">
 
-<p>
-  Monitor selected digital assets with live pricing and
-  24-hour market movement.
-</p>
+  <div class="section-header">
 
-  </div>  <div class="market-table-wrap"><table>
+    <div class="eyebrow">
+      AUREUM MARKETS
+    </div>
 
-  <thead>
-    <tr>
-      <th>Asset</th>
-      <th>Price</th>
-      <th>24H Change</th>
-      <th>Status</th>
-    </tr>
-  </thead>
+    <h2>
+      Markets in real time.
+    </h2>
 
-  <tbody id="marketTableBody">
-    <tr>
-      <td colspan="4">
-        Loading live market data...
-      </td>
-    </tr>
-  </tbody>
+    <p>
+      Monitor selected digital assets with live pricing and
+      24-hour market movement.
+    </p>
 
-</table>
-
-  </div></section><!-- INVESTMENT --><section id="plans">  <div class="section-header"><div class="eyebrow">
-  AUREUM INVEST
-</div>
-
-<h2>
-  Structured opportunities.
-</h2>
-
-<p>
-  Explore the available AUREUM investment structures and
-  their configured terms.
-</p>
-
-  </div>  <div class="plans"><article class="plan">
-  <div class="plan-category">Gold</div>
-  <h3>AUREUM DAWN</h3>
-
-  <div class="plan-return">
-    7% <small>after 48 hours</small>
   </div>
 
-  <div class="plan-info">
-    <div><span>Minimum</span><strong>0.025 Troy oz</strong></div>
-    <div><span>Maximum</span><strong>0.25 Troy oz</strong></div>
+
+  <div class="market-table-wrap">
+
+    <table>
+
+      <thead>
+
+        <tr>
+          <th>Asset</th>
+          <th>Price</th>
+          <th>24H Change</th>
+          <th>Status</th>
+        </tr>
+
+      </thead>
+
+      <tbody id="marketTableBody">
+
+        <tr>
+
+          <td colspan="4">
+            Loading live market data...
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
   </div>
 
-  <p class="plan-description">
-    Designed for users taking their first step into AUREUM.
-  </p>
-
-  <button class="btn btn-gold" onclick="openAuth('signup')">
-    Start
-  </button>
-</article>
+</section>
 
 
-<article class="plan featured">
-  <div class="plan-category">Gold</div>
-  <h3>AUREUM CREST</h3>
+<!-- =====================================================
+     INDUSTRY & MARKET RESOURCES
+===================================================== -->
 
-  <div class="plan-return">
-    9% <small>after 72 hours</small>
+<section id="resources">
+
+  <div class="section-header">
+
+    <div class="eyebrow">
+      INDUSTRY & MARKET RESOURCES
+    </div>
+
+    <h2>
+      Connected to the digital asset industry.
+    </h2>
+
+    <p>
+      Explore leading digital-asset platforms, market-data
+      providers and industry publications.
+    </p>
+
   </div>
 
-  <div class="plan-info">
-    <div><span>Minimum</span><strong>0.25 Troy oz</strong></div>
-    <div><span>Maximum</span><strong>1 Troy oz</strong></div>
+
+  <div class="resource-grid">
+
+
+    <!-- BITCOIN.COM -->
+
+    <a
+      class="resource-card"
+      href="https://www.bitcoin.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+
+      <div class="resource-logo">
+
+        <img
+          src="https://www.google.com/s2/favicons?domain=bitcoin.com&sz=128"
+          alt="Bitcoin.com"
+        >
+
+      </div>
+
+      <div>
+
+        <div class="resource-name">
+          Bitcoin.com
+        </div>
+
+        <div class="resource-type">
+          Digital Assets
+        </div>
+
+      </div>
+
+    </a>
+
+
+    <!-- BITGET -->
+
+    <a
+      class="resource-card"
+      href="https://www.bitget.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+
+      <div class="resource-logo">
+
+        <img
+          src="https://www.google.com/s2/favicons?domain=bitget.com&sz=128"
+          alt="Bitget"
+        >
+
+      </div>
+
+      <div>
+
+        <div class="resource-name">
+          Bitget
+        </div>
+
+        <div class="resource-type">
+          Exchange
+        </div>
+
+      </div>
+
+    </a>
+
+
+    <!-- MEXC -->
+
+    <a
+      class="resource-card"
+      href="https://www.mexc.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+
+      <div class="resource-logo">
+
+        <img
+          src="https://www.google.com/s2/favicons?domain=mexc.com&sz=128"
+          alt="MEXC"
+        >
+
+      </div>
+
+      <div>
+
+        <div class="resource-name">
+          MEXC
+        </div>
+
+        <div class="resource-type">
+          Exchange
+        </div>
+
+      </div>
+
+    </a>
+
+
+    <!-- BINANCE -->
+
+    <a
+      class="resource-card"
+      href="https://www.binance.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+
+      <div class="resource-logo">
+
+        <img
+          src="https://www.google.com/s2/favicons?domain=binance.com&sz=128"
+          alt="Binance"
+        >
+
+      </div>
+
+      <div>
+
+        <div class="resource-name">
+          Binance
+        </div>
+
+        <div class="resource-type">
+          Exchange
+        </div>
+
+      </div>
+
+    </a>
+
+
+    <!-- COINBASE -->
+
+    <a
+      class="resource-card"
+      href="https://www.coinbase.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+
+      <div class="resource-logo">
+
+        <img
+          src="https://www.google.com/s2/favicons?domain=coinbase.com&sz=128"
+          alt="Coinbase"
+        >
+
+      </div>
+
+      <div>
+
+        <div class="resource-name">
+          Coinbase
+        </div>
+
+        <div class="resource-type">
+          Digital Assets
+        </div>
+
+      </div>
+
+    </a>
+
+
+    <!-- OKX -->
+
+    <a
+      class="resource-card"
+      href="https://www.okx.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+
+      <div class="resource-logo">
+
+        <img
+          src="https://www.google.com/s2/favicons?domain=okx.com&sz=128"
+          alt="OKX"
+        >
+
+      </div>
+
+      <div>
+
+        <div class="resource-name">
+          OKX
+        </div>
+
+        <div class="resource-type">
+          Exchange
+        </div>
+
+      </div>
+
+    </a>
+
+
+    <!-- COINMARKETCAP -->
+
+    <a
+      class="resource-card"
+      href="https://coinmarketcap.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+
+      <div class="resource-logo">
+
+        <img
+          src="https://www.google.com/s2/favicons?domain=coinmarketcap.com&sz=128"
+          alt="CoinMarketCap"
+        >
+
+      </div>
+
+      <div>
+
+        <div class="resource-name">
+          CoinMarketCap
+        </div>
+
+        <div class="resource-type">
+          Market Data
+        </div>
+
+      </div>
+
+    </a>
+
+
+    <!-- COINGECKO -->
+
+    <a
+      class="resource-card"
+      href="https://www.coingecko.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+
+      <div class="resource-logo">
+
+        <img
+          src="https://www.google.com/s2/favicons?domain=coingecko.com&sz=128"
+          alt="CoinGecko"
+        >
+
+      </div>
+
+      <div>
+
+        <div class="resource-name">
+          CoinGecko
+        </div>
+
+        <div class="resource-type">
+          Market Data
+        </div>
+
+      </div>
+
+    </a>
+
+
+    <!-- TRADINGVIEW -->
+
+    <a
+      class="resource-card"
+      href="https://www.tradingview.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+
+      <div class="resource-logo">
+
+        <img
+          src="https://www.google.com/s2/favicons?domain=tradingview.com&sz=128"
+          alt="TradingView"
+        >
+
+      </div>
+
+      <div>
+
+        <div class="resource-name">
+          TradingView
+        </div>
+
+        <div class="resource-type">
+          Market Intelligence
+        </div>
+
+      </div>
+
+    </a>
+
+
+    <!-- COINTELEGRAPH -->
+
+    <a
+      class="resource-card"
+      href="https://cointelegraph.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+
+      <div class="resource-logo">
+
+        <img
+          src="https://www.google.com/s2/favicons?domain=cointelegraph.com&sz=128"
+          alt="Cointelegraph"
+        >
+
+      </div>
+
+      <div>
+
+        <div class="resource-name">
+          Cointelegraph
+        </div>
+
+        <div class="resource-type">
+          News
+        </div>
+
+      </div>
+
+    </a>
+
+
+    <!-- CRYPTO.NEWS -->
+
+    <a
+      class="resource-card"
+      href="https://crypto.news/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+
+      <div class="resource-logo">
+
+        <img
+          src="https://www.google.com/s2/favicons?domain=crypto.news&sz=128"
+          alt="Crypto.news"
+        >
+
+      </div>
+
+      <div>
+
+        <div class="resource-name">
+          Crypto.news
+        </div>
+
+        <div class="resource-type">
+          News
+        </div>
+
+      </div>
+
+    </a>
+
+
+    <!-- THE BLOCK -->
+
+    <a
+      class="resource-card"
+      href="https://www.theblock.co/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+
+      <div class="resource-logo">
+
+        <img
+          src="https://www.google.com/s2/favicons?domain=theblock.co&sz=128"
+          alt="The Block"
+        >
+
+      </div>
+
+      <div>
+
+        <div class="resource-name">
+          The Block
+        </div>
+
+        <div class="resource-type">
+          Research & News
+        </div>
+
+      </div>
+
+    </a>
+
+
   </div>
 
-  <p class="plan-description">
-    A structured AUREUM Gold investment plan.
-  </p>
-
-  <button class="btn btn-gold" onclick="openAuth('signup')">
-    Start
-  </button>
-</article>
+</section>
 
 
-<article class="plan">
-  <div class="plan-category">Gold</div>
-  <h3>AUREUM CROWN</h3>
+<!-- =====================================================
+     INVESTMENT
+===================================================== -->
 
-  <div class="plan-return">
-    7% <small>after 72 hours</small>
+<section id="plans">
+
+  <div class="section-header">
+
+    <div class="eyebrow">
+      AUREUM INVEST
+    </div>
+
+    <h2>
+      Structured opportunities.
+    </h2>
+
+    <p>
+      Explore the available AUREUM investment structures and
+      their configured terms.
+    </p>
+
   </div>
 
-  <div class="plan-info">
-    <div><span>Minimum</span><strong>1 Troy oz</strong></div>
-    <div><span>Maximum</span><strong>5 Troy oz</strong></div>
+
+  <div class="plans">
+
+
+    <article class="plan">
+
+      <div class="plan-category">
+        Gold
+      </div>
+
+      <h3>
+        AUREUM DAWN
+      </h3>
+
+      <div class="plan-return">
+        7% <small>after 48 hours</small>
+      </div>
+
+      <div class="plan-info">
+
+        <div>
+          <span>Minimum</span>
+          <strong>0.025 Troy oz</strong>
+        </div>
+
+        <div>
+          <span>Maximum</span>
+          <strong>0.25 Troy oz</strong>
+        </div>
+
+      </div>
+
+      <p class="plan-description">
+        Designed for users taking their first step into AUREUM.
+      </p>
+
+      <button
+        class="btn btn-gold"
+        onclick="openAuth('signup')"
+      >
+        Start
+      </button>
+
+    </article>
+
+
+    <article class="plan featured">
+
+      <div class="plan-category">
+        Gold
+      </div>
+
+      <h3>
+        AUREUM CREST
+      </h3>
+
+      <div class="plan-return">
+        9% <small>after 72 hours</small>
+      </div>
+
+      <div class="plan-info">
+
+        <div>
+          <span>Minimum</span>
+          <strong>0.25 Troy oz</strong>
+        </div>
+
+        <div>
+          <span>Maximum</span>
+          <strong>1 Troy oz</strong>
+        </div>
+
+      </div>
+
+      <p class="plan-description">
+        A structured AUREUM Gold investment plan.
+      </p>
+
+      <button
+        class="btn btn-gold"
+        onclick="openAuth('signup')"
+      >
+        Start
+      </button>
+
+    </article>
+
+
+    <article class="plan">
+
+      <div class="plan-category">
+        Gold
+      </div>
+
+      <h3>
+        AUREUM CROWN
+      </h3>
+
+      <div class="plan-return">
+        7% <small>after 72 hours</small>
+      </div>
+
+      <div class="plan-info">
+
+        <div>
+          <span>Minimum</span>
+          <strong>1 Troy oz</strong>
+        </div>
+
+        <div>
+          <span>Maximum</span>
+          <strong>5 Troy oz</strong>
+        </div>
+
+      </div>
+
+      <p class="plan-description">
+        A structured AUREUM Gold investment plan.
+      </p>
+
+      <button
+        class="btn btn-gold"
+        onclick="openAuth('signup')"
+      >
+        Start
+      </button>
+
+    </article>
+
+
+    <article class="plan">
+
+      <div class="plan-category">
+        Gold
+      </div>
+
+      <h3>
+        AUREUM BLACK
+      </h3>
+
+      <div class="plan-return">
+        16.5% <small>weekly</small>
+      </div>
+
+      <div class="plan-info">
+
+        <div>
+          <span>Minimum</span>
+          <strong>5 Troy oz</strong>
+        </div>
+
+        <div>
+          <span>Maximum</span>
+          <strong>99 Troy oz</strong>
+        </div>
+
+      </div>
+
+      <p class="plan-description">
+        AUREUM premium Gold investment plan.
+      </p>
+
+      <button
+        class="btn btn-gold"
+        onclick="openAuth('signup')"
+      >
+        Start
+      </button>
+
+    </article>
+
+
+    <article class="plan">
+
+      <div class="plan-category">
+        Crypto
+      </div>
+
+      <h3>
+        AUREUM PULSE
+      </h3>
+
+      <div class="plan-return">
+        4.5% <small>daily</small>
+      </div>
+
+      <div class="plan-info">
+
+        <div>
+          <span>Minimum</span>
+          <strong>$99</strong>
+        </div>
+
+        <div>
+          <span>Maximum</span>
+          <strong>$1,000</strong>
+        </div>
+
+      </div>
+
+      <p class="plan-description">
+        AUREUM Crypto investment plan.
+      </p>
+
+      <button
+        class="btn btn-gold"
+        onclick="openAuth('signup')"
+      >
+        Start
+      </button>
+
+    </article>
+
+
+    <article class="plan featured">
+
+      <div class="plan-category">
+        Crypto
+      </div>
+
+      <h3>
+        AUREUM PRIME
+      </h3>
+
+      <div class="plan-return">
+        7% <small>after 48 hours</small>
+      </div>
+
+      <div class="plan-info">
+
+        <div>
+          <span>Minimum</span>
+          <strong>$1,000</strong>
+        </div>
+
+        <div>
+          <span>Maximum</span>
+          <strong>$10,000</strong>
+        </div>
+
+      </div>
+
+      <p class="plan-description">
+        AUREUM Crypto investment plan.
+      </p>
+
+      <button
+        class="btn btn-gold"
+        onclick="openAuth('signup')"
+      >
+        Start
+      </button>
+
+    </article>
+
+
+    <article class="plan">
+
+      <div class="plan-category">
+        Crypto
+      </div>
+
+      <h3>
+        AUREUM APEX
+      </h3>
+
+      <div class="plan-return">
+        10% <small>weekly</small>
+      </div>
+
+      <div class="plan-info">
+
+        <div>
+          <span>Minimum</span>
+          <strong>$10,000</strong>
+        </div>
+
+        <div>
+          <span>Maximum</span>
+          <strong>Unlimited</strong>
+        </div>
+
+      </div>
+
+      <p class="plan-description">
+        AUREUM Crypto investment plan.
+      </p>
+
+      <button
+        class="btn btn-gold"
+        onclick="openAuth('signup')"
+      >
+        Start
+      </button>
+
+    </article>
+
+
   </div>
 
-  <p class="plan-description">
-    A structured AUREUM Gold investment plan.
-  </p>
 
-  <button class="btn btn-gold" onclick="openAuth('signup')">
-    Start
-  </button>
-</article>
-
-
-<article class="plan">
-  <div class="plan-category">Gold</div>
-  <h3>AUREUM BLACK</h3>
-
-  <div class="plan-return">
-    16.5% <small>weekly</small>
-  </div>
-
-  <div class="plan-info">
-    <div><span>Minimum</span><strong>5 Troy oz</strong></div>
-    <div><span>Maximum</span><strong>99 Troy oz</strong></div>
-  </div>
-
-  <p class="plan-description">
-    AUREUM premium Gold investment plan.
-  </p>
-
-  <button class="btn btn-gold" onclick="openAuth('signup')">
-    Start
-  </button>
-</article>
-
-
-<article class="plan">
-  <div class="plan-category">Crypto</div>
-  <h3>AUREUM PULSE</h3>
-
-  <div class="plan-return">
-    4.5% <small>daily</small>
-  </div>
-
-  <div class="plan-info">
-    <div><span>Minimum</span><strong>$99</strong></div>
-    <div><span>Maximum</span><strong>$1,000</strong></div>
-  </div>
-
-  <p class="plan-description">
-    AUREUM Crypto investment plan.
-  </p>
-
-  <button class="btn btn-gold" onclick="openAuth('signup')">
-    Start
-  </button>
-</article>
-
-
-<article class="plan featured">
-  <div class="plan-category">Crypto</div>
-  <h3>AUREUM PRIME</h3>
-
-  <div class="plan-return">
-    7% <small>after 48 hours</small>
-  </div>
-
-  <div class="plan-info">
-    <div><span>Minimum</span><strong>$1,000</strong></div>
-    <div><span>Maximum</span><strong>$10,000</strong></div>
-  </div>
-
-  <p class="plan-description">
-    AUREUM Crypto investment plan.
-  </p>
-
-  <button class="btn btn-gold" onclick="openAuth('signup')">
-    Start
-  </button>
-</article>
-
-
-<article class="plan">
-  <div class="plan-category">Crypto</div>
-  <h3>AUREUM APEX</h3>
-
-  <div class="plan-return">
-    10% <small>weekly</small>
-  </div>
-
-  <div class="plan-info">
-    <div><span>Minimum</span><strong>$10,000</strong></div>
-    <div><span>Maximum</span><strong>Unlimited</strong></div>
-  </div>
-
-  <p class="plan-description">
-    AUREUM Crypto investment plan.
-  </p>
-
-  <button class="btn btn-gold" onclick="openAuth('signup')">
-    Start
-  </button>
-</article>
-
-  </div>  <p style="color:#66635e;font-size:10px;margin-top:25px;line-height:1.7;">
+  <p
+    style="
+      color:#66635e;
+      font-size:10px;
+      margin-top:25px;
+      line-height:1.7;
+    "
+  >
     Displayed investment rates and terms are configured by AUREUM
     and are subject to applicable terms, eligibility requirements,
     disclosures and changes.
-  </p></section><!-- AUREUM ECOSYSTEM --><section id="ecosystem">  <div class="section-header"><div class="eyebrow">
-  AUREUM ECOSYSTEM
-</div>
-
-<h2>
-  One ecosystem. One wealth experience.
-</h2>
-
-<p>
-  AUREUM brings together connected tools designed to help
-  users store, manage, access and understand their digital wealth.
-</p>
-
-  </div>  <div class="ecosystem"><div class="eco-card">
-  <div class="eco-number">01</div>
-  <h3>AUREUM VAULT</h3>
-  <p>
-    Securely store and manage your digital wealth.
-  </p>
-</div>
-
-
-<div class="eco-card">
-  <div class="eco-number">02</div>
-  <h3>AUREUM AI</h3>
-  <p>
-    Intelligent automated trading, powered by advanced market analysis.
-  </p>
-</div>
-
-
-<div class="eco-card">
-  <div class="eco-number">03</div>
-  <h3>AUREUM INSURE</h3>
-  <p>
-    Protection designed for your assets and wealth.
-  </p>
-</div>
-
-
-<div class="eco-card">
-  <div class="eco-number">04</div>
-  <h3>AUREUM CARD</h3>
-  <p>
-    Access and spend your wealth wherever you go.
-  </p>
-</div>
-
-
-<div class="eco-card">
-  <div class="eco-number">05</div>
-  <h3>AUREUM EXCHANGE</h3>
-  <p>
-    Buy, sell, and convert supported digital assets seamlessly.
-  </p>
-</div>
-
-
-<div class="eco-card">
-  <div class="eco-number">06</div>
-  <h3>AUREUM MARKETS</h3>
-  <p>
-    Real-time market data, insights, and opportunities.
-  </p>
-</div>
-
-
-<div class="eco-card featured">
-  <div class="eco-number">AUREUM</div>
-  <h3>ONE WEALTH EXPERIENCE</h3>
-  <p>
-    One ecosystem. One wealth experience.
-  </p>
-</div>
-
-  </div></section><!-- ABOUT --><section id="about">  <div class="editorial"><div class="eyebrow">
-  ABOUT AUREUM
-</div>
-
-<h2 class="editorial-title">
-  Built around digital wealth.
-</h2>
-
-<div class="editorial-copy">
-
-  <p>
-    AUREUM is a modern financial technology ecosystem designed
-    to bring gold, digital assets, and wealth-building tools
-    together through one seamless platform.
   </p>
 
-  <p>
-    We believe wealth should be accessible, transparent, and
-    built for the future. Aureum connects traditional stores
-    of value with modern digital finance, giving users a simpler
-    way to access, manage, and monitor their wealth.
-  </p>
-
-  <p>
-    From gold-backed digital ownership to cryptocurrency markets
-    and structured investment products, Aureum is designed around
-    one principle: making sophisticated financial opportunities
-    easier to understand and access.
-  </p>
-
-</div>
+</section>
 
 
-<!-- VISION -->
+<!-- =====================================================
+     AUREUM ECOSYSTEM
+===================================================== -->
 
-<div class="statement">
+<section id="ecosystem">
 
-  <div class="eyebrow">
-    OUR VISION
+  <div class="section-header">
+
+    <div class="eyebrow">
+      AUREUM ECOSYSTEM
+    </div>
+
+    <h2>
+      One ecosystem. One wealth experience.
+    </h2>
+
+    <p>
+      AUREUM brings together connected tools designed to help
+      users store, manage, access and understand their digital wealth.
+    </p>
+
   </div>
 
-  <h3>
-    To build a new standard for digital wealth.
-  </h3>
 
-  <p>
-    Aureum brings together the stability and heritage of gold
-    with the accessibility and innovation of blockchain
-    technology—creating an ecosystem designed for a new
-    generation of investors.
-  </p>
-
-</div>
+  <div class="ecosystem">
 
 
-<!-- MISSION -->
+    <div class="eco-card">
 
-<div class="statement">
+      <div class="eco-number">
+        01
+      </div>
 
-  <div class="eyebrow">
-    MISSION
+      <h3>
+        AUREUM VAULT
+      </h3>
+
+      <p>
+        Securely store and manage your digital wealth.
+      </p>
+
+    </div>
+
+
+    <div class="eco-card">
+
+      <div class="eco-number">
+        02
+      </div>
+
+      <h3>
+        AUREUM AI
+      </h3>
+
+      <p>
+        Intelligent automated trading, powered by advanced market analysis.
+      </p>
+
+    </div>
+
+
+    <div class="eco-card">
+
+      <div class="eco-number">
+        03
+      </div>
+
+      <h3>
+        AUREUM INSURE
+      </h3>
+
+      <p>
+        Protection designed for your assets and wealth.
+      </p>
+
+    </div>
+
+
+    <div class="eco-card">
+
+      <div class="eco-number">
+        04
+      </div>
+
+      <h3>
+        AUREUM CARD
+      </h3>
+
+      <p>
+        Access and spend your wealth wherever you go.
+      </p>
+
+    </div>
+
+
+    <div class="eco-card">
+
+      <div class="eco-number">
+        05
+      </div>
+
+      <h3>
+        AUREUM EXCHANGE
+      </h3>
+
+      <p>
+        Buy, sell, and convert supported digital assets seamlessly.
+      </p>
+
+    </div>
+
+
+    <div class="eco-card">
+
+      <div class="eco-number">
+        06
+      </div>
+
+      <h3>
+        AUREUM MARKETS
+      </h3>
+
+      <p>
+        Real-time market data, insights, and opportunities.
+      </p>
+
+    </div>
+
+
+    <div class="eco-card featured">
+
+      <div class="eco-number">
+        AUREUM
+      </div>
+
+      <h3>
+        ONE WEALTH EXPERIENCE
+      </h3>
+
+      <p>
+        One ecosystem. One wealth experience.
+      </p>
+
+    </div>
+
+
   </div>
 
-  <h3>
-    Make wealth more accessible.<br>
-    Make ownership more transparent.<br>
-    Build for tomorrow.
-  </h3>
+</section>
 
-</div>
 
-  </div></section><!-- CTA --><div class="cta" id="contact">  <div class="eyebrow">
+<!-- =====================================================
+     ABOUT
+===================================================== -->
+
+<section id="about">
+
+  <div class="editorial">
+
+    <div class="eyebrow">
+      ABOUT AUREUM
+    </div>
+
+    <h2 class="editorial-title">
+      Built around digital wealth.
+    </h2>
+
+    <div class="editorial-copy">
+
+      <p>
+        AUREUM is a modern financial technology ecosystem designed
+        to bring gold, digital assets, and wealth-building tools
+        together through one seamless platform.
+      </p>
+
+      <p>
+        We believe wealth should be accessible, transparent, and
+        built for the future. Aureum connects traditional stores
+        of value with modern digital finance, giving users a simpler
+        way to access, manage, and monitor their wealth.
+      </p>
+
+      <p>
+        From gold-backed digital ownership to cryptocurrency markets
+        and structured investment products, Aureum is designed around
+        one principle: making sophisticated financial opportunities
+        easier to understand and access.
+      </p>
+
+    </div>
+
+
+    <!-- VISION -->
+
+    <div class="statement">
+
+      <div class="eyebrow">
+        OUR VISION
+      </div>
+
+      <h3>
+        To build a new standard for digital wealth.
+      </h3>
+
+      <p>
+        Aureum brings together the stability and heritage of gold
+        with the accessibility and innovation of blockchain
+        technology—creating an ecosystem designed for a new
+        generation of investors.
+      </p>
+
+    </div>
+
+
+    <!-- MISSION -->
+
+    <div class="statement">
+
+      <div class="eyebrow">
+        MISSION
+      </div>
+
+      <h3>
+        Make wealth more accessible.<br>
+        Make ownership more transparent.<br>
+        Build for tomorrow.
+      </h3>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     CTA
+===================================================== -->
+
+<div
+  class="cta"
+  id="contact"
+>
+
+  <div class="eyebrow">
     AUREUM
-  </div>  <h2>
+  </div>
+
+  <h2>
     Enter the ecosystem.
-  </h2>  <p>
+  </h2>
+
+  <p>
     Create your AUREUM account and access the platform as
     the ecosystem continues to expand.
-  </p>  <button class="btn btn-gold" onclick="openAuth('signup')">
-    Create Account
-  </button></div></main><!-- FOOTER --><footer>  <div class="footer-main"><div class="footer-brand">
-
-  <div class="logo">AUREUM</div>
-
-  <p>
-    The New Standard of Wealth.
   </p>
 
-</div>
-
-<div class="footer-links">
-
-  <div>
-    <strong>Platform</strong>
-    <a href="#markets">Markets</a>
-    <a href="#plans">Investment</a>
-    <a href="#ecosystem">Ecosystem</a>
-  </div>
-
-  <div>
-    <strong>Company</strong>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
-  </div>
-
-  <div>
-    <strong>Account</strong>
-    <a href="#" onclick="openAuth('login');return false;">Log in</a>
-    <a href="#" onclick="openAuth('signup');return false;">Create Account</a>
-  </div>
-
-</div>
-
-  </div>  <div class="footer-bottom">
-    <span>© 2026 AUREUM. All rights reserved.</span>
-    <span>The New Standard of Wealth.</span>
-  </div></footer><!-- AUTH MODAL --><div class="modal" id="authModal">  <div class="modal-card"><button class="close-modal" onclick="closeAuth()">×</button>
-
-<h2 id="authTitle">
-  Welcome back
-</h2>
-
-<p id="authSubtitle">
-  Sign in to access your AUREUM account.
-</p>
-
-<div class="auth-tabs">
-
   <button
-    class="auth-tab active"
-    id="loginTab"
-    onclick="switchAuth('login')"
+    class="btn btn-gold"
+    onclick="openAuth('signup')"
   >
-    Log in
-  </button>
-
-  <button
-    class="auth-tab"
-    id="signupTab"
-    onclick="switchAuth('signup')"
-  >
-    Create account
+    Create Account
   </button>
 
 </div>
 
-<form id="authForm">
+</main>
 
-  <div
-    class="form-group"
-    id="fullNameGroup"
-    style="display:none;"
-  >
-    <label>Full name</label>
-    <input
-      id="fullName"
-      type="text"
-      autocomplete="name"
-      placeholder="Your full name"
-    >
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+  <div class="footer-main">
+
+    <div class="footer-brand">
+
+      <div class="logo">
+        AUREUM
+      </div>
+
+      <p>
+        The New Standard of Wealth.
+      </p>
+
+    </div>
+
+
+    <div class="footer-links">
+
+      <div>
+
+        <strong>
+          Platform
+        </strong>
+
+        <a href="#markets">
+          Markets
+        </a>
+
+        <a href="#resources">
+          Resources
+        </a>
+
+        <a href="#plans">
+          Investment
+        </a>
+
+        <a href="#ecosystem">
+          Ecosystem
+        </a>
+
+      </div>
+
+
+      <div>
+
+        <strong>
+          Company
+        </strong>
+
+        <a href="#about">
+          About
+        </a>
+
+        <a href="#contact">
+          Contact
+        </a>
+
+      </div>
+
+
+      <div>
+
+        <strong>
+          Account
+        </strong>
+
+        <a
+          href="#"
+          onclick="openAuth('login');return false;"
+        >
+          Log in
+        </a>
+
+        <a
+          href="#"
+          onclick="openAuth('signup');return false;"
+        >
+          Create Account
+        </a>
+
+      </div>
+
+    </div>
+
   </div>
 
-  <div class="form-group">
-    <label>Email address</label>
-    <input
-      id="email"
-      type="email"
-      autocomplete="email"
-      placeholder="you@example.com"
-      required
-    >
+
+  <div class="footer-bottom">
+
+    <span>
+      © 2026 AUREUM. All rights reserved.
+    </span>
+
+    <span>
+      The New Standard of Wealth.
+    </span>
+
   </div>
 
-  <div class="form-group">
-    <label>Password</label>
-    <input
-      id="password"
-      type="password"
-      autocomplete="current-password"
-      placeholder="Minimum 6 characters"
-      minlength="6"
-      required
+</footer>
+
+
+<!-- =====================================================
+     AUTH MODAL
+===================================================== -->
+
+<div
+  class="modal"
+  id="authModal"
+>
+
+  <div class="modal-card">
+
+    <button
+      class="close-modal"
+      onclick="closeAuth()"
     >
+      ×
+    </button>
+
+    <h2 id="authTitle">
+      Welcome back
+    </h2>
+
+    <p id="authSubtitle">
+      Sign in to access your AUREUM account.
+    </p>
+
+
+    <div class="auth-tabs">
+
+      <button
+        class="auth-tab active"
+        id="loginTab"
+        onclick="switchAuth('login')"
+      >
+        Log in
+      </button>
+
+      <button
+        class="auth-tab"
+        id="signupTab"
+        onclick="switchAuth('signup')"
+      >
+        Create account
+      </button>
+
+    </div>
+
+
+    <form id="authForm">
+
+      <div
+        class="form-group"
+        id="fullNameGroup"
+        style="display:none;"
+      >
+
+        <label>
+          Full name
+        </label>
+
+        <input
+          id="fullName"
+          type="text"
+          autocomplete="name"
+          placeholder="Your full name"
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Email address
+        </label>
+
+        <input
+          id="email"
+          type="email"
+          autocomplete="email"
+          placeholder="you@example.com"
+          required
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Password
+        </label>
+
+        <input
+          id="password"
+          type="password"
+          autocomplete="current-password"
+          placeholder="Minimum 6 characters"
+          minlength="6"
+          required
+        >
+
+      </div>
+
+
+      <div
+        class="auth-message"
+        id="authMessage"
+      ></div>
+
+
+      <button
+        type="submit"
+        class="btn btn-gold auth-submit"
+        id="authSubmit"
+      >
+        Log in
+      </button>
+
+    </form>
+
   </div>
 
-  <div class="auth-message" id="authMessage"></div>
+</div>
 
-  <button
-    type="submit"
-    class="btn btn-gold auth-submit"
-    id="authSubmit"
-  >
-    Log in
-  </button>
 
-</form>
-
-  </div></div><script>
+<script>
 
 /* =========================================================
    AUREUM CONFIGURATION
@@ -1777,12 +2888,17 @@ const loader =
   document.getElementById("loader");
 
 function hideLoader(){
+
   if(loader){
     loader.classList.add("hidden");
   }
+
 }
 
-setTimeout(hideLoader,2500);
+setTimeout(
+  hideLoader,
+  2500
+);
 
 
 /* =========================================================
@@ -1795,15 +2911,25 @@ const menuBtn =
 const navLinks =
   document.getElementById("navLinks");
 
-menuBtn.addEventListener("click",()=>{
-  navLinks.classList.toggle("open");
-});
+menuBtn.addEventListener(
+  "click",
+  ()=>{
+    navLinks.classList.toggle("open");
+  }
+);
 
-document.querySelectorAll(".nav-links a").forEach(link=>{
-  link.addEventListener("click",()=>{
-    navLinks.classList.remove("open");
+document
+  .querySelectorAll(".nav-links a")
+  .forEach(link=>{
+
+    link.addEventListener(
+      "click",
+      ()=>{
+        navLinks.classList.remove("open");
+      }
+    );
+
   });
-});
 
 
 /* =========================================================
@@ -1822,121 +2948,197 @@ const SYMBOLS=[
 ];
 
 const COIN_NAMES={
+
   BTC:"Bitcoin",
+
   ETH:"Ethereum",
+
   BNB:"BNB",
+
   XRP:"XRP",
+
   SOL:"Solana",
+
   TRX:"TRON",
+
   USDT:"Tether USD",
+
   USDC:"USD Coin"
+
 };
 
 const marketState={};
+
 let goldState=null;
 
 
+/* =========================================================
+   PRICE FORMATTERS
+========================================================= */
+
 function formatPrice(price){
 
-  const value=Number(price);
+  const value=
+    Number(price);
 
-  if(!Number.isFinite(value)){
+  if(
+    !Number.isFinite(value)
+  ){
     return "—";
   }
 
   if(value>=1000){
-    return "$"+value.toLocaleString("en-US",{
-      minimumFractionDigits:2,
-      maximumFractionDigits:2
-    });
+
+    return "$"+
+      value.toLocaleString(
+        "en-US",
+        {
+          minimumFractionDigits:2,
+          maximumFractionDigits:2
+        }
+      );
+
   }
 
   if(value>=1){
-    return "$"+value.toLocaleString("en-US",{
-      minimumFractionDigits:2,
-      maximumFractionDigits:4
-    });
+
+    return "$"+
+      value.toLocaleString(
+        "en-US",
+        {
+          minimumFractionDigits:2,
+          maximumFractionDigits:4
+        }
+      );
+
   }
 
-  return "$"+value.toLocaleString("en-US",{
-    minimumFractionDigits:4,
-    maximumFractionDigits:6
-  });
+  return "$"+
+    value.toLocaleString(
+      "en-US",
+      {
+        minimumFractionDigits:4,
+        maximumFractionDigits:6
+      }
+    );
+
 }
 
 
 function formatGoldPrice(price){
 
-  const value=Number(price);
+  const value=
+    Number(price);
 
-  if(!Number.isFinite(value)){
+  if(
+    !Number.isFinite(value)
+  ){
     return "—";
   }
 
-  return "$"+value.toLocaleString("en-US",{
-    minimumFractionDigits:2,
-    maximumFractionDigits:2
-  });
+  return "$"+
+    value.toLocaleString(
+      "en-US",
+      {
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+      }
+    );
+
 }
 
 
 function formatChange(change){
 
-  const value=Number(change);
+  const value=
+    Number(change);
 
-  if(!Number.isFinite(value)){
+  if(
+    !Number.isFinite(value)
+  ){
     return "—";
   }
 
-  return (value>0?"+":"")+value.toFixed(2)+"%";
+  return (
+    value>0
+      ? "+"
+      : ""
+  )+
+    value.toFixed(2)+
+    "%";
+
 }
 
 
 function changeClass(change){
 
-  const value=Number(change);
+  const value=
+    Number(change);
 
-  if(value>0) return "positive";
-  if(value<0) return "negative";
+  if(value>0){
+    return "positive";
+  }
+
+  if(value<0){
+    return "negative";
+  }
 
   return "";
+
 }
 
 
 function formatUpdatedTime(timestamp){
 
-  if(!timestamp) return "";
+  if(!timestamp){
+    return "";
+  }
 
   let date;
 
   if(
     typeof timestamp==="number" ||
-    /^\d+$/.test(String(timestamp))
+    /^\d+$/.test(
+      String(timestamp)
+    )
   ){
 
-    const numericTimestamp=Number(timestamp);
+    const numericTimestamp=
+      Number(timestamp);
 
-    date=new Date(
-      numericTimestamp < 10000000000
-        ? numericTimestamp*1000
-        : numericTimestamp
-    );
+    date=
+      new Date(
+        numericTimestamp<10000000000
+          ? numericTimestamp*1000
+          : numericTimestamp
+      );
 
   }else{
 
-    date=new Date(timestamp);
+    date=
+      new Date(timestamp);
 
   }
 
-  if(Number.isNaN(date.getTime())){
+  if(
+    Number.isNaN(
+      date.getTime()
+    )
+  ){
+
     return "";
+
   }
 
-  return date.toLocaleTimeString([],{
-    hour:"2-digit",
-    minute:"2-digit",
-    second:"2-digit"
-  });
+  return date.toLocaleTimeString(
+    [],
+    {
+      hour:"2-digit",
+      minute:"2-digit",
+      second:"2-digit"
+    }
+  );
+
 }
 
 
@@ -1946,35 +3148,51 @@ function formatUpdatedTime(timestamp){
 
 async function loadMarkets(){
 
-  const controller=new AbortController();
+  const controller=
+    new AbortController();
 
-  const timeout=setTimeout(()=>{
-    controller.abort();
-  },10000);
+  const timeout=
+    setTimeout(
+      ()=>{
+        controller.abort();
+      },
+      10000
+    );
 
   try{
 
-    const response=await fetch(
-      MARKET_API_URL,
-      {
-        method:"GET",
-        headers:{
-          "Accept":"application/json"
-        },
-        signal:controller.signal,
-        cache:"no-store"
-      }
-    );
+    const response=
+      await fetch(
+        MARKET_API_URL,
+        {
+          method:"GET",
+
+          headers:{
+            "Accept":
+              "application/json"
+          },
+
+          signal:
+            controller.signal,
+
+          cache:
+            "no-store"
+        }
+      );
+
 
     if(!response.ok){
 
       throw new Error(
-        "Market API returned HTTP "+response.status
+        "Market API returned HTTP "+
+        response.status
       );
 
     }
 
-    const apiData=await response.json();
+
+    const apiData=
+      await response.json();
 
 
     if(
@@ -1993,84 +3211,86 @@ async function loadMarkets(){
     /* =====================================================
        CRYPTO DATA
 
-       The API returns:
+       BTC / ETH and the other assets are read from:
 
        data.BTC.quote.USD.price
        data.ETH.quote.USD.price
-
-       and the same structure for the other assets.
     ===================================================== */
 
     let latestTimestamp=null;
 
-    SYMBOLS.forEach(symbol=>{
 
-      const asset=
-        apiData?.data?.[symbol];
+    SYMBOLS.forEach(
+      symbol=>{
 
-      const quote=
-        asset?.quote?.USD;
+        const asset=
+          apiData?.data?.[symbol];
+
+        const quote=
+          asset?.quote?.USD;
 
 
-      /*
-        Validate the price before saving it.
-        This prevents "undefined", null or invalid
-        values from reaching the BTC/ETH cards.
-      */
+        if(
+          !quote ||
+          !Number.isFinite(
+            Number(quote.price)
+          )
+        ){
 
-      if(
-        !quote ||
-        !Number.isFinite(
-          Number(quote.price)
-        )
-      ){
+          console.warn(
+            "No valid market data for:",
+            symbol,
+            asset
+          );
 
-        console.warn(
-          "No valid market data for:",
-          symbol,
-          asset
-        );
+          return;
 
-        return;
+        }
+
+
+        const price=
+          Number(quote.price);
+
+        const change=
+          Number(
+            quote.percent_change_24h
+          );
+
+
+        marketState[symbol]={
+
+          price:
+
+            price,
+
+          change:
+
+            Number.isFinite(change)
+              ? change
+              : 0,
+
+          updatedAt:
+
+            quote.last_updated ||
+            apiData?.status?.timestamp ||
+            null
+
+        };
+
+
+        if(
+          marketState[symbol]
+            .updatedAt
+        ){
+
+          latestTimestamp=
+            marketState[symbol]
+              .updatedAt;
+
+        }
+
       }
-
-
-      const price=
-        Number(quote.price);
-
-      const change=
-        Number(
-          quote.percent_change_24h
-        );
-
-
-      marketState[symbol]={
-
-        price:price,
-
-        change:
-          Number.isFinite(change)
-            ? change
-            : 0,
-
-        updatedAt:
-          quote.last_updated ||
-          apiData?.status?.timestamp ||
-          null
-
-      };
-
-
-      if(
-        marketState[symbol].updatedAt
-      ){
-
-        latestTimestamp=
-          marketState[symbol].updatedAt;
-
-      }
-
-    });
+    );
 
 
     /* =====================================================
@@ -2079,6 +3299,7 @@ async function loadMarkets(){
 
     const gold=
       apiData?.gold;
+
 
     if(
       gold &&
@@ -2089,25 +3310,34 @@ async function loadMarkets(){
 
       goldState={
 
-        price:Number(gold.price),
+        price:
+          Number(gold.price),
 
-        change:Number(gold.change),
+        change:
+          Number(gold.change),
 
-        changePercent:Number(
-          gold.changePercent
-        ),
+        changePercent:
+          Number(
+            gold.changePercent
+          ),
 
-        bid:Number(gold.bid),
+        bid:
+          Number(gold.bid),
 
-        ask:Number(gold.ask),
+        ask:
+          Number(gold.ask),
 
-        high:Number(gold.high),
+        high:
+          Number(gold.high),
 
-        low:Number(gold.low),
+        low:
+          Number(gold.low),
 
-        open:Number(gold.open),
+        open:
+          Number(gold.open),
 
-        timestamp:gold.timestamp
+        timestamp:
+          gold.timestamp
 
       };
 
@@ -2150,7 +3380,10 @@ async function loadMarkets(){
 
         updatedElement.textContent=
           "Live data • Updated "+
-          (goldTime || cryptoTime);
+          (
+            goldTime ||
+            cryptoTime
+          );
 
       }else{
 
@@ -2168,6 +3401,7 @@ async function loadMarkets(){
       error
     );
 
+
     const updatedElement=
       document.getElementById(
         "marketUpdated"
@@ -2177,9 +3411,14 @@ async function loadMarkets(){
     if(updatedElement){
 
       updatedElement.textContent=
-        Object.keys(marketState).length ||
+
+        Object.keys(
+          marketState
+        ).length ||
         goldState
+
           ? "Live data temporarily unavailable • Showing last update"
+
           : "Live market data could not be loaded.";
 
     }
@@ -2206,66 +3445,64 @@ function renderMarkets(){
      BTC + ETH SNAPSHOT
   ===================================================== */
 
-  ["BTC","ETH"].forEach(symbol=>{
+  ["BTC","ETH"].forEach(
+    symbol=>{
 
-    const item=
-      marketState[symbol];
-
-
-    /*
-      If valid data exists, update the actual
-      snapshot element immediately.
-    */
-
-    if(
-      !item ||
-      !Number.isFinite(
-        Number(item.price)
-      )
-    ){
-
-      return;
-
-    }
+      const item=
+        marketState[symbol];
 
 
-    const priceElement=
-      document.getElementById(
-        "snapshot-"+symbol
-      );
-
-    const changeElement=
-      document.getElementById(
-        "snapshot-"+symbol+"-change"
-      );
-
-
-    if(priceElement){
-
-      priceElement.textContent=
-        formatPrice(
+      if(
+        !item ||
+        !Number.isFinite(
           Number(item.price)
+        )
+      ){
+
+        return;
+
+      }
+
+
+      const priceElement=
+        document.getElementById(
+          "snapshot-"+symbol
         );
+
+      const changeElement=
+        document.getElementById(
+          "snapshot-"+symbol+
+          "-change"
+        );
+
+
+      if(priceElement){
+
+        priceElement.textContent=
+          formatPrice(
+            Number(item.price)
+          );
+
+      }
+
+
+      if(changeElement){
+
+        changeElement.textContent=
+          formatChange(
+            Number(item.change)
+          );
+
+        changeElement.className=
+          "asset-change "+
+          changeClass(
+            Number(item.change)
+          );
+
+      }
 
     }
-
-
-    if(changeElement){
-
-      changeElement.textContent=
-        formatChange(
-          Number(item.change)
-        );
-
-      changeElement.className=
-        "asset-change "+
-        changeClass(
-          Number(item.change)
-        );
-
-    }
-
-  });
+  );
 
 
   /* =====================================================
@@ -2327,69 +3564,92 @@ function renderMarkets(){
       "marketTableBody"
     );
 
-  if(!tableBody) return;
+  if(!tableBody){
+    return;
+  }
 
 
   tableBody.innerHTML="";
 
 
-  SYMBOLS.forEach(symbol=>{
+  SYMBOLS.forEach(
+    symbol=>{
 
-    const item=
-      marketState[symbol];
+      const item=
+        marketState[symbol];
 
 
-    if(
-      !item ||
-      !Number.isFinite(
-        Number(item.price)
-      )
-    ){
+      if(
+        !item ||
+        !Number.isFinite(
+          Number(item.price)
+        )
+      ){
 
-      return;
+        return;
+
+      }
+
+
+      const row=
+        document.createElement(
+          "tr"
+        );
+
+
+      row.innerHTML=`
+
+        <td>
+
+          <strong>
+            ${symbol}
+          </strong>
+
+          <div
+            style="
+              color:#66635e;
+              font-size:10px;
+              margin-top:3px;
+            "
+          >
+            ${COIN_NAMES[symbol]}
+          </div>
+
+        </td>
+
+        <td>
+          ${formatPrice(item.price)}
+        </td>
+
+        <td
+          class="${changeClass(
+            item.change
+          )}"
+        >
+          ${formatChange(
+            item.change
+          )}
+        </td>
+
+        <td>
+
+          <span class="live-indicator">
+
+            <span class="live-dot"></span>
+
+            Live
+
+          </span>
+
+        </td>
+
+      `;
+
+
+      tableBody.appendChild(row);
 
     }
-
-
-    const row=
-      document.createElement("tr");
-
-
-    row.innerHTML=`
-      <td>
-        <strong>${symbol}</strong>
-
-        <div
-          style="
-            color:#66635e;
-            font-size:10px;
-            margin-top:3px;
-          "
-        >
-          ${COIN_NAMES[symbol]}
-        </div>
-      </td>
-
-      <td>
-        ${formatPrice(item.price)}
-      </td>
-
-      <td class="${changeClass(item.change)}">
-        ${formatChange(item.change)}
-      </td>
-
-      <td>
-        <span class="live-indicator">
-          <span class="live-dot"></span>
-          Live
-        </span>
-      </td>
-    `;
-
-
-    tableBody.appendChild(row);
-
-  });
+  );
 
 
   renderTicker();
@@ -2408,13 +3668,15 @@ function renderTicker(){
       "ticker"
     );
 
-  if(!ticker) return;
+  if(!ticker){
+    return;
+  }
 
 
   let html="";
 
 
-  /* Gold */
+  /* GOLD */
 
   if(
     goldState &&
@@ -2424,6 +3686,7 @@ function renderTicker(){
   ){
 
     html+=`
+
       <div class="ticker-item">
 
         <span class="ticker-symbol">
@@ -2447,63 +3710,68 @@ function renderTicker(){
         </span>
 
       </div>
+
     `;
 
   }
 
 
-  /* Crypto */
+  /* CRYPTO */
 
-  SYMBOLS.forEach(symbol=>{
+  SYMBOLS.forEach(
+    symbol=>{
 
-    const item=
-      marketState[symbol];
+      const item=
+        marketState[symbol];
 
 
-    if(
-      !item ||
-      !Number.isFinite(
-        Number(item.price)
-      )
-    ){
+      if(
+        !item ||
+        !Number.isFinite(
+          Number(item.price)
+        )
+      ){
 
-      return;
+        return;
+
+      }
+
+
+      html+=`
+
+        <div class="ticker-item">
+
+          <span class="ticker-symbol">
+            ${symbol}
+          </span>
+
+          ${formatPrice(
+            item.price
+          )}
+
+          &nbsp;
+
+          <span
+            class="${changeClass(
+              item.change
+            )}"
+          >
+            ${formatChange(
+              item.change
+            )}
+          </span>
+
+        </div>
+
+      `;
 
     }
-
-
-    html+=`
-      <div class="ticker-item">
-
-        <span class="ticker-symbol">
-          ${symbol}
-        </span>
-
-        ${formatPrice(
-          item.price
-        )}
-
-        &nbsp;
-
-        <span
-          class="${changeClass(
-            item.change
-          )}"
-        >
-          ${formatChange(
-            item.change
-          )}
-        </span>
-
-      </div>
-    `;
-
-  });
+  );
 
 
   /*
-    Duplicate the ticker once so the
-    continuous animation remains smooth.
+    Duplicate ticker once for
+    continuous animation.
   */
 
   ticker.innerHTML=
@@ -2518,10 +3786,6 @@ function renderTicker(){
 
 loadMarkets();
 
-
-/*
-  Refresh live market data every 60 seconds.
-*/
 
 setInterval(
   loadMarkets,
@@ -2581,13 +3845,16 @@ const authMessage=
 let authMode="login";
 
 
-function openAuth(mode="login"){
+function openAuth(
+  mode="login"
+){
 
   authModal.classList.add(
     "active"
   );
 
   switchAuth(mode);
+
 }
 
 
@@ -2598,6 +3865,7 @@ function closeAuth(){
   );
 
   clearAuthMessage();
+
 }
 
 
@@ -2668,6 +3936,7 @@ function showAuthMessage(
   authMessage.className=
     "auth-message show "+
     type;
+
 }
 
 
@@ -2677,6 +3946,7 @@ function clearAuthMessage(){
 
   authMessage.className=
     "auth-message";
+
 }
 
 
@@ -2750,15 +4020,22 @@ authForm.addEventListener(
           data,
           error
         }=
-          await supabaseClient.auth.signUp({
-            email,
-            password,
-            options:{
-              data:{
-                full_name:fullName
+          await supabaseClient
+            .auth
+            .signUp({
+
+              email,
+
+              password,
+
+              options:{
+                data:{
+                  full_name:
+                    fullName
+                }
               }
-            }
-          });
+
+            });
 
 
         if(error){
@@ -2777,9 +4054,16 @@ authForm.addEventListener(
             await supabaseClient
               .from("profiles")
               .upsert({
-                id:data.user.id,
-                full_name:fullName,
-                email:email
+
+                id:
+                  data.user.id,
+
+                full_name:
+                  fullName,
+
+                email:
+                  email
+
               });
 
 
@@ -2823,10 +4107,14 @@ authForm.addEventListener(
           data,
           error
         }=
-          await supabaseClient.auth
+          await supabaseClient
+            .auth
             .signInWithPassword({
+
               email,
+
               password
+
             });
 
 
@@ -2850,7 +4138,10 @@ authForm.addEventListener(
           await supabaseClient
             .from("profiles")
             .select("id")
-            .eq("id",data.user.id)
+            .eq(
+              "id",
+              data.user.id
+            )
             .maybeSingle();
 
 
@@ -2859,13 +4150,20 @@ authForm.addEventListener(
           await supabaseClient
             .from("profiles")
             .insert({
-              id:data.user.id,
+
+              id:
+                data.user.id,
+
               full_name:
-                data.user.user_metadata?.full_name ||
+                data.user
+                  .user_metadata
+                  ?.full_name ||
                 "",
+
               email:
                 data.user.email ||
                 email
+
             });
 
         }
@@ -2985,12 +4283,16 @@ supabaseClient.auth.onAuthStateChange(
 window.addEventListener(
   "load",
   ()=>{
+
     setTimeout(
       hideLoader,
       300
     );
+
   }
 );
 
-</script></body>
-  </html>
+</script>
+
+</body>
+          </html>
