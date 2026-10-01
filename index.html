@@ -1541,14 +1541,14 @@ footer{
           class="asset-price"
           id="snapshot-GOLD"
         >
-          Loading...
+          —
         </div>
 
         <div
           class="asset-change"
           id="snapshot-GOLD-change"
         >
-          —
+          Live feed pending
         </div>
 
         <div class="chart gold-chart">
@@ -3196,21 +3196,11 @@ const SUPABASE_PUBLISHABLE_KEY =
 const MARKET_API_URL =
   "https://aureum-platform.onrender.com/api/markets";
 
-const PUBLIC_FALLBACK_API =
-  "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,binancecoin,ripple,solana,tron,tether,usd-coin";
-
-let supabaseClient = null;
-
-try {
-  if (window.supabase && typeof window.supabase.createClient === "function") {
-    supabaseClient = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
-    );
-  }
-} catch (e) {
-  console.warn("Supabase init deferred or unavailable:", e);
-}
+const supabaseClient =
+  window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
 
 
 /* =========================================================
@@ -3244,27 +3234,25 @@ const menuBtn =
 const navLinks =
   document.getElementById("navLinks");
 
-if(menuBtn && navLinks){
-  menuBtn.addEventListener(
-    "click",
-    ()=>{
-      navLinks.classList.toggle("open");
-    }
-  );
+menuBtn.addEventListener(
+  "click",
+  ()=>{
+    navLinks.classList.toggle("open");
+  }
+);
 
-  document
-    .querySelectorAll(".nav-links a")
-    .forEach(link=>{
+document
+  .querySelectorAll(".nav-links a")
+  .forEach(link=>{
 
-      link.addEventListener(
-        "click",
-        ()=>{
-          navLinks.classList.remove("open");
-        }
-      );
+    link.addEventListener(
+      "click",
+      ()=>{
+        navLinks.classList.remove("open");
+      }
+    );
 
-    });
-}
+  });
 
 
 /* =========================================================
@@ -3302,34 +3290,9 @@ const COIN_NAMES={
 
 };
 
-const ID_MAP = {
-
-  "bitcoin": "BTC",
-
-  "ethereum": "ETH",
-
-  "binancecoin": "BNB",
-
-  "ripple": "XRP",
-
-  "solana": "SOL",
-
-  "tron": "TRX",
-
-  "tether": "USDT",
-
-  "usd-coin": "USDC"
-
-};
-
 const marketState={};
 
-let goldState={
-  price: 2685.40,
-  change: 12.80,
-  changePercent: 0.48,
-  timestamp: Date.now()
-};
+let goldState=null;
 
 
 /* =========================================================
@@ -3503,67 +3466,6 @@ function formatUpdatedTime(timestamp){
 
 
 /* =========================================================
-   FALLBACK MARKET LOADER
-========================================================= */
-
-async function loadFallbackMarkets(){
-
-  try{
-
-    const res = await fetch(PUBLIC_FALLBACK_API);
-
-    if(!res.ok) throw new Error("Fallback HTTP error "+res.status);
-
-    const list = await res.json();
-
-    if(Array.isArray(list)){
-
-      list.forEach(item => {
-
-        const sym = ID_MAP[item.id];
-
-        if(sym){
-
-          marketState[sym] = {
-
-            price: Number(item.current_price),
-
-            change: Number(item.price_change_percentage_24h),
-
-            updatedAt: item.last_updated || Date.now()
-
-          };
-
-        }
-
-      });
-
-      renderMarkets();
-
-      const updatedElement = document.getElementById("marketUpdated");
-
-      if(updatedElement){
-
-        updatedElement.textContent = "Live market data connected";
-
-      }
-
-      return true;
-
-    }
-
-  }catch(err){
-
-    console.warn("Public fallback market load skipped:", err);
-
-  }
-
-  return false;
-
-}
-
-
-/* =========================================================
    LOAD LIVE MARKETS
 ========================================================= */
 
@@ -3577,7 +3479,7 @@ async function loadMarkets(){
       ()=>{
         controller.abort();
       },
-      8000
+      10000
     );
 
   try{
@@ -3653,6 +3555,12 @@ async function loadMarkets(){
           )
         ){
 
+          console.warn(
+            "No valid market data for:",
+            symbol,
+            asset
+          );
+
           return;
 
         }
@@ -3669,21 +3577,33 @@ async function loadMarkets(){
 
         marketState[symbol]={
 
-          price: price,
+          price:
 
-          change: Number.isFinite(change) ? change : 0,
+            price,
 
-          updatedAt: quote.last_updated || apiData?.status?.timestamp || null
+          change:
+
+            Number.isFinite(change)
+              ? change
+              : 0,
+
+          updatedAt:
+
+            quote.last_updated ||
+            apiData?.status?.timestamp ||
+            null
 
         };
 
 
         if(
-          marketState[symbol].updatedAt
+          marketState[symbol]
+            .updatedAt
         ){
 
           latestTimestamp=
-            marketState[symbol].updatedAt;
+            marketState[symbol]
+              .updatedAt;
 
         }
 
@@ -3708,31 +3628,50 @@ async function loadMarkets(){
 
       goldState={
 
-        price: Number(gold.price),
+        price:
+          Number(gold.price),
 
-        change: Number(gold.change),
+        change:
+          Number(gold.change),
 
-        changePercent: Number(gold.changePercent),
+        changePercent:
+          Number(
+            gold.changePercent
+          ),
 
-        bid: Number(gold.bid),
+        bid:
+          Number(gold.bid),
 
-        ask: Number(gold.ask),
+        ask:
+          Number(gold.ask),
 
-        high: Number(gold.high),
+        high:
+          Number(gold.high),
 
-        low: Number(gold.low),
+        low:
+          Number(gold.low),
 
-        open: Number(gold.open),
+        open:
+          Number(gold.open),
 
-        timestamp: gold.timestamp
+        timestamp:
+          gold.timestamp
 
       };
 
     }
 
 
+    /* =====================================================
+       RENDER EVERYTHING
+    ===================================================== */
+
     renderMarkets();
 
+
+    /* =====================================================
+       LAST UPDATE
+    ===================================================== */
 
     const cryptoTime=
       formatUpdatedTime(
@@ -3775,44 +3714,30 @@ async function loadMarkets(){
 
   }catch(error){
 
-    console.warn(
-      "Primary market API unreachable, attempting public market stream fallback..."
+    console.error(
+      "AUREUM market error:",
+      error
     );
 
-    const fallbackSuccess = await loadFallbackMarkets();
 
-    if(!fallbackSuccess){
+    const updatedElement=
+      document.getElementById(
+        "marketUpdated"
+      );
 
-      // Dynamic baseline numbers to keep feed live and dynamic
 
-      marketState["BTC"] = marketState["BTC"] || { price: 67450.20, change: 2.15, updatedAt: Date.now() };
+    if(updatedElement){
 
-      marketState["ETH"] = marketState["ETH"] || { price: 3520.80, change: 1.42, updatedAt: Date.now() };
+      updatedElement.textContent=
 
-      marketState["BNB"] = marketState["BNB"] || { price: 588.30, change: -0.85, updatedAt: Date.now() };
+        Object.keys(
+          marketState
+        ).length ||
+        goldState
 
-      marketState["XRP"] = marketState["XRP"] || { price: 0.542, change: 0.95, updatedAt: Date.now() };
+          ? "Live data temporarily unavailable • Showing last update"
 
-      marketState["SOL"] = marketState["SOL"] || { price: 178.60, change: 4.12, updatedAt: Date.now() };
-
-      marketState["TRX"] = marketState["TRX"] || { price: 0.162, change: 0.22, updatedAt: Date.now() };
-
-      marketState["USDT"] = marketState["USDT"] || { price: 1.00, change: 0.01, updatedAt: Date.now() };
-
-      marketState["USDC"] = marketState["USDC"] || { price: 1.00, change: 0.00, updatedAt: Date.now() };
-
-      renderMarkets();
-
-      const updatedElement=
-        document.getElementById(
-          "marketUpdated"
-        );
-
-      if(updatedElement){
-
-        updatedElement.textContent= "Live data connected";
-
-      }
+          : "Live market data could not be loaded.";
 
     }
 
@@ -4237,24 +4162,22 @@ function openAuth(
   mode="login"
 ){
 
-  if(authModal){
-    authModal.classList.add(
-      "active"
-    );
-    switchAuth(mode);
-  }
+  authModal.classList.add(
+    "active"
+  );
+
+  switchAuth(mode);
 
 }
 
 
 function closeAuth(){
 
-  if(authModal){
-    authModal.classList.remove(
-      "active"
-    );
-    clearAuthMessage();
-  }
+  authModal.classList.remove(
+    "active"
+  );
+
+  clearAuthMessage();
 
 }
 
@@ -4268,31 +4191,47 @@ function switchAuth(mode){
 
   if(mode==="signup"){
 
-    if(authTitle) authTitle.textContent= "Create your AUREUM account";
+    authTitle.textContent=
+      "Create your AUREUM account";
 
-    if(authSubtitle) authSubtitle.textContent= "Create an account to access the AUREUM ecosystem.";
+    authSubtitle.textContent=
+      "Create an account to access the AUREUM ecosystem.";
 
-    if(authSubmit) authSubmit.textContent= "Create Account";
+    authSubmit.textContent=
+      "Create Account";
 
-    if(fullNameGroup) fullNameGroup.style.display= "block";
+    fullNameGroup.style.display=
+      "block";
 
-    if(loginTab) loginTab.classList.remove("active");
+    loginTab.classList.remove(
+      "active"
+    );
 
-    if(signupTab) signupTab.classList.add("active");
+    signupTab.classList.add(
+      "active"
+    );
 
   }else{
 
-    if(authTitle) authTitle.textContent= "Welcome back";
+    authTitle.textContent=
+      "Welcome back";
 
-    if(authSubtitle) authSubtitle.textContent= "Sign in to access your AUREUM account.";
+    authSubtitle.textContent=
+      "Sign in to access your AUREUM account.";
 
-    if(authSubmit) authSubmit.textContent= "Log in";
+    authSubmit.textContent=
+      "Log in";
 
-    if(fullNameGroup) fullNameGroup.style.display= "none";
+    fullNameGroup.style.display=
+      "none";
 
-    if(loginTab) loginTab.classList.add("active");
+    loginTab.classList.add(
+      "active"
+    );
 
-    if(signupTab) signupTab.classList.remove("active");
+    signupTab.classList.remove(
+      "active"
+    );
 
   }
 
@@ -4304,331 +4243,308 @@ function showAuthMessage(
   type
 ){
 
-  if(authMessage){
-    authMessage.textContent= message;
-    authMessage.className= "auth-message show "+ type;
-  }
+  authMessage.textContent=
+    message;
+
+  authMessage.className=
+    "auth-message show "+
+    type;
 
 }
 
 
 function clearAuthMessage(){
 
-  if(authMessage){
-    authMessage.textContent="";
-    authMessage.className= "auth-message";
-  }
+  authMessage.textContent="";
+
+  authMessage.className=
+    "auth-message";
 
 }
 
 
-if(authForm){
+authForm.addEventListener(
+  "submit",
+  async event=>{
 
-  authForm.addEventListener(
-    "submit",
-    async event=>{
+    event.preventDefault();
 
-      event.preventDefault();
-
-      clearAuthMessage();
+    clearAuthMessage();
 
 
-      const email=
-        document.getElementById(
-          "email"
-        ).value.trim();
+    const email=
+      document.getElementById(
+        "email"
+      ).value.trim();
 
-      const password=
-        document.getElementById(
-          "password"
-        ).value;
+    const password=
+      document.getElementById(
+        "password"
+      ).value;
 
-      const fullName=
-        document.getElementById(
-          "fullName"
-        ).value.trim();
+    const fullName=
+      document.getElementById(
+        "fullName"
+      ).value.trim();
 
+
+    if(
+      !email ||
+      !password
+    ){
+
+      showAuthMessage(
+        "Please enter your email and password.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    authSubmit.disabled=true;
+
+    authSubmit.textContent=
+      authMode==="signup"
+        ? "Creating account..."
+        : "Signing in...";
+
+
+    try{
 
       if(
-        !email ||
-        !password
+        authMode==="signup"
       ){
 
-        showAuthMessage(
-          "Please enter your email and password.",
-          "error"
-        );
-
-        return;
-
-      }
-
-      if (authMode === "signup" && !fullName) {
-
-        showAuthMessage(
-          "Please enter your full name.",
-          "error"
-        );
-
-        return;
-
-      }
-
-
-      if(authSubmit){
-        authSubmit.disabled=true;
-        authSubmit.textContent=
-          authMode==="signup"
-            ? "Creating account..."
-            : "Signing in...";
-      }
-
-
-      try{
-
-        if(!supabaseClient){
+        if(!fullName){
 
           showAuthMessage(
-            authMode === "signup"
-              ? "Account created successfully (demo mode)."
-              : "Login successful (demo mode).",
-            "success"
+            "Please enter your full name.",
+            "error"
           );
-
-          setTimeout(closeAuth, 1000);
 
           return;
 
         }
 
 
+        const {
+          data,
+          error
+        }=
+          await supabaseClient
+            .auth
+            .signUp({
+
+              email,
+
+              password,
+
+              options:{
+                data:{
+                  full_name:
+                    fullName
+                }
+              }
+
+            });
+
+
+        if(error){
+          throw error;
+        }
+
+
         if(
-          authMode==="signup"
+          data?.user &&
+          data?.session
         ){
 
           const {
-            data,
-            error
-          }=
-            await supabaseClient
-              .auth
-              .signUp({
-
-                email,
-
-                password,
-
-                options:{
-                  data:{
-                    full_name:
-                      fullName
-                  }
-                }
-
-              });
-
-
-          if(error){
-            throw error;
-          }
-
-
-          if(
-            data?.user &&
-            data?.session
-          ){
-
-            const {
-              error:profileError
-            }=
-              await supabaseClient
-                .from("profiles")
-                .upsert({
-
-                  id:
-                    data.user.id,
-
-                  full_name:
-                    fullName,
-
-                  email:
-                    email
-
-                });
-
-
-            if(profileError){
-
-              console.error(
-                "Profile creation error:",
-                profileError
-              );
-
-            }
-
-          }
-
-
-          if(data?.session){
-
-            showAuthMessage(
-              "Account created successfully.",
-              "success"
-            );
-
-            setTimeout(
-              closeAuth,
-              1000
-            );
-
-          }else{
-
-            showAuthMessage(
-              "Account created. Please check your email to confirm your account.",
-              "success"
-            );
-
-          }
-
-
-        }else{
-
-          const {
-            data,
-            error
-          }=
-            await supabaseClient
-              .auth
-              .signInWithPassword({
-
-                email,
-
-                password
-
-              });
-
-
-          if(error){
-            throw error;
-          }
-
-
-          if(!data?.user){
-
-            throw new Error(
-              "Login could not be completed."
-            );
-
-          }
-
-
-          const {
-            data:existingProfile
+            error:profileError
           }=
             await supabaseClient
               .from("profiles")
-              .select("id")
-              .eq(
-                "id",
-                data.user.id
-              )
-              .maybeSingle();
-
-
-          if(!existingProfile){
-
-            await supabaseClient
-              .from("profiles")
-              .insert({
+              .upsert({
 
                 id:
                   data.user.id,
 
                 full_name:
-                  data.user
-                    .user_metadata
-                    ?.full_name ||
-                  "",
+                  fullName,
 
                 email:
-                  data.user.email ||
                   email
 
               });
 
+
+          if(profileError){
+
+            console.error(
+              "Profile creation error:",
+              profileError
+            );
+
           }
 
+        }
+
+
+        if(data?.session){
 
           showAuthMessage(
-            "Login successful.",
+            "Account created successfully.",
             "success"
           );
 
-
           setTimeout(
             closeAuth,
-            800
+            1000
+          );
+
+        }else{
+
+          showAuthMessage(
+            "Account created. Please check your email to confirm your account.",
+            "success"
           );
 
         }
 
 
-      }catch(error){
+      }else{
 
-        console.error(
-          "Authentication error:",
+        const {
+          data,
           error
-        );
+        }=
+          await supabaseClient
+            .auth
+            .signInWithPassword({
+
+              email,
+
+              password
+
+            });
+
+
+        if(error){
+          throw error;
+        }
+
+
+        if(!data?.user){
+
+          throw new Error(
+            "Login could not be completed."
+          );
+
+        }
+
+
+        const {
+          data:existingProfile
+        }=
+          await supabaseClient
+            .from("profiles")
+            .select("id")
+            .eq(
+              "id",
+              data.user.id
+            )
+            .maybeSingle();
+
+
+        if(!existingProfile){
+
+          await supabaseClient
+            .from("profiles")
+            .insert({
+
+              id:
+                data.user.id,
+
+              full_name:
+                data.user
+                  .user_metadata
+                  ?.full_name ||
+                "",
+
+              email:
+                data.user.email ||
+                email
+
+            });
+
+        }
 
 
         showAuthMessage(
-          error.message ||
-          "Something went wrong. Please try again.",
-          "error"
+          "Login successful.",
+          "success"
         );
 
 
-      }finally{
-
-        if(authSubmit){
-          authSubmit.disabled=false;
-          authSubmit.textContent=
-            authMode==="signup"
-              ? "Create Account"
-              : "Log in";
-        }
+        setTimeout(
+          closeAuth,
+          800
+        );
 
       }
 
-    }
-  );
 
-}
+    }catch(error){
+
+      console.error(
+        "Authentication error:",
+        error
+      );
+
+
+      showAuthMessage(
+        error.message ||
+        "Something went wrong. Please try again.",
+        "error"
+      );
+
+
+    }finally{
+
+      authSubmit.disabled=false;
+
+      authSubmit.textContent=
+        authMode==="signup"
+          ? "Create Account"
+          : "Log in";
+
+    }
+
+  }
+);
 
 
 /* =========================================================
    MODAL CONTROLS
 ========================================================= */
 
-if(authModal){
+authModal.addEventListener(
+  "click",
+  event=>{
 
-  authModal.addEventListener(
-    "click",
-    event=>{
+    if(
+      event.target===
+      authModal
+    ){
 
-      if(
-        event.target===
-        authModal
-      ){
-
-        closeAuth();
-
-      }
+      closeAuth();
 
     }
-  );
 
-}
+  }
+);
 
 
 document.addEventListener(
@@ -4651,30 +4567,26 @@ document.addEventListener(
    SUPABASE SESSION
 ========================================================= */
 
-if(supabaseClient && supabaseClient.auth){
+supabaseClient.auth.onAuthStateChange(
+  (event,session)=>{
 
-  supabaseClient.auth.onAuthStateChange(
-    (event,session)=>{
+    console.log(
+      "AUREUM auth event:",
+      event
+    );
+
+
+    if(session?.user){
 
       console.log(
-        "AUREUM auth event:",
-        event
+        "Authenticated user:",
+        session.user.email
       );
 
-
-      if(session?.user){
-
-        console.log(
-          "Authenticated user:",
-          session.user.email
-        );
-
-      }
-
     }
-  );
 
-}
+  }
+);
 
 
 /* =========================================================
@@ -4696,4 +4608,4 @@ window.addEventListener(
 </script>
 
 </body>
-</html>
+        </html>
