@@ -231,6 +231,21 @@ nav{
 .nav-actions{
   display:flex;
   gap:10px;
+  align-items:center;
+}
+
+.user-badge{
+  font-size:12px;
+  color:var(--gold2);
+  font-weight:600;
+  padding:6px 12px;
+  border-radius:15px;
+  background:rgba(212,175,55,.1);
+  border:1px solid rgba(212,175,55,.2);
+  max-width:180px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 
 .btn{
@@ -1303,7 +1318,7 @@ footer{
 
   </div>
 
-  <div class="nav-actions">
+  <div class="nav-actions" id="navActions">
 
     <button
       class="btn"
@@ -3196,11 +3211,16 @@ const SUPABASE_PUBLISHABLE_KEY =
 const MARKET_API_URL =
   "https://aureum-platform.onrender.com/api/markets";
 
+const BACKEND_ME_URL =
+  "https://aureum-platform.onrender.com/api/me";
+
 const supabaseClient =
   window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_PUBLISHABLE_KEY
   );
+
+let backendUserData = null;
 
 
 /* =========================================================
@@ -4564,29 +4584,102 @@ document.addEventListener(
 
 
 /* =========================================================
-   SUPABASE SESSION
+   BACKEND AUTHENTICATION INTEGRATION
 ========================================================= */
 
-supabaseClient.auth.onAuthStateChange(
-  (event,session)=>{
+async function fetchBackendUser(accessToken) {
+  try {
+    const response = await fetch(BACKEND_ME_URL, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${accessToken}`
+      }
+    });
 
-    console.log(
-      "AUREUM auth event:",
-      event
-    );
-
-
-    if(session?.user){
-
-      console.log(
-        "Authenticated user:",
-        session.user.email
-      );
-
+    if (!response.ok) {
+      if (response.status === 401) {
+        console.warn("Backend rejected token as unauthorized or expired.");
+      } else {
+        console.error("Backend /api/me error status:", response.status);
+      }
+      clearUserState();
+      return null;
     }
 
+    const data = await response.json();
+    backendUserData = data;
+    return data;
+  } catch (error) {
+    console.error("Failed to connect to backend /api/me:", error);
+    return null;
   }
-);
+}
+
+function updateUIForAuthenticatedUser(session, userData) {
+  const navActions = document.getElementById("navActions");
+  if (!navActions) return;
+
+  const email = session.user.email || "Account";
+
+  navActions.innerHTML = `
+    <span class="user-badge" title="${email}">${email}</span>
+    <button class="btn" onclick="handleLogout()">Log out</button>
+  `;
+}
+
+function updateUIForGuest() {
+  const navActions = document.getElementById("navActions");
+  if (!navActions) return;
+
+  navActions.innerHTML = `
+    <button class="btn" onclick="openAuth('login')">Log in</button>
+    <button class="btn btn-gold" onclick="openAuth('signup')">Get Started</button>
+  `;
+}
+
+function clearUserState() {
+  backendUserData = null;
+  updateUIForGuest();
+}
+
+async function handleLogout() {
+  try {
+    await supabaseClient.auth.signOut();
+  } catch (err) {
+    console.error("Logout error:", err);
+  } finally {
+    clearUserState();
+  }
+}
+
+async function handleAuthSession(session) {
+  if (session && session.access_token) {
+    const userData = await fetchBackendUser(session.access_token);
+    if (userData || session.user) {
+      updateUIForAuthenticatedUser(session, userData);
+    } else {
+      clearUserState();
+    }
+  } else {
+    clearUserState();
+  }
+}
+
+
+/* =========================================================
+   SUPABASE SESSION & AUTH LISTENERS
+========================================================= */
+
+supabaseClient.auth.onAuthStateChange((event, session) => {
+  console.log("AUREUM auth event:", event);
+
+  if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED" || event === "INITIAL_SESSION") {
+    handleAuthSession(session);
+  } else if (event === "SIGNED_OUT") {
+    clearUserState();
+  }
+});
 
 
 /* =========================================================
@@ -4595,7 +4688,16 @@ supabaseClient.auth.onAuthStateChange(
 
 window.addEventListener(
   "load",
-  ()=>{
+  async ()=>{
+
+    try {
+      const { data: { session } } = await supabaseClient.auth.getSession();
+      if (session) {
+        await handleAuthSession(session);
+      }
+    } catch (err) {
+      console.error("Error checking initial session:", err);
+    }
 
     setTimeout(
       hideLoader,
