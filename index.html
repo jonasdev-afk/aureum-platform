@@ -22,6 +22,19 @@
       padding: 0;
     }
 
+    :root {
+      --black: #18181b;
+      --black-2: #111113;
+      --black-3: #202023;
+      --gold: #d4af37;
+      --gold-light: #f1d77b;
+      --sand: #f5f5f4;
+      --muted: #a1a1aa;
+      --border: rgba(212, 175, 55, 0.18);
+      --green: #4ade80;
+      --red: #f87171;
+    }
+
     html {
       scroll-behavior: smooth;
     }
@@ -29,13 +42,15 @@
     body {
       font-family:
         Inter,
+        ui-sans-serif,
+        system-ui,
         -apple-system,
         BlinkMacSystemFont,
         "Segoe UI",
         sans-serif;
-      background: #18181b;
-      color: #f5f5f4;
-      line-height: 1.6;
+      background: var(--black);
+      color: var(--sand);
+      line-height: 1.5;
       overflow-x: hidden;
     }
 
@@ -54,9 +69,7 @@
       cursor: pointer;
     }
 
-    /* =========================
-       LOADING SCREEN
-    ========================= */
+    /* LOADER */
 
     #loader {
       position: fixed;
@@ -66,15 +79,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition:
-        opacity 0.45s ease,
-        visibility 0.45s ease;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
     }
 
     #loader.hidden {
       opacity: 0;
       visibility: hidden;
-      pointer-events: none;
     }
 
     .loader-inner {
@@ -82,905 +92,811 @@
     }
 
     .loader-logo {
-      font-size: 34px;
+      font-size: 38px;
       font-weight: 800;
-      letter-spacing: 0.28em;
-      color: #d4af37;
-      margin-left: 0.28em;
+      letter-spacing: 8px;
+      color: var(--gold);
+      margin-bottom: 18px;
     }
 
     .loader-line {
-      width: 130px;
+      width: 180px;
       height: 2px;
-      margin: 22px auto 14px;
-      background: rgba(212, 175, 55, 0.18);
       overflow: hidden;
+      background: rgba(255,255,255,0.08);
+      margin: auto;
     }
 
-    .loader-line::after {
-      content: "";
+    .loader-line span {
       display: block;
-      width: 45%;
+      width: 50%;
       height: 100%;
-      background: #d4af37;
-      animation: loaderMove 1s infinite ease-in-out;
+      background: var(--gold);
+      animation: loading 1.1s infinite ease-in-out;
     }
 
-    .loader-text {
-      color: rgba(245, 245, 244, 0.55);
-      font-size: 12px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
+    @keyframes loading {
+      0% { transform: translateX(-120%); }
+      100% { transform: translateX(260%); }
     }
 
-    @keyframes loaderMove {
-      0% {
-        transform: translateX(-120%);
-      }
-
-      100% {
-        transform: translateX(330%);
-      }
-    }
-
-    /* =========================
-       BACKGROUND
-    ========================= */
+    /* BACKGROUND */
 
     .background-grid {
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: -3;
-      opacity: 0.18;
-      background-image:
-        linear-gradient(
-          rgba(212, 175, 55, 0.055) 1px,
-          transparent 1px
-        ),
-        linear-gradient(
-          90deg,
-          rgba(212, 175, 55, 0.055) 1px,
-          transparent 1px
-        );
-      background-size: 70px 70px;
-    }
-
-    .orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(90px);
-      pointer-events: none;
       z-index: -2;
-      opacity: 0.13;
+      opacity: 0.16;
+      background-image:
+        linear-gradient(rgba(212,175,55,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212,175,55,0.08) 1px, transparent 1px);
+      background-size: 70px 70px;
+      mask-image: linear-gradient(to bottom, black, transparent 80%);
     }
 
-    .orb.one {
-      width: 350px;
-      height: 350px;
-      top: 5%;
-      left: -150px;
-      background: #d4af37;
-    }
-
-    .orb.two {
-      width: 420px;
-      height: 420px;
+    .glow {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: rgba(212,175,55,0.07);
+      filter: blur(100px);
+      top: -300px;
       right: -200px;
-      top: 35%;
-      background: #80651b;
+      pointer-events: none;
+      z-index: -1;
     }
 
-    /* =========================
-       HEADER
-    ========================= */
+    /* NAV */
 
-    header {
+    nav {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      z-index: 1000;
-      border-bottom: 1px solid rgba(245, 245, 244, 0.07);
-      background: rgba(24, 24, 27, 0.78);
-      backdrop-filter: blur(18px);
-    }
-
-    .nav {
-      max-width: 1240px;
       height: 78px;
-      margin: auto;
-      padding: 0 24px;
+      z-index: 1000;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 30px;
+      padding: 0 6%;
+      background: rgba(24,24,27,0.82);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 11px;
+    .logo {
+      font-size: 23px;
       font-weight: 800;
-      letter-spacing: 0.18em;
-    }
-
-    .brand-mark {
-      width: 34px;
-      height: 34px;
-      border: 1px solid rgba(212, 175, 55, 0.8);
-      display: grid;
-      place-items: center;
-      color: #d4af37;
-      font-size: 15px;
-    }
-
-    .brand-name {
-      font-size: 15px;
+      letter-spacing: 5px;
+      color: var(--gold);
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 27px;
-      font-size: 13px;
-      color: rgba(245, 245, 244, 0.72);
+      gap: 28px;
+    }
+
+    .nav-links a {
+      color: #d4d4d8;
+      font-size: 14px;
+      transition: 0.2s;
     }
 
     .nav-links a:hover {
-      color: #d4af37;
+      color: var(--gold-light);
     }
 
     .nav-actions {
       display: flex;
-      gap: 10px;
       align-items: center;
+      gap: 10px;
     }
 
     .btn {
-      border: 1px solid rgba(212, 175, 55, 0.55);
+      border: 1px solid rgba(212,175,55,0.35);
       background: transparent;
-      color: #f5f5f4;
-      padding: 11px 17px;
-      border-radius: 4px;
-      font-size: 13px;
-      transition: 0.25s ease;
+      color: var(--sand);
+      padding: 11px 18px;
+      border-radius: 8px;
+      transition: 0.2s;
+      font-weight: 600;
     }
 
     .btn:hover {
+      border-color: var(--gold);
       transform: translateY(-1px);
-      border-color: #d4af37;
-      color: #d4af37;
     }
 
-    .btn-primary {
-      background: #d4af37;
+    .btn-gold {
+      background: var(--gold);
       color: #18181b;
-      border-color: #d4af37;
-      font-weight: 700;
+      border-color: var(--gold);
     }
 
-    .btn-primary:hover {
+    .btn-gold:hover {
+      background: var(--gold-light);
       color: #18181b;
-      background: #e1c45d;
     }
 
-    .mobile-menu {
+    .menu-btn {
       display: none;
-      border: 0;
       background: transparent;
       color: white;
-      font-size: 26px;
+      border: 0;
+      font-size: 25px;
     }
 
-    /* =========================
-       MAIN
-    ========================= */
+    /* HERO */
 
-    main {
-      padding-top: 78px;
-    }
-
-    .container {
-      max-width: 1240px;
-      margin: auto;
-      padding: 0 24px;
-    }
-
-    section {
-      padding: 110px 0;
+    .hero {
+      min-height: 100vh;
+      padding: 150px 6% 80px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      align-items: center;
+      gap: 60px;
+      position: relative;
     }
 
     .eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: 9px;
-      color: #d4af37;
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      font-size: 11px;
+      gap: 8px;
+      color: var(--gold-light);
+      font-size: 12px;
       font-weight: 700;
-      margin-bottom: 18px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 22px;
     }
 
     .eyebrow::before {
       content: "";
-      width: 22px;
+      width: 28px;
       height: 1px;
-      background: #d4af37;
-    }
-
-    h1,
-    h2,
-    h3 {
-      line-height: 1.05;
-    }
-
-    h2 {
-      font-size: clamp(35px, 5vw, 62px);
-      letter-spacing: -0.04em;
-    }
-
-    .section-heading {
-      max-width: 720px;
-      margin-bottom: 50px;
-    }
-
-    .section-heading p {
-      color: rgba(245, 245, 244, 0.58);
-      margin-top: 20px;
-      max-width: 650px;
-      font-size: 15px;
-    }
-
-    /* =========================
-       HERO
-    ========================= */
-
-    .hero {
-      min-height: calc(100vh - 78px);
-      display: flex;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-content {
-      max-width: 850px;
-      padding: 90px 0 70px;
+      background: var(--gold);
     }
 
     .hero h1 {
-      font-size: clamp(56px, 10vw, 128px);
-      letter-spacing: -0.065em;
-      font-weight: 800;
+      font-size: clamp(52px, 7vw, 100px);
+      line-height: 0.95;
+      letter-spacing: -4px;
+      max-width: 900px;
     }
 
     .hero h1 span {
-      display: block;
+      color: var(--gold);
     }
 
-    .hero h1 .gold {
-      color: #d4af37;
-    }
-
-    .hero-text {
-      max-width: 670px;
-      color: rgba(245, 245, 244, 0.62);
+    .hero p {
       margin-top: 28px;
+      max-width: 600px;
+      color: #a1a1aa;
       font-size: 17px;
+      line-height: 1.8;
     }
 
-    .hero-actions {
+    .hero-buttons {
       display: flex;
       gap: 12px;
-      margin-top: 34px;
+      margin-top: 35px;
       flex-wrap: wrap;
     }
 
-    .hero-stat-row {
+    /* MARKET CARD */
+
+    .market-preview {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.035);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 30px 100px rgba(0,0,0,0.3);
+    }
+
+    .market-heading {
       display: flex;
-      gap: 55px;
-      margin-top: 70px;
-      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
     }
 
-    .hero-stat strong {
-      display: block;
-      font-size: 24px;
+    .market-heading h3 {
+      font-size: 15px;
     }
 
-    .hero-stat span {
-      display: block;
-      margin-top: 4px;
-      color: rgba(245, 245, 244, 0.42);
+    .live-indicator {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--green);
+      font-size: 11px;
       text-transform: uppercase;
-      font-size: 10px;
-      letter-spacing: 0.14em;
+      letter-spacing: 1px;
     }
 
-    /* =========================
-       TICKER
-    ========================= */
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 12px var(--green);
+    }
 
-    .ticker-wrapper {
-      border-top: 1px solid rgba(245, 245, 244, 0.07);
-      border-bottom: 1px solid rgba(245, 245, 244, 0.07);
+    .market-row {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 15px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .market-row:last-child {
+      border-bottom: 0;
+    }
+
+    .coin {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .coin-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(212,175,55,0.1);
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .coin-name strong {
+      display: block;
+      font-size: 13px;
+    }
+
+    .coin-name small {
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .coin-price {
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .change {
+      font-size: 12px;
+      text-align: right;
+    }
+
+    .positive {
+      color: var(--green);
+    }
+
+    .negative {
+      color: var(--red);
+    }
+
+    .market-updated {
+      color: var(--muted);
+      font-size: 10px;
+      margin-top: 15px;
+    }
+
+    /* SECTIONS */
+
+    section {
+      padding: 100px 6%;
+    }
+
+    .section-header {
+      max-width: 700px;
+      margin-bottom: 45px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(35px, 5vw, 60px);
+      letter-spacing: -2px;
+      line-height: 1;
+    }
+
+    .section-header p {
+      color: var(--muted);
+      margin-top: 16px;
+      line-height: 1.8;
+    }
+
+    /* TICKER */
+
+    .ticker-wrap {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
       overflow: hidden;
-      background: rgba(0, 0, 0, 0.14);
+      background: rgba(255,255,255,0.025);
     }
 
     .ticker {
       display: flex;
       width: max-content;
-      animation: tickerMove 35s linear infinite;
-    }
-
-    .ticker-track {
-      display: flex;
+      animation: ticker 35s linear infinite;
     }
 
     .ticker-item {
-      min-width: 210px;
-      padding: 18px 24px;
-      border-right: 1px solid rgba(245, 245, 244, 0.06);
+      padding: 16px 30px;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      font-size: 12px;
+      white-space: nowrap;
     }
 
     .ticker-symbol {
-      color: rgba(245, 245, 244, 0.45);
-      font-size: 10px;
-      letter-spacing: 0.15em;
-    }
-
-    .ticker-price {
-      margin-top: 3px;
-      font-weight: 700;
-      font-size: 15px;
-    }
-
-    .ticker-change {
-      margin-left: 8px;
-      color: #d4af37;
-      font-size: 11px;
-    }
-
-    .ticker-change.negative {
-      color: #d67a7a;
-    }
-
-    @keyframes tickerMove {
-      from {
-        transform: translateX(0);
-      }
-
-      to {
-        transform: translateX(-50%);
-      }
-    }
-
-    /* =========================
-       ECOSYSTEM
-    ========================= */
-
-    .ecosystem-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: rgba(245, 245, 244, 0.08);
-      border: 1px solid rgba(245, 245, 244, 0.08);
-    }
-
-    .eco-card {
-      min-height: 230px;
-      padding: 30px;
-      background: rgba(24, 24, 27, 0.92);
-      transition: 0.3s ease;
-    }
-
-    .eco-card:hover {
-      background: rgba(212, 175, 55, 0.05);
-    }
-
-    .eco-number {
-      color: #d4af37;
-      font-size: 11px;
-      letter-spacing: 0.15em;
-    }
-
-    .eco-icon {
-      font-size: 22px;
-      margin: 30px 0 22px;
-      color: #d4af37;
-    }
-
-    .eco-card h3 {
-      font-size: 20px;
-      margin-bottom: 12px;
-    }
-
-    .eco-card p {
-      color: rgba(245, 245, 244, 0.5);
-      font-size: 13px;
-    }
-
-    /* =========================
-       PLANS
-    ========================= */
-
-    .plans-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-    }
-
-    .plan-card {
-      border: 1px solid rgba(245, 245, 244, 0.09);
-      background: rgba(245, 245, 244, 0.025);
-      padding: 28px;
-      min-height: 350px;
-      display: flex;
-      flex-direction: column;
-      transition: 0.3s ease;
-    }
-
-    .plan-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(212, 175, 55, 0.5);
-    }
-
-    .plan-category {
-      color: #d4af37;
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-    }
-
-    .plan-name {
-      margin-top: 12px;
-      font-size: 23px;
-    }
-
-    .plan-return {
-      font-size: 43px;
+      color: var(--gold);
       font-weight: 800;
-      margin-top: 35px;
-      letter-spacing: -0.04em;
+      margin-right: 10px;
     }
 
-    .plan-period {
-      color: rgba(245, 245, 244, 0.48);
-      font-size: 12px;
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
     }
 
-    .plan-range {
-      margin-top: auto;
-      padding-top: 30px;
-      border-top: 1px solid rgba(245, 245, 244, 0.07);
-      color: rgba(245, 245, 244, 0.55);
-      font-size: 12px;
+    /* MARKET TABLE */
+
+    .market-table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      background: rgba(255,255,255,0.025);
     }
 
-    .plan-range strong {
-      display: block;
-      color: #f5f5f4;
-      margin-top: 5px;
-    }
-
-    /* =========================
-       MARKETS
-    ========================= */
-
-    .market-box {
-      border: 1px solid rgba(245, 245, 244, 0.08);
-      overflow: hidden;
-      background: rgba(245, 245, 244, 0.025);
-    }
-
-    .market-status {
-      padding: 15px 20px;
-      border-bottom: 1px solid rgba(245, 245, 244, 0.07);
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      align-items: center;
-      font-size: 12px;
-    }
-
-    .status-left {
-      color: rgba(245, 245, 244, 0.55);
-    }
-
-    .status-dot {
-      display: inline-block;
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #d4af37;
-      margin-right: 7px;
-    }
-
-    .market-status.error .status-dot {
-      background: #b85f5f;
-    }
-
-    .market-table {
+    table {
       width: 100%;
       border-collapse: collapse;
+      min-width: 650px;
     }
 
-    .market-table th,
-    .market-table td {
-      padding: 19px 20px;
+    th,
+    td {
+      padding: 18px 20px;
       text-align: left;
-      border-bottom: 1px solid rgba(245, 245, 244, 0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
 
-    .market-table th {
-      color: rgba(245, 245, 244, 0.35);
-      font-size: 10px;
+    th {
+      color: var(--muted);
+      font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.14em;
-      font-weight: 500;
+      letter-spacing: 1px;
     }
 
-    .market-table td {
-      font-size: 13px;
+    td {
+      font-size: 14px;
     }
 
-    .asset-name {
-      font-weight: 700;
+    tbody tr:last-child td {
+      border-bottom: 0;
     }
 
-    .asset-sub {
-      color: rgba(245, 245, 244, 0.38);
-      font-size: 11px;
-    }
+    /* PLANS */
 
-    .change-positive {
-      color: #d4af37;
-    }
-
-    .change-negative {
-      color: #d67a7a;
-    }
-
-    /* =========================
-       HOW IT WORKS
-    ========================= */
-
-    .steps {
+    .plans {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 15px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
     }
 
-    .step {
-      border-top: 1px solid rgba(212, 175, 55, 0.35);
-      padding-top: 22px;
+    .plan {
+      position: relative;
+      padding: 28px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.025);
+      border-radius: 16px;
+      transition: 0.25s;
+      overflow: hidden;
     }
 
-    .step-number {
-      color: #d4af37;
-      font-size: 11px;
-      letter-spacing: 0.15em;
+    .plan:hover {
+      transform: translateY(-5px);
+      border-color: rgba(212,175,55,0.45);
     }
 
-    .step h3 {
-      margin-top: 30px;
-      font-size: 21px;
-    }
-
-    .step p {
-      color: rgba(245, 245, 244, 0.48);
-      font-size: 13px;
-      margin-top: 12px;
-    }
-
-    /* =========================
-       ABOUT
-    ========================= */
-
-    .about-box {
-      border: 1px solid rgba(245, 245, 244, 0.08);
-      padding: clamp(30px, 6vw, 80px);
+    .plan.featured {
+      border-color: rgba(212,175,55,0.5);
       background:
         linear-gradient(
-          135deg,
-          rgba(212, 175, 55, 0.06),
-          transparent 50%
+          145deg,
+          rgba(212,175,55,0.11),
+          rgba(255,255,255,0.025)
         );
     }
 
-    .about-box h2 {
-      max-width: 800px;
+    .plan-category {
+      color: var(--gold);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
     }
 
-    .about-box p {
-      max-width: 700px;
-      color: rgba(245, 245, 244, 0.56);
+    .plan h3 {
+      margin-top: 9px;
+      font-size: 21px;
+    }
+
+    .plan-return {
       margin-top: 25px;
-      font-size: 15px;
+      font-size: 38px;
+      font-weight: 800;
+      color: var(--gold-light);
     }
 
-    /* =========================
-       FOOTER
-    ========================= */
+    .plan-return small {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .plan-info {
+      margin-top: 20px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .plan-info div {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 10px;
+      font-size: 12px;
+    }
+
+    .plan-info span:first-child {
+      color: var(--muted);
+    }
+
+    .plan-description {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+      margin-top: 18px;
+      min-height: 40px;
+    }
+
+    .plan .btn {
+      width: 100%;
+      margin-top: 22px;
+    }
+
+    /* ECOSYSTEM */
+
+    .ecosystem {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    .eco-card {
+      padding: 28px;
+      min-height: 190px;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.025);
+    }
+
+    .eco-number {
+      color: var(--gold);
+      font-size: 11px;
+      letter-spacing: 2px;
+    }
+
+    .eco-card h3 {
+      margin-top: 35px;
+      font-size: 19px;
+    }
+
+    .eco-card p {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    /* CTA */
+
+    .cta {
+      margin: 30px 6% 100px;
+      padding: 80px;
+      border: 1px solid rgba(212,175,55,0.25);
+      border-radius: 24px;
+      background:
+        radial-gradient(
+          circle at 80% 20%,
+          rgba(212,175,55,0.12),
+          transparent 35%
+        ),
+        rgba(255,255,255,0.025);
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: clamp(35px, 5vw, 65px);
+      letter-spacing: -2px;
+    }
+
+    .cta p {
+      color: var(--muted);
+      margin: 15px auto 28px;
+      max-width: 650px;
+    }
+
+    /* FOOTER */
 
     footer {
-      border-top: 1px solid rgba(245, 245, 244, 0.07);
-      padding: 55px 0 35px;
+      padding: 50px 6%;
+      border-top: 1px solid rgba(255,255,255,0.06);
     }
 
-    .footer-top {
+    .footer-main {
       display: flex;
       justify-content: space-between;
       gap: 40px;
-      flex-wrap: wrap;
-    }
-
-    .footer-brand {
-      max-width: 330px;
     }
 
     .footer-brand p {
-      color: rgba(245, 245, 244, 0.4);
+      color: var(--muted);
       font-size: 12px;
-      margin-top: 15px;
+      max-width: 350px;
+      margin-top: 12px;
     }
 
     .footer-links {
       display: flex;
-      gap: 65px;
+      gap: 50px;
     }
 
-    .footer-column h4 {
-      color: rgba(245, 245, 244, 0.4);
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      font-size: 10px;
-      margin-bottom: 15px;
+    .footer-links div {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
-    .footer-column a {
-      display: block;
+    .footer-links strong {
       font-size: 12px;
-      color: rgba(245, 245, 244, 0.65);
-      margin-bottom: 9px;
+      color: var(--gold);
+      margin-bottom: 5px;
     }
 
-    .footer-column a:hover {
-      color: #d4af37;
+    .footer-links a {
+      color: var(--muted);
+      font-size: 12px;
     }
 
     .footer-bottom {
-      border-top: 1px solid rgba(245, 245, 244, 0.07);
-      margin-top: 45px;
-      padding-top: 22px;
-      color: rgba(245, 245, 244, 0.3);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      margin-top: 40px;
+      padding-top: 20px;
+      color: #71717a;
       font-size: 11px;
       display: flex;
       justify-content: space-between;
       gap: 20px;
-      flex-wrap: wrap;
     }
 
-    /* =========================
-       MODAL
-    ========================= */
+    /* MODAL */
 
-    .modal-overlay {
+    .modal {
       position: fixed;
       inset: 0;
       z-index: 5000;
-      background: rgba(0, 0, 0, 0.72);
-      backdrop-filter: blur(10px);
+      background: rgba(0,0,0,0.78);
+      backdrop-filter: blur(8px);
       display: none;
       align-items: center;
       justify-content: center;
       padding: 20px;
     }
 
-    .modal-overlay.active {
+    .modal.active {
       display: flex;
     }
 
-    .modal {
-      width: min(440px, 100%);
+    .modal-card {
+      width: 100%;
+      max-width: 440px;
       background: #202023;
-      border: 1px solid rgba(212, 175, 55, 0.3);
-      padding: 32px;
+      border: 1px solid rgba(212,175,55,0.25);
+      border-radius: 18px;
+      padding: 30px;
       position: relative;
-      box-shadow: 0 30px 100px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 30px 100px rgba(0,0,0,0.5);
     }
 
-    .modal-close {
+    .close-modal {
       position: absolute;
-      right: 18px;
       top: 14px;
+      right: 17px;
       border: 0;
       background: transparent;
-      color: rgba(245, 245, 244, 0.55);
+      color: #a1a1aa;
       font-size: 24px;
     }
 
-    .modal h3 {
+    .modal-card h2 {
       font-size: 27px;
+      margin-bottom: 7px;
     }
 
-    .modal-subtitle {
-      color: rgba(245, 245, 244, 0.48);
+    .modal-card > p {
+      color: var(--muted);
       font-size: 13px;
-      margin-top: 8px;
-      margin-bottom: 25px;
+      margin-bottom: 22px;
+    }
+
+    .auth-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .auth-tab {
+      background: transparent;
+      color: var(--muted);
+      border: 0;
+      padding: 12px;
+      border-bottom: 2px solid transparent;
+    }
+
+    .auth-tab.active {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
     }
 
     .form-group {
-      margin-bottom: 15px;
+      margin-bottom: 14px;
     }
 
     .form-group label {
       display: block;
-      font-size: 11px;
-      color: rgba(245, 245, 244, 0.5);
-      margin-bottom: 7px;
+      color: #d4d4d8;
+      font-size: 12px;
+      margin-bottom: 6px;
     }
 
     .form-group input {
       width: 100%;
-      border: 1px solid rgba(245, 245, 244, 0.12);
+      border: 1px solid rgba(255,255,255,0.1);
       background: #18181b;
-      color: #f5f5f4;
-      padding: 13px;
+      color: white;
+      border-radius: 8px;
+      padding: 12px 13px;
       outline: none;
-      border-radius: 3px;
     }
 
     .form-group input:focus {
-      border-color: rgba(212, 175, 55, 0.7);
+      border-color: rgba(212,175,55,0.6);
     }
 
-    .form-submit {
+    .auth-message {
+      display: none;
+      margin: 12px 0;
+      padding: 10px;
+      border-radius: 7px;
+      font-size: 12px;
+    }
+
+    .auth-message.show {
+      display: block;
+    }
+
+    .auth-message.error {
+      color: #fecaca;
+      background: rgba(248,113,113,0.1);
+      border: 1px solid rgba(248,113,113,0.2);
+    }
+
+    .auth-message.success {
+      color: #bbf7d0;
+      background: rgba(74,222,128,0.1);
+      border: 1px solid rgba(74,222,128,0.2);
+    }
+
+    .auth-submit {
       width: 100%;
       margin-top: 5px;
     }
 
-    .form-message {
-      min-height: 20px;
-      margin-top: 14px;
-      font-size: 12px;
-      color: #d4af37;
-    }
+    /* RESPONSIVE */
 
-    .modal-switch {
-      text-align: center;
-      color: rgba(245, 245, 244, 0.45);
-      font-size: 12px;
-      margin-top: 20px;
-    }
+    @media (max-width: 1000px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
 
-    .modal-switch button {
-      border: 0;
-      background: transparent;
-      color: #d4af37;
-      margin-left: 5px;
-    }
-
-    /* =========================
-       TOAST
-    ========================= */
-
-    #toast {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      z-index: 9000;
-      background: #242427;
-      border: 1px solid rgba(212, 175, 55, 0.4);
-      color: #f5f5f4;
-      padding: 14px 18px;
-      max-width: 350px;
-      font-size: 12px;
-      transform: translateY(130%);
-      opacity: 0;
-      transition: 0.3s ease;
-    }
-
-    #toast.show {
-      transform: translateY(0);
-      opacity: 1;
-    }
-
-    /* =========================
-       RESPONSIVE
-    ========================= */
-
-    @media (max-width: 1050px) {
-      .plans-grid {
+      .plans {
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .ecosystem-grid {
+      .ecosystem {
         grid-template-columns: repeat(2, 1fr);
-      }
-
-      .steps {
-        grid-template-columns: repeat(2, 1fr);
-        row-gap: 45px;
       }
     }
 
     @media (max-width: 760px) {
-      .nav-links,
+      nav {
+        padding: 0 5%;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: 78px;
+        left: 0;
+        right: 0;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        padding: 15px 5%;
+        background: rgba(24,24,27,0.98);
+        border-bottom: 1px solid rgba(255,255,255,0.07);
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-links a {
+        padding: 13px 0;
+      }
+
       .nav-actions {
         display: none;
       }
 
-      .mobile-menu {
-        display: block;
-      }
-
       .hero {
-        min-height: auto;
-      }
-
-      .hero-content {
-        padding: 80px 0;
+        padding-top: 125px;
       }
 
       .hero h1 {
-        font-size: 57px;
+        font-size: 54px;
       }
 
-      .hero-stat-row {
-        gap: 30px;
-        margin-top: 50px;
-      }
-
-      section {
-        padding: 80px 0;
-      }
-
-      .ecosystem-grid,
-      .plans-grid,
-      .steps {
+      .plans {
         grid-template-columns: 1fr;
       }
 
-      .market-table th:nth-child(3),
-      .market-table td:nth-child(3) {
-        display: none;
+      .ecosystem {
+        grid-template-columns: 1fr;
+      }
+
+      section {
+        padding: 75px 5%;
+      }
+
+      .cta {
+        margin: 20px 5% 75px;
+        padding: 50px 25px;
+      }
+
+      .footer-main {
+        flex-direction: column;
       }
 
       .footer-links {
-        gap: 35px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .container {
-        padding: 0 18px;
+        flex-wrap: wrap;
       }
 
-      .nav {
-        padding: 0 18px;
-      }
-
-      .hero h1 {
-        font-size: 48px;
-      }
-
-      .hero-text {
-        font-size: 15px;
-      }
-
-      .market-table th,
-      .market-table td {
-        padding: 15px 10px;
-      }
-
-      .footer-links {
-        width: 100%;
-        justify-content: space-between;
+      .footer-bottom {
+        flex-direction: column;
       }
     }
   </style>
@@ -988,990 +904,709 @@
 
 <body>
 
-  <!-- LOADING SCREEN -->
   <div id="loader">
     <div class="loader-inner">
       <div class="loader-logo">AUREUM</div>
-      <div class="loader-line"></div>
-      <div class="loader-text">Initializing ecosystem</div>
+      <div class="loader-line">
+        <span></span>
+      </div>
     </div>
   </div>
 
   <div class="background-grid"></div>
-  <div class="orb one"></div>
-  <div class="orb two"></div>
+  <div class="glow"></div>
 
-  <!-- HEADER -->
-  <header>
-    <nav class="nav">
+  <!-- NAVIGATION -->
 
-      <a href="#top" class="brand">
-        <div class="brand-mark">A</div>
-        <div class="brand-name">AUREUM</div>
-      </a>
+  <nav>
+    <a href="#home" class="logo">AUREUM</a>
 
-      <div class="nav-links">
-        <a href="#ecosystem">Ecosystem</a>
-        <a href="#plans">Plans</a>
-        <a href="#markets">Markets</a>
-        <a href="#how">How It Works</a>
-        <a href="#about">About</a>
-      </div>
+    <div class="nav-links" id="navLinks">
+      <a href="#markets">Markets</a>
+      <a href="#plans">Investment</a>
+      <a href="#ecosystem">Ecosystem</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
 
-      <div class="nav-actions">
-        <button class="btn" onclick="openAuth('login')">
-          Login
-        </button>
-
-        <button
-          class="btn btn-primary"
-          onclick="openAuth('signup')"
-        >
-          Get Started
-        </button>
-      </div>
-
-      <button
-        class="mobile-menu"
-        onclick="toggleMobileMenu()"
-        aria-label="Menu"
-      >
-        ☰
+    <div class="nav-actions">
+      <button class="btn" onclick="openAuth('login')">Log in</button>
+      <button class="btn btn-gold" onclick="openAuth('signup')">
+        Get Started
       </button>
+    </div>
 
-    </nav>
-  </header>
+    <button class="menu-btn" id="menuBtn">☰</button>
+  </nav>
 
-  <main id="top">
+  <!-- HERO -->
 
-    <!-- HERO -->
+  <main id="home">
+
     <section class="hero">
-      <div class="container">
 
-        <div class="hero-content">
+      <div>
+        <div class="eyebrow">Digital Wealth Ecosystem</div>
 
-          <div class="eyebrow">
-            Digital Wealth Ecosystem
+        <h1>
+          Gold.<br />
+          Crypto.<br />
+          <span>Wealth.</span>
+        </h1>
+
+        <p>
+          AUREUM brings digital assets, structured investment products and
+          market intelligence together in one premium financial ecosystem.
+        </p>
+
+        <div class="hero-buttons">
+          <button class="btn btn-gold" onclick="openAuth('signup')">
+            Get Started
+          </button>
+
+          <a href="#markets" class="btn">
+            Explore Markets
+          </a>
+        </div>
+      </div>
+
+      <!-- LIVE MARKET PREVIEW -->
+
+      <div class="market-preview">
+
+        <div class="market-heading">
+          <h3>Live Digital Markets</h3>
+
+          <div class="live-indicator">
+            <span class="live-dot"></span>
+            Live
+          </div>
+        </div>
+
+        <div id="heroMarketRows">
+          <div class="market-row">
+            <div class="coin">
+              <div class="coin-icon">BTC</div>
+              <div class="coin-name">
+                <strong>Bitcoin</strong>
+                <small>BTC</small>
+              </div>
+            </div>
+            <div class="coin-price" id="hero-BTC">Loading...</div>
+            <div class="change" id="hero-BTC-change">—</div>
           </div>
 
-          <h1>
-            <span>GOLD.</span>
-            <span class="gold">CRYPTO.</span>
-            <span>WEALTH.</span>
-          </h1>
-
-          <p class="hero-text">
-            AUREUM brings digital assets, wealth tools and market
-            intelligence together through one premium financial
-            ecosystem.
-          </p>
-
-          <div class="hero-actions">
-
-            <button
-              class="btn btn-primary"
-              onclick="document.getElementById('plans').scrollIntoView({behavior:'smooth'})"
-            >
-              Explore Plans
-            </button>
-
-            <button
-              class="btn"
-              onclick="document.getElementById('ecosystem').scrollIntoView({behavior:'smooth'})"
-            >
-              Discover AUREUM
-            </button>
-
+          <div class="market-row">
+            <div class="coin">
+              <div class="coin-icon">ETH</div>
+              <div class="coin-name">
+                <strong>Ethereum</strong>
+                <small>ETH</small>
+              </div>
+            </div>
+            <div class="coin-price" id="hero-ETH">Loading...</div>
+            <div class="change" id="hero-ETH-change">—</div>
           </div>
 
-          <div class="hero-stat-row">
-
-            <div class="hero-stat">
-              <strong>GOLD</strong>
-              <span>Digital Wealth</span>
+          <div class="market-row">
+            <div class="coin">
+              <div class="coin-icon">BNB</div>
+              <div class="coin-name">
+                <strong>BNB</strong>
+                <small>BNB</small>
+              </div>
             </div>
-
-            <div class="hero-stat">
-              <strong>CRYPTO</strong>
-              <span>Digital Assets</span>
-            </div>
-
-            <div class="hero-stat">
-              <strong>24/7</strong>
-              <span>Market Access</span>
-            </div>
-
+            <div class="coin-price" id="hero-BNB">Loading...</div>
+            <div class="change" id="hero-BNB-change">—</div>
           </div>
 
+          <div class="market-row">
+            <div class="coin">
+              <div class="coin-icon">SOL</div>
+              <div class="coin-name">
+                <strong>Solana</strong>
+                <small>SOL</small>
+              </div>
+            </div>
+            <div class="coin-price" id="hero-SOL">Loading...</div>
+            <div class="change" id="hero-SOL-change">—</div>
+          </div>
+        </div>
+
+        <div class="market-updated" id="marketUpdated">
+          Connecting to live market data...
         </div>
 
       </div>
+
     </section>
 
-    <!-- LIVE TICKER -->
-    <div class="ticker-wrapper">
+    <!-- TICKER -->
 
-      <div class="ticker">
+    <div class="ticker-wrap">
+      <div class="ticker" id="ticker"></div>
+    </div>
 
-        <div id="tickerTrack1" class="ticker-track"></div>
-        <div id="tickerTrack2" class="ticker-track"></div>
+    <!-- MARKETS -->
+
+    <section id="markets">
+
+      <div class="section-header">
+        <div class="eyebrow">AUREUM MARKETS</div>
+
+        <h2>Markets in real time.</h2>
+
+        <p>
+          Monitor selected digital assets with live pricing and 24-hour
+          market movement.
+        </p>
+      </div>
+
+      <div class="market-table-wrap">
+
+        <table>
+          <thead>
+            <tr>
+              <th>Asset</th>
+              <th>Price</th>
+              <th>24H Change</th>
+              <th>Market Status</th>
+            </tr>
+          </thead>
+
+          <tbody id="marketTableBody">
+            <tr>
+              <td colspan="4">Loading live market data...</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+    </section>
+
+    <!-- INVESTMENT PLANS -->
+
+    <section id="plans">
+
+      <div class="section-header">
+        <div class="eyebrow">AUREUM INVEST</div>
+
+        <h2>Structured opportunities.</h2>
+
+        <p>
+          Explore the available AUREUM investment structures and their
+          configured terms.
+        </p>
+      </div>
+
+      <div class="plans">
+
+        <article class="plan">
+          <div class="plan-category">Gold</div>
+          <h3>AUREUM DAWN</h3>
+
+          <div class="plan-return">
+            7%
+            <small>after 48 hours</small>
+          </div>
+
+          <div class="plan-info">
+            <div>
+              <span>Minimum</span>
+              <strong>0.025 Troy oz</strong>
+            </div>
+
+            <div>
+              <span>Maximum</span>
+              <strong>0.25 Troy oz</strong>
+            </div>
+          </div>
+
+          <p class="plan-description">
+            Designed for users taking their first step into AUREUM.
+          </p>
+
+          <button class="btn btn-gold" onclick="openAuth('signup')">
+            Start
+          </button>
+        </article>
+
+
+        <article class="plan featured">
+          <div class="plan-category">Gold</div>
+          <h3>AUREUM CREST</h3>
+
+          <div class="plan-return">
+            9%
+            <small>after 72 hours</small>
+          </div>
+
+          <div class="plan-info">
+            <div>
+              <span>Minimum</span>
+              <strong>0.25 Troy oz</strong>
+            </div>
+
+            <div>
+              <span>Maximum</span>
+              <strong>1 Troy oz</strong>
+            </div>
+          </div>
+
+          <p class="plan-description">
+            A structured AUREUM Gold investment plan.
+          </p>
+
+          <button class="btn btn-gold" onclick="openAuth('signup')">
+            Start
+          </button>
+        </article>
+
+
+        <article class="plan">
+          <div class="plan-category">Gold</div>
+          <h3>AUREUM CROWN</h3>
+
+          <div class="plan-return">
+            7%
+            <small>after 72 hours</small>
+          </div>
+
+          <div class="plan-info">
+            <div>
+              <span>Minimum</span>
+              <strong>1 Troy oz</strong>
+            </div>
+
+            <div>
+              <span>Maximum</span>
+              <strong>5 Troy oz</strong>
+            </div>
+          </div>
+
+          <p class="plan-description">
+            A structured AUREUM Gold investment plan.
+          </p>
+
+          <button class="btn btn-gold" onclick="openAuth('signup')">
+            Start
+          </button>
+        </article>
+
+
+        <article class="plan">
+          <div class="plan-category">Gold</div>
+          <h3>AUREUM BLACK</h3>
+
+          <div class="plan-return">
+            16.5%
+            <small>weekly</small>
+          </div>
+
+          <div class="plan-info">
+            <div>
+              <span>Minimum</span>
+              <strong>5 Troy oz</strong>
+            </div>
+
+            <div>
+              <span>Maximum</span>
+              <strong>99 Troy oz</strong>
+            </div>
+          </div>
+
+          <p class="plan-description">
+            AUREUM premium Gold investment plan.
+          </p>
+
+          <button class="btn btn-gold" onclick="openAuth('signup')">
+            Start
+          </button>
+        </article>
+
+
+        <article class="plan">
+          <div class="plan-category">Crypto</div>
+          <h3>AUREUM PULSE</h3>
+
+          <div class="plan-return">
+            4.5%
+            <small>daily</small>
+          </div>
+
+          <div class="plan-info">
+            <div>
+              <span>Minimum</span>
+              <strong>$99</strong>
+            </div>
+
+            <div>
+              <span>Maximum</span>
+              <strong>$1,000</strong>
+            </div>
+          </div>
+
+          <p class="plan-description">
+            AUREUM Crypto investment plan.
+          </p>
+
+          <button class="btn btn-gold" onclick="openAuth('signup')">
+            Start
+          </button>
+        </article>
+
+
+        <article class="plan featured">
+          <div class="plan-category">Crypto</div>
+          <h3>AUREUM PRIME</h3>
+
+          <div class="plan-return">
+            7%
+            <small>after 48 hours</small>
+          </div>
+
+          <div class="plan-info">
+            <div>
+              <span>Minimum</span>
+              <strong>$1,000</strong>
+            </div>
+
+            <div>
+              <span>Maximum</span>
+              <strong>$10,000</strong>
+            </div>
+          </div>
+
+          <p class="plan-description">
+            AUREUM Crypto investment plan.
+          </p>
+
+          <button class="btn btn-gold" onclick="openAuth('signup')">
+            Start
+          </button>
+        </article>
+
+
+        <article class="plan">
+          <div class="plan-category">Crypto</div>
+          <h3>AUREUM APEX</h3>
+
+          <div class="plan-return">
+            10%
+            <small>weekly</small>
+          </div>
+
+          <div class="plan-info">
+            <div>
+              <span>Minimum</span>
+              <strong>$10,000</strong>
+            </div>
+
+            <div>
+              <span>Maximum</span>
+              <strong>Unlimited</strong>
+            </div>
+          </div>
+
+          <p class="plan-description">
+            AUREUM Crypto investment plan.
+          </p>
+
+          <button class="btn btn-gold" onclick="openAuth('signup')">
+            Start
+          </button>
+        </article>
+
+      </div>
+
+      <p style="color:#71717a;font-size:11px;margin-top:25px;line-height:1.7;">
+        Displayed investment rates and terms are configured by AUREUM and are
+        subject to applicable terms, eligibility requirements, disclosures and
+        changes.
+      </p>
+
+    </section>
+
+
+    <!-- ECOSYSTEM -->
+
+    <section id="ecosystem">
+
+      <div class="section-header">
+        <div class="eyebrow">THE AUREUM ECOSYSTEM</div>
+
+        <h2>One ecosystem. Multiple capabilities.</h2>
+
+        <p>
+          Designed to bring investing, market intelligence, portfolio
+          management and digital assets into a unified experience.
+        </p>
+      </div>
+
+      <div class="ecosystem">
+
+        <div class="eco-card">
+          <div class="eco-number">01</div>
+          <h3>AUREUM INVEST</h3>
+          <p>
+            Structured Gold and Crypto investment products.
+          </p>
+        </div>
+
+        <div class="eco-card">
+          <div class="eco-number">02</div>
+          <h3>AUREUM MARKETS</h3>
+          <p>
+            Live digital-asset market intelligence and pricing.
+          </p>
+        </div>
+
+        <div class="eco-card">
+          <div class="eco-number">03</div>
+          <h3>AUREUM WALLET</h3>
+          <p>
+            Digital balances, deposits, withdrawals and transaction history.
+          </p>
+        </div>
+
+        <div class="eco-card">
+          <div class="eco-number">04</div>
+          <h3>AUREUM TRADE</h3>
+          <p>
+            A professional trading experience planned for the ecosystem.
+          </p>
+        </div>
+
+        <div class="eco-card">
+          <div class="eco-number">05</div>
+          <h3>AUREUM WEALTH</h3>
+          <p>
+            Unified portfolio visibility across the ecosystem.
+          </p>
+        </div>
+
+        <div class="eco-card">
+          <div class="eco-number">06</div>
+          <h3>AUREUM INTELLIGENCE</h3>
+          <p>
+            Analytics, alerts, reporting and portfolio insights.
+          </p>
+        </div>
+
+        <div class="eco-card">
+          <div class="eco-number">07</div>
+          <h3>AUREUM PAY</h3>
+          <p>
+            Future digital payment capabilities subject to infrastructure
+            availability.
+          </p>
+        </div>
+
+        <div class="eco-card">
+          <div class="eco-number">08</div>
+          <h3>AUREUM SECURITY</h3>
+          <p>
+            Account security, verification and controlled transaction flows.
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ABOUT -->
+
+    <section id="about">
+
+      <div class="section-header">
+        <div class="eyebrow">ABOUT AUREUM</div>
+
+        <h2>Built around digital wealth.</h2>
+
+        <p>
+          AUREUM is designed as a unified financial technology ecosystem
+          connecting digital assets, investment structures and market
+          intelligence through one platform.
+        </p>
+      </div>
+
+    </section>
+
+
+    <!-- CTA -->
+
+    <div class="cta" id="contact">
+
+      <div class="eyebrow" style="justify-content:center;">
+        AUREUM
+      </div>
+
+      <h2>Enter the ecosystem.</h2>
+
+      <p>
+        Create your AUREUM account and access the platform as the ecosystem
+        continues to expand.
+      </p>
+
+      <button class="btn btn-gold" onclick="openAuth('signup')">
+        Create Account
+      </button>
+
+    </div>
+
+  </main>
+
+
+  <!-- FOOTER -->
+
+  <footer>
+
+    <div class="footer-main">
+
+      <div class="footer-brand">
+        <div class="logo">AUREUM</div>
+
+        <p>
+          Gold. Crypto. Wealth.
+        </p>
+      </div>
+
+      <div class="footer-links">
+
+        <div>
+          <strong>Platform</strong>
+          <a href="#markets">Markets</a>
+          <a href="#plans">Investment</a>
+          <a href="#ecosystem">Ecosystem</a>
+        </div>
+
+        <div>
+          <strong>Company</strong>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </div>
+
+        <div>
+          <strong>Account</strong>
+          <a href="#" onclick="openAuth('login');return false;">
+            Log in
+          </a>
+          <a href="#" onclick="openAuth('signup');return false;">
+            Create Account
+          </a>
+        </div>
 
       </div>
 
     </div>
 
-    <!-- ECOSYSTEM -->
-    <section id="ecosystem">
-
-      <div class="container">
-
-        <div class="section-heading">
-
-          <div class="eyebrow">
-            The AUREUM Ecosystem
-          </div>
-
-          <h2>
-            One ecosystem.<br />
-            Multiple possibilities.
-          </h2>
-
-          <p>
-            AUREUM is designed as a connected financial ecosystem
-            where investment, markets, portfolio management and
-            digital assets work together through one experience.
-          </p>
-
-        </div>
-
-        <div class="ecosystem-grid">
-
-          <div class="eco-card">
-            <div class="eco-number">01</div>
-            <div class="eco-icon">◈</div>
-            <h3>AUREUM INVEST</h3>
-            <p>
-              Explore structured Gold and Crypto investment
-              opportunities through the AUREUM platform.
-            </p>
-          </div>
-
-          <div class="eco-card">
-            <div class="eco-number">02</div>
-            <div class="eco-icon">◇</div>
-            <h3>AUREUM MARKETS</h3>
-            <p>
-              Monitor digital asset markets, price movements
-              and market intelligence from one interface.
-            </p>
-          </div>
-
-          <div class="eco-card">
-            <div class="eco-number">03</div>
-            <div class="eco-icon">▣</div>
-            <h3>AUREUM WALLET</h3>
-            <p>
-              A unified environment for viewing balances,
-              deposits, withdrawals and transaction history.
-            </p>
-          </div>
-
-          <div class="eco-card">
-            <div class="eco-number">04</div>
-            <div class="eco-icon">△</div>
-            <h3>AUREUM TRADE</h3>
-            <p>
-              A professional trading environment planned around
-              market information and portfolio visibility.
-            </p>
-          </div>
-
-          <div class="eco-card">
-            <div class="eco-number">05</div>
-            <div class="eco-icon">◎</div>
-            <h3>AUREUM WEALTH</h3>
-            <p>
-              A consolidated view of assets, investments and
-              portfolio performance.
-            </p>
-          </div>
-
-          <div class="eco-card">
-            <div class="eco-number">06</div>
-            <div class="eco-icon">✦</div>
-            <h3>AUREUM INTELLIGENCE</h3>
-            <p>
-              Analytics, portfolio metrics, market alerts and
-              reporting tools designed to improve visibility.
-            </p>
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- PLANS -->
-    <section id="plans">
-
-      <div class="container">
-
-        <div class="section-heading">
-
-          <div class="eyebrow">
-            AUREUM Investment
-          </div>
-
-          <h2>
-            Structured plans for different strategies.
-          </h2>
-
-          <p>
-            Review the current AUREUM plan structure. Terms,
-            eligibility and availability will be presented in
-            the authenticated platform.
-          </p>
-
-        </div>
-
-        <div class="plans-grid">
-
-          <div class="plan-card">
-
-            <div class="plan-category">
-              AUREUM GOLD
-            </div>
-
-            <div class="plan-name">
-              DAWN
-            </div>
-
-            <div class="plan-return">
-              7%
-            </div>
-
-            <div class="plan-period">
-              after 48 hours
-            </div>
-
-            <div class="plan-range">
-              Minimum
-              <strong>0.025 Troy oz</strong>
-
-              <br />
-
-              Maximum
-              <strong>0.25 Troy oz</strong>
-            </div>
-
-          </div>
-
-          <div class="plan-card">
-
-            <div class="plan-category">
-              AUREUM GOLD
-            </div>
-
-            <div class="plan-name">
-              CREST
-            </div>
-
-            <div class="plan-return">
-              9%
-            </div>
-
-            <div class="plan-period">
-              after 72 hours
-            </div>
-
-            <div class="plan-range">
-              Minimum
-              <strong>0.25 Troy oz</strong>
-
-              <br />
-
-              Maximum
-              <strong>1 Troy oz</strong>
-            </div>
-
-          </div>
-
-          <div class="plan-card">
-
-            <div class="plan-category">
-              AUREUM GOLD
-            </div>
-
-            <div class="plan-name">
-              CROWN
-            </div>
-
-            <div class="plan-return">
-              7%
-            </div>
-
-            <div class="plan-period">
-              after 72 hours
-            </div>
-
-            <div class="plan-range">
-              Minimum
-              <strong>1 Troy oz</strong>
-
-              <br />
-
-              Maximum
-              <strong>5 Troy oz</strong>
-            </div>
-
-          </div>
-
-          <div class="plan-card">
-
-            <div class="plan-category">
-              AUREUM GOLD
-            </div>
-
-            <div class="plan-name">
-              BLACK
-            </div>
-
-            <div class="plan-return">
-              16.5%
-            </div>
-
-            <div class="plan-period">
-              weekly
-            </div>
-
-            <div class="plan-range">
-              Minimum
-              <strong>5 Troy oz</strong>
-
-              <br />
-
-              Maximum
-              <strong>99 Troy oz</strong>
-            </div>
-
-          </div>
-
-          <div class="plan-card">
-
-            <div class="plan-category">
-              AUREUM CRYPTO
-            </div>
-
-            <div class="plan-name">
-              PULSE
-            </div>
-
-            <div class="plan-return">
-              4.5%
-            </div>
-
-            <div class="plan-period">
-              daily
-            </div>
-
-            <div class="plan-range">
-              Minimum
-              <strong>$99</strong>
-
-              <br />
-
-              Maximum
-              <strong>$1,000</strong>
-            </div>
-
-          </div>
-
-          <div class="plan-card">
-
-            <div class="plan-category">
-              AUREUM CRYPTO
-            </div>
-
-            <div class="plan-name">
-              PRIME
-            </div>
-
-            <div class="plan-return">
-              7%
-            </div>
-
-            <div class="plan-period">
-              after 48 hours
-            </div>
-
-            <div class="plan-range">
-              Minimum
-              <strong>$1,000</strong>
-
-              <br />
-
-              Maximum
-              <strong>$10,000</strong>
-            </div>
-
-          </div>
-
-          <div class="plan-card">
-
-            <div class="plan-category">
-              AUREUM CRYPTO
-            </div>
-
-            <div class="plan-name">
-              APEX
-            </div>
-
-            <div class="plan-return">
-              10%
-            </div>
-
-            <div class="plan-period">
-              weekly
-            </div>
-
-            <div class="plan-range">
-              Minimum
-              <strong>$10,000</strong>
-
-              <br />
-
-              Maximum
-              <strong>Unlimited</strong>
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- MARKETS -->
-    <section id="markets">
-
-      <div class="container">
-
-        <div class="section-heading">
-
-          <div class="eyebrow">
-            Market Intelligence
-          </div>
-
-          <h2>
-            Watch the markets.
-          </h2>
-
-          <p>
-            Live cryptocurrency market data is supplied through
-            the AUREUM market-data service.
-          </p>
-
-        </div>
-
-        <div class="market-box">
-
-          <div
-            id="marketStatus"
-            class="market-status"
-          >
-
-            <div class="status-left">
-              <span class="status-dot"></span>
-              <span id="marketStatusText">
-                Connecting to market data...
-              </span>
-            </div>
-
-            <div id="marketUpdated">
-              --
-            </div>
-
-          </div>
-
-          <div style="overflow-x:auto;">
-
-            <table class="market-table">
-
-              <thead>
-
-                <tr>
-                  <th>Asset</th>
-                  <th>Price</th>
-                  <th>24H</th>
-                  <th>Status</th>
-                </tr>
-
-              </thead>
-
-              <tbody id="marketTableBody">
-
-                <tr>
-                  <td>
-                    <div class="asset-name">
-                      Loading...
-                    </div>
-                    <div class="asset-sub">
-                      Market data
-                    </div>
-                  </td>
-
-                  <td>
-                    --
-                  </td>
-
-                  <td>
-                    --
-                  </td>
-
-                  <td>
-                    Connecting
-                  </td>
-                </tr>
-
-              </tbody>
-
-            </table>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- HOW IT WORKS -->
-    <section id="how">
-
-      <div class="container">
-
-        <div class="section-heading">
-
-          <div class="eyebrow">
-            Getting Started
-          </div>
-
-          <h2>
-            A simple path into the ecosystem.
-          </h2>
-
-        </div>
-
-        <div class="steps">
-
-          <div class="step">
-
-            <div class="step-number">
-              01 — ACCOUNT
-            </div>
-
-            <h3>
-              Create your account
-            </h3>
-
-            <p>
-              Register for an AUREUM account and complete the
-              required account verification steps.
-            </p>
-
-          </div>
-
-          <div class="step">
-
-            <div class="step-number">
-              02 — FUND
-            </div>
-
-            <h3>
-              Fund your wallet
-            </h3>
-
-            <p>
-              Select an available digital asset and follow the
-              displayed deposit instructions.
-            </p>
-
-          </div>
-
-          <div class="step">
-
-            <div class="step-number">
-              03 — INVEST
-            </div>
-
-            <h3>
-              Select a plan
-            </h3>
-
-            <p>
-              Review available investment plans and select one
-              that matches your chosen strategy.
-            </p>
-
-          </div>
-
-          <div class="step">
-
-            <div class="step-number">
-              04 — MANAGE
-            </div>
-
-            <h3>
-              Monitor your portfolio
-            </h3>
-
-            <p>
-              Track investments, balances, transactions and
-              market information from your dashboard.
-            </p>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- ABOUT -->
-    <section id="about">
-
-      <div class="container">
-
-        <div class="about-box">
-
-          <div class="eyebrow">
-            AUREUM
-          </div>
-
-          <h2>
-            Built around wealth.
-          </h2>
-
-          <p>
-            AUREUM is being developed as a premium digital wealth
-            environment connecting Gold, Crypto, markets and
-            portfolio intelligence through one unified experience.
-          </p>
-
-          <div style="margin-top:30px;">
-
-            <button
-              class="btn btn-primary"
-              onclick="openAuth('signup')"
-            >
-              Explore AUREUM
-            </button>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-  </main>
-
-  <!-- FOOTER -->
-  <footer>
-
-    <div class="container">
-
-      <div class="footer-top">
-
-        <div class="footer-brand">
-
-          <a href="#top" class="brand">
-
-            <div class="brand-mark">
-              A
-            </div>
-
-            <div class="brand-name">
-              AUREUM
-            </div>
-
-          </a>
-
-          <p>
-            Gold. Crypto. Wealth. A premium digital wealth
-            ecosystem designed for the modern financial landscape.
-          </p>
-
-        </div>
-
-        <div class="footer-links">
-
-          <div class="footer-column">
-
-            <h4>Platform</h4>
-
-            <a href="#ecosystem">
-              Ecosystem
-            </a>
-
-            <a href="#plans">
-              Investment Plans
-            </a>
-
-            <a href="#markets">
-              Markets
-            </a>
-
-            <a href="#how">
-              How It Works
-            </a>
-
-          </div>
-
-          <div class="footer-column">
-
-            <h4>AUREUM</h4>
-
-            <a href="#about">
-              About
-            </a>
-
-            <a href="#top">
-              Contact
-            </a>
-
-            <a href="#top">
-              FAQ
-            </a>
-
-            <a href="#top">
-              Security
-            </a>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <div class="footer-bottom">
-
-        <div>
-          © AUREUM. All rights reserved.
-        </div>
-
-        <div>
-          GOLD. CRYPTO. WEALTH.
-        </div>
-
-      </div>
-
+    <div class="footer-bottom">
+      <span>© 2026 AUREUM. All rights reserved.</span>
+      <span>Gold. Crypto. Wealth.</span>
     </div>
 
   </footer>
 
+
   <!-- AUTH MODAL -->
-  <div
-    id="authOverlay"
-    class="modal-overlay"
-    onclick="closeAuthOutside(event)"
-  >
 
-    <div class="modal">
+  <div class="modal" id="authModal">
 
-      <button
-        class="modal-close"
-        onclick="closeAuth()"
-        aria-label="Close"
-      >
-        ×
-      </button>
+    <div class="modal-card">
 
-      <!-- LOGIN -->
-      <div id="loginFormContainer">
+      <button class="close-modal" onclick="closeAuth()">×</button>
 
-        <h3>
-          Welcome back.
-        </h3>
+      <h2 id="authTitle">Welcome to AUREUM</h2>
 
-        <div class="modal-subtitle">
-          Sign in to your AUREUM account.
-        </div>
+      <p id="authSubtitle">
+        Sign in to access your AUREUM account.
+      </p>
 
-        <form id="loginForm">
+      <div class="auth-tabs">
 
-          <div class="form-group">
+        <button
+          class="auth-tab active"
+          id="loginTab"
+          onclick="switchAuth('login')"
+        >
+          Log in
+        </button>
 
-            <label>
-              Email
-            </label>
-
-            <input
-              id="loginEmail"
-              type="email"
-              placeholder="you@example.com"
-              required
-              autocomplete="email"
-            />
-
-          </div>
-
-          <div class="form-group">
-
-            <label>
-              Password
-            </label>
-
-            <input
-              id="loginPassword"
-              type="password"
-              placeholder="Your password"
-              required
-              autocomplete="current-password"
-            />
-
-          </div>
-
-          <button
-            id="loginSubmit"
-            class="btn btn-primary form-submit"
-            type="submit"
-          >
-            Sign In
-          </button>
-
-          <div
-            id="loginMessage"
-            class="form-message"
-          ></div>
-
-        </form>
-
-        <div class="modal-switch">
-
-          Don't have an account?
-
-          <button
-            type="button"
-            onclick="switchAuth('signup')"
-          >
-            Create one
-          </button>
-
-        </div>
+        <button
+          class="auth-tab"
+          id="signupTab"
+          onclick="switchAuth('signup')"
+        >
+          Create account
+        </button>
 
       </div>
 
-      <!-- SIGNUP -->
-      <div
-        id="signupFormContainer"
-        style="display:none;"
-      >
+      <form id="authForm">
 
-        <h3>
-          Create your account.
-        </h3>
-
-        <div class="modal-subtitle">
-          Join the AUREUM ecosystem.
+        <div
+          class="form-group"
+          id="fullNameGroup"
+          style="display:none;"
+        >
+          <label for="fullName">Full name</label>
+          <input
+            id="fullName"
+            type="text"
+            autocomplete="name"
+            placeholder="Your full name"
+          />
         </div>
 
-        <form id="signupForm">
-
-          <div class="form-group">
-
-            <label>
-              Full name
-            </label>
-
-            <input
-              id="signupName"
-              type="text"
-              placeholder="Your full name"
-              required
-              autocomplete="name"
-            />
-
-          </div>
-
-          <div class="form-group">
-
-            <label>
-              Email
-            </label>
-
-            <input
-              id="signupEmail"
-              type="email"
-              placeholder="you@example.com"
-              required
-              autocomplete="email"
-            />
-
-          </div>
-
-          <div class="form-group">
-
-            <label>
-              Password
-            </label>
-
-            <input
-              id="signupPassword"
-              type="password"
-              placeholder="Minimum 6 characters"
-              minlength="6"
-              required
-              autocomplete="new-password"
-            />
-
-          </div>
-
-          <button
-            id="signupSubmit"
-            class="btn btn-primary form-submit"
-            type="submit"
-          >
-            Create Account
-          </button>
-
-          <div
-            id="signupMessage"
-            class="form-message"
-          ></div>
-
-        </form>
-
-        <div class="modal-switch">
-
-          Already have an account?
-
-          <button
-            type="button"
-            onclick="switchAuth('login')"
-          >
-            Sign in
-          </button>
-
+        <div class="form-group">
+          <label for="email">Email address</label>
+          <input
+            id="email"
+            type="email"
+            autocomplete="email"
+            placeholder="you@example.com"
+            required
+          />
         </div>
 
-      </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            autocomplete="current-password"
+            placeholder="Minimum 6 characters"
+            minlength="6"
+            required
+          />
+        </div>
+
+        <div
+          class="auth-message"
+          id="authMessage"
+        ></div>
+
+        <button
+          type="submit"
+          class="btn btn-gold auth-submit"
+          id="authSubmit"
+        >
+          Log in
+        </button>
+
+      </form>
 
     </div>
 
   </div>
 
-  <!-- TOAST -->
-  <div id="toast"></div>
 
   <script>
-    /* =====================================================
+    /* =========================================================
        AUREUM CONFIGURATION
-    ===================================================== */
+       ========================================================= */
 
     const SUPABASE_URL =
       "https://zyvmnnsnrxnxbpvskyga.supabase.co";
@@ -1979,1013 +1614,801 @@
     const SUPABASE_PUBLISHABLE_KEY =
       "sb_publishable_rHz9N-CdhKuiuKQPFL6MFg_Wo65Uo1z";
 
-    /* CORRECT AUREUM MARKET API */
     const MARKET_API_URL =
       "https://aureum-platform.onrender.com/api/markets";
 
-    let supabaseClient = null;
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
 
-    /* =====================================================
-       INITIALIZE SUPABASE SAFELY
-    ===================================================== */
 
-    function initializeSupabase() {
-
-      try {
-
-        if (
-          window.supabase &&
-          typeof window.supabase.createClient === "function"
-        ) {
-
-          supabaseClient =
-            window.supabase.createClient(
-              SUPABASE_URL,
-              SUPABASE_PUBLISHABLE_KEY
-            );
-
-          return true;
-        }
-
-      } catch (error) {
-
-        console.error(
-          "Supabase initialization failed:",
-          error
-        );
-
-      }
-
-      return false;
-    }
-
-    /* =====================================================
+    /* =========================================================
        LOADER
-    ===================================================== */
+       ========================================================= */
+
+    const loader = document.getElementById("loader");
 
     function hideLoader() {
-
-      const loader =
-        document.getElementById("loader");
-
-      if (!loader) return;
-
-      loader.classList.add("hidden");
-
+      if (loader) {
+        loader.classList.add("hidden");
+      }
     }
 
     setTimeout(hideLoader, 2500);
 
-    /* =====================================================
-       TOAST
-    ===================================================== */
 
-    let toastTimer = null;
+    /* =========================================================
+       MOBILE MENU
+       ========================================================= */
 
-    function showToast(message) {
+    const menuBtn = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
 
-      const toast =
-        document.getElementById("toast");
+    menuBtn.addEventListener("click", () => {
+      navLinks.classList.toggle("open");
+    });
 
-      if (!toast) return;
+    document.querySelectorAll(".nav-links a").forEach(link => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+      });
+    });
 
-      toast.textContent = message;
 
-      toast.classList.add("show");
+    /* =========================================================
+       MARKET DATA
+       ========================================================= */
 
-      clearTimeout(toastTimer);
+    const SYMBOLS = [
+      "BTC",
+      "ETH",
+      "BNB",
+      "XRP",
+      "SOL",
+      "TRX",
+      "USDT",
+      "USDC"
+    ];
 
-      toastTimer = setTimeout(() => {
+    const COIN_NAMES = {
+      BTC: "Bitcoin",
+      ETH: "Ethereum",
+      BNB: "BNB",
+      XRP: "XRP",
+      SOL: "Solana",
+      TRX: "TRON",
+      USDT: "Tether USD",
+      USDC: "USD Coin"
+    };
 
-        toast.classList.remove("show");
+    const marketState = {};
 
-      }, 3500);
+    function formatPrice(price) {
+      const value = Number(price);
 
-    }
-
-    /* =====================================================
-       AUTH MODAL
-    ===================================================== */
-
-    function openAuth(type) {
-
-      const overlay =
-        document.getElementById("authOverlay");
-
-      overlay.classList.add("active");
-
-      switchAuth(type);
-
-    }
-
-    function closeAuth() {
-
-      document
-        .getElementById("authOverlay")
-        .classList.remove("active");
-
-    }
-
-    function closeAuthOutside(event) {
-
-      if (
-        event.target ===
-        document.getElementById("authOverlay")
-      ) {
-
-        closeAuth();
-
+      if (!Number.isFinite(value)) {
+        return "—";
       }
 
-    }
-
-    function switchAuth(type) {
-
-      const login =
-        document.getElementById(
-          "loginFormContainer"
-        );
-
-      const signup =
-        document.getElementById(
-          "signupFormContainer"
-        );
-
-      if (type === "signup") {
-
-        login.style.display = "none";
-        signup.style.display = "block";
-
-      } else {
-
-        signup.style.display = "none";
-        login.style.display = "block";
-
+      if (value >= 1000) {
+        return "$" + value.toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        });
       }
 
-    }
-
-    /* =====================================================
-       LOGIN
-    ===================================================== */
-
-    async function handleLogin(event) {
-
-      event.preventDefault();
-
-      if (!supabaseClient) {
-
-        showToast(
-          "Authentication service is currently unavailable."
-        );
-
-        return;
-
+      if (value >= 1) {
+        return "$" + value.toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 4
+        });
       }
 
-      const email =
-        document
-          .getElementById("loginEmail")
-          .value
-          .trim();
+      return "$" + value.toLocaleString("en-US", {
+        minimumFractionDigits: 4,
+        maximumFractionDigits: 6
+      });
+    }
 
-      const password =
-        document
-          .getElementById("loginPassword")
-          .value;
 
-      const button =
-        document.getElementById("loginSubmit");
+    function formatChange(change) {
+      const value = Number(change);
 
-      const message =
-        document.getElementById("loginMessage");
+      if (!Number.isFinite(value)) {
+        return "—";
+      }
 
-      button.disabled = true;
-      button.textContent = "Signing in...";
-      message.textContent = "";
+      const prefix = value > 0 ? "+" : "";
+
+      return prefix + value.toFixed(2) + "%";
+    }
+
+
+    function changeClass(change) {
+      const value = Number(change);
+
+      if (value > 0) {
+        return "positive";
+      }
+
+      if (value < 0) {
+        return "negative";
+      }
+
+      return "";
+    }
+
+
+    function formatUpdatedTime(timestamp) {
+      if (!timestamp) {
+        return "";
+      }
+
+      const date = new Date(timestamp);
+
+      if (Number.isNaN(date.getTime())) {
+        return "";
+      }
+
+      return date.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+      });
+    }
+
+
+    async function loadMarkets() {
+
+      const controller = new AbortController();
+
+      const timeout = setTimeout(() => {
+        controller.abort();
+      }, 10000);
 
       try {
 
-        const {
-          data,
-          error
-        } =
-          await supabaseClient.auth.signInWithPassword({
-            email,
-            password
-          });
+        const response = await fetch(
+          MARKET_API_URL,
+          {
+            method: "GET",
+            headers: {
+              "Accept": "application/json"
+            },
+            signal: controller.signal
+          }
+        );
 
-        if (error) {
-
-          message.textContent =
-            error.message;
-
-          return;
-
+        if (!response.ok) {
+          throw new Error(
+            "Market API returned HTTP " + response.status
+          );
         }
 
-        message.textContent =
-          "Login successful.";
+        const apiData = await response.json();
 
-        showToast(
-          "Welcome back to AUREUM."
-        );
+        if (
+          !apiData ||
+          !apiData.data ||
+          typeof apiData.data !== "object"
+        ) {
+          throw new Error("Invalid market API response");
+        }
 
-        setTimeout(() => {
+        let latestTimestamp = null;
 
-          closeAuth();
+        SYMBOLS.forEach(symbol => {
 
-        }, 700);
+          const quote =
+            apiData?.data?.[symbol]?.quote?.USD;
 
-        console.log(
-          "Authenticated user:",
-          data.user
-        );
+          if (!quote) {
+            return;
+          }
+
+          const price = quote.price;
+          const change = quote.percent_change_24h;
+          const updatedAt =
+            quote.last_updated ||
+            apiData?.status?.timestamp;
+
+          marketState[symbol] = {
+            price,
+            change,
+            updatedAt
+          };
+
+          if (updatedAt) {
+            latestTimestamp = updatedAt;
+          }
+        });
+
+        renderMarkets();
+
+        const updatedText =
+          formatUpdatedTime(latestTimestamp);
+
+        const updatedElement =
+          document.getElementById("marketUpdated");
+
+        if (updatedElement) {
+
+          if (updatedText) {
+            updatedElement.textContent =
+              "Live data • Updated " + updatedText;
+          } else {
+            updatedElement.textContent =
+              "Live market data connected";
+          }
+
+        }
 
       } catch (error) {
 
-        console.error(error);
+        console.error("AUREUM market error:", error);
 
-        message.textContent =
-          "Unable to sign in. Please try again.";
+        const updatedElement =
+          document.getElementById("marketUpdated");
 
-      } finally {
+        if (updatedElement) {
 
-        button.disabled = false;
-        button.textContent = "Sign In";
-
-      }
-
-    }
-
-    /* =====================================================
-       SIGNUP
-    ===================================================== */
-
-    async function handleSignup(event) {
-
-      event.preventDefault();
-
-      if (!supabaseClient) {
-
-        showToast(
-          "Authentication service is currently unavailable."
-        );
-
-        return;
-
-      }
-
-      const fullName =
-        document
-          .getElementById("signupName")
-          .value
-          .trim();
-
-      const email =
-        document
-          .getElementById("signupEmail")
-          .value
-          .trim();
-
-      const password =
-        document
-          .getElementById("signupPassword")
-          .value;
-
-      const button =
-        document.getElementById("signupSubmit");
-
-      const message =
-        document.getElementById("signupMessage");
-
-      button.disabled = true;
-      button.textContent = "Creating...";
-      message.textContent = "";
-
-      try {
-
-        if (password.length < 6) {
-
-          message.textContent =
-            "Password must be at least 6 characters.";
-
-          return;
+          if (Object.keys(marketState).length > 0) {
+            updatedElement.textContent =
+              "Live data temporarily unavailable • Showing last update";
+          } else {
+            updatedElement.textContent =
+              "Live market data could not be loaded. Please try again shortly.";
+          }
 
         }
 
-        const {
-          data,
-          error
-        } =
-          await supabaseClient.auth.signUp({
+        /*
+          Important:
+          We do NOT erase existing market prices when
+          the API temporarily fails.
+        */
 
+      } finally {
+
+        clearTimeout(timeout);
+        hideLoader();
+
+      }
+    }
+
+
+    function renderMarkets() {
+
+      /* HERO */
+
+      ["BTC", "ETH", "BNB", "SOL"].forEach(symbol => {
+
+        const item = marketState[symbol];
+
+        if (!item) {
+          return;
+        }
+
+        const priceElement =
+          document.getElementById("hero-" + symbol);
+
+        const changeElement =
+          document.getElementById(
+            "hero-" + symbol + "-change"
+          );
+
+        if (priceElement) {
+          priceElement.textContent =
+            formatPrice(item.price);
+        }
+
+        if (changeElement) {
+
+          changeElement.textContent =
+            formatChange(item.change);
+
+          changeElement.className =
+            "change " + changeClass(item.change);
+        }
+
+      });
+
+
+      /* TABLE */
+
+      const tableBody =
+        document.getElementById("marketTableBody");
+
+      if (!tableBody) {
+        return;
+      }
+
+      tableBody.innerHTML = "";
+
+      SYMBOLS.forEach(symbol => {
+
+        const item = marketState[symbol];
+
+        if (!item) {
+          return;
+        }
+
+        const row =
+          document.createElement("tr");
+
+        const change =
+          Number(item.change);
+
+        const changeText =
+          formatChange(change);
+
+        const changeCls =
+          changeClass(change);
+
+        row.innerHTML = `
+          <td>
+            <strong>${symbol}</strong>
+            <div style="color:#71717a;font-size:11px;margin-top:3px;">
+              ${COIN_NAMES[symbol]}
+            </div>
+          </td>
+
+          <td>
+            ${formatPrice(item.price)}
+          </td>
+
+          <td class="${changeCls}">
+            ${changeText}
+          </td>
+
+          <td>
+            <span class="live-indicator">
+              <span class="live-dot"></span>
+              Live
+            </span>
+          </td>
+        `;
+
+        tableBody.appendChild(row);
+
+      });
+
+
+      /* TICKER */
+
+      renderTicker();
+    }
+
+
+    function renderTicker() {
+
+      const ticker =
+        document.getElementById("ticker");
+
+      if (!ticker) {
+        return;
+      }
+
+      let html = "";
+
+      SYMBOLS.forEach(symbol => {
+
+        const item = marketState[symbol];
+
+        if (!item) {
+          return;
+        }
+
+        html += `
+          <div class="ticker-item">
+            <span class="ticker-symbol">${symbol}</span>
+            ${formatPrice(item.price)}
+            &nbsp;
+            <span class="${changeClass(item.change)}">
+              ${formatChange(item.change)}
+            </span>
+          </div>
+        `;
+
+      });
+
+      /*
+        Duplicate the ticker so the animation
+        remains continuous.
+      */
+
+      ticker.innerHTML = html + html;
+    }
+
+
+    /*
+      Load immediately and refresh every 60 seconds.
+    */
+
+    loadMarkets();
+
+    setInterval(loadMarkets, 60000);
+
+
+    /* =========================================================
+       AUTHENTICATION
+       ========================================================= */
+
+    const authModal =
+      document.getElementById("authModal");
+
+    const authForm =
+      document.getElementById("authForm");
+
+    const authTitle =
+      document.getElementById("authTitle");
+
+    const authSubtitle =
+      document.getElementById("authSubtitle");
+
+    const authSubmit =
+      document.getElementById("authSubmit");
+
+    const fullNameGroup =
+      document.getElementById("fullNameGroup");
+
+    const loginTab =
+      document.getElementById("loginTab");
+
+    const signupTab =
+      document.getElementById("signupTab");
+
+    const authMessage =
+      document.getElementById("authMessage");
+
+    let authMode = "login";
+
+
+    function openAuth(mode = "login") {
+
+      authModal.classList.add("active");
+
+      switchAuth(mode);
+    }
+
+
+    function closeAuth() {
+
+      authModal.classList.remove("active");
+
+      clearAuthMessage();
+    }
+
+
+    function switchAuth(mode) {
+
+      authMode = mode;
+
+      clearAuthMessage();
+
+      if (mode === "signup") {
+
+        authTitle.textContent =
+          "Create your AUREUM account";
+
+        authSubtitle.textContent =
+          "Create an account to access the AUREUM ecosystem.";
+
+        authSubmit.textContent =
+          "Create Account";
+
+        fullNameGroup.style.display =
+          "block";
+
+        loginTab.classList.remove("active");
+        signupTab.classList.add("active");
+
+      } else {
+
+        authTitle.textContent =
+          "Welcome back";
+
+        authSubtitle.textContent =
+          "Sign in to access your AUREUM account.";
+
+        authSubmit.textContent =
+          "Log in";
+
+        fullNameGroup.style.display =
+          "none";
+
+        loginTab.classList.add("active");
+        signupTab.classList.remove("active");
+      }
+    }
+
+
+    function showAuthMessage(message, type) {
+
+      authMessage.textContent = message;
+
+      authMessage.className =
+        "auth-message show " + type;
+    }
+
+
+    function clearAuthMessage() {
+
+      authMessage.textContent = "";
+
+      authMessage.className =
+        "auth-message";
+    }
+
+
+    authForm.addEventListener("submit", async event => {
+
+      event.preventDefault();
+
+      clearAuthMessage();
+
+      const email =
+        document.getElementById("email").value.trim();
+
+      const password =
+        document.getElementById("password").value;
+
+      const fullName =
+        document.getElementById("fullName").value.trim();
+
+      if (!email || !password) {
+
+        showAuthMessage(
+          "Please enter your email and password.",
+          "error"
+        );
+
+        return;
+      }
+
+      authSubmit.disabled = true;
+
+      authSubmit.textContent =
+        authMode === "signup"
+          ? "Creating account..."
+          : "Signing in...";
+
+
+      try {
+
+        if (authMode === "signup") {
+
+          if (!fullName) {
+
+            showAuthMessage(
+              "Please enter your full name.",
+              "error"
+            );
+
+            return;
+          }
+
+          const {
+            data,
+            error
+          } = await supabaseClient.auth.signUp({
             email,
             password,
-
             options: {
               data: {
                 full_name: fullName
               }
             }
-
           });
 
-        if (error) {
+          if (error) {
+            throw error;
+          }
 
-          message.textContent =
-            error.message;
 
-          return;
+          /*
+            Create the profile only when a session
+            is available immediately.
 
-        }
+            If email confirmation is enabled,
+            the profile can be created after the
+            user confirms the email and signs in.
+          */
 
-        if (!data.session) {
+          if (data?.user && data?.session) {
 
-          message.textContent =
-            "Account created. Check your email to verify your account.";
+            const {
+              error: profileError
+            } = await supabaseClient
+              .from("profiles")
+              .upsert({
+                id: data.user.id,
+                full_name: fullName,
+                email: email
+              });
+
+            if (profileError) {
+              console.error(
+                "Profile creation error:",
+                profileError
+              );
+            }
+          }
+
+
+          if (data?.session) {
+
+            showAuthMessage(
+              "Account created successfully.",
+              "success"
+            );
+
+            setTimeout(() => {
+              closeAuth();
+            }, 1000);
+
+          } else {
+
+            showAuthMessage(
+              "Account created. Please check your email to confirm your account.",
+              "success"
+            );
+
+          }
 
         } else {
 
-          await createProfile(
-            data.user,
-            fullName,
-            email
-          );
-
-          message.textContent =
-            "Account created successfully.";
-
-          showToast(
-            "Your AUREUM account has been created."
-          );
-
-        }
-
-      } catch (error) {
-
-        console.error(error);
-
-        message.textContent =
-          "Unable to create account. Please try again.";
-
-      } finally {
-
-        button.disabled = false;
-        button.textContent = "Create Account";
-
-      }
-
-    }
-
-    /* =====================================================
-       PROFILE
-    ===================================================== */
-
-    async function createProfile(
-      user,
-      fullName,
-      email
-    ) {
-
-      if (!supabaseClient || !user) return;
-
-      try {
-
-        const {
-          error
-        } =
-          await supabaseClient
-            .from("profiles")
-            .upsert(
-              {
-                id: user.id,
-                full_name: fullName,
-                email: email
-              },
-              {
-                onConflict: "id"
-              }
-            );
-
-        if (error) {
-
-          console.error(
-            "Profile creation error:",
+          const {
+            data,
             error
+          } = await supabaseClient.auth.signInWithPassword({
+            email,
+            password
+          });
+
+          if (error) {
+            throw error;
+          }
+
+          if (!data?.user) {
+            throw new Error(
+              "Login could not be completed."
+            );
+          }
+
+          /*
+            Make sure a profile exists for
+            authenticated users.
+          */
+
+          const {
+            data: existingProfile
+          } = await supabaseClient
+            .from("profiles")
+            .select("id")
+            .eq("id", data.user.id)
+            .maybeSingle();
+
+          if (!existingProfile) {
+
+            await supabaseClient
+              .from("profiles")
+              .insert({
+                id: data.user.id,
+                full_name:
+                  data.user.user_metadata?.full_name ||
+                  "",
+                email:
+                  data.user.email || email
+              });
+          }
+
+          showAuthMessage(
+            "Login successful.",
+            "success"
           );
 
+          setTimeout(() => {
+
+            closeAuth();
+
+            /*
+              Dashboard will be connected here
+              when the AUREUM user application
+              is added.
+            */
+
+          }, 800);
         }
 
       } catch (error) {
 
         console.error(
-          "Profile error:",
+          "Authentication error:",
           error
         );
 
+        showAuthMessage(
+          error.message ||
+          "Something went wrong. Please try again.",
+          "error"
+        );
+
+      } finally {
+
+        authSubmit.disabled = false;
+
+        authSubmit.textContent =
+          authMode === "signup"
+            ? "Create Account"
+            : "Log in";
       }
 
-    }
+    });
 
-    /* =====================================================
-       SESSION
-    ===================================================== */
 
-    async function checkSession() {
+    /* =========================================================
+       MODAL CONTROLS
+       ========================================================= */
 
-      if (!supabaseClient) return;
+    authModal.addEventListener("click", event => {
 
-      try {
+      if (event.target === authModal) {
+        closeAuth();
+      }
 
-        const {
-          data
-        } =
-          await supabaseClient.auth.getSession();
+    });
 
-        if (data && data.session) {
+
+    document.addEventListener("keydown", event => {
+
+      if (event.key === "Escape") {
+        closeAuth();
+      }
+
+    });
+
+
+    /* =========================================================
+       AUTH SESSION CHECK
+       ========================================================= */
+
+    supabaseClient.auth.onAuthStateChange(
+      async (event, session) => {
+
+        console.log(
+          "AUREUM auth event:",
+          event
+        );
+
+        if (session?.user) {
 
           console.log(
-            "Active AUREUM session:",
-            data.session.user.email
+            "Authenticated user:",
+            session.user.email
           );
 
         }
 
-      } catch (error) {
-
-        console.error(
-          "Session check failed:",
-          error
-        );
-
       }
+    );
 
-    }
 
-    /* =====================================================
-       MARKET DATA
-    ===================================================== */
+    /* =========================================================
+       PAGE INITIALIZATION
+       ========================================================= */
 
-    const MARKET_ASSETS = [
-      {
-        symbol: "BTC",
-        name: "Bitcoin"
-      },
-      {
-        symbol: "ETH",
-        name: "Ethereum"
-      },
-      {
-        symbol: "BNB",
-        name: "BNB"
-      },
-      {
-        symbol: "SOL",
-        name: "Solana"
-      },
-      {
-        symbol: "XRP",
-        name: "XRP"
-      },
-      {
-        symbol: "TRX",
-        name: "TRON"
-      },
-      {
-        symbol: "USDT",
-        name: "Tether USD"
-      },
-      {
-        symbol: "USDC",
-        name: "USD Coin"
-      }
-    ];
+    window.addEventListener("load", () => {
 
-    function formatPrice(price) {
-
-      if (
-        price === null ||
-        price === undefined ||
-        Number.isNaN(Number(price))
-      ) {
-
-        return "--";
-
-      }
-
-      const value = Number(price);
-
-      if (value >= 1000) {
-
-        return "$" + value.toLocaleString(
-          "en-US",
-          {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-          }
-        );
-
-      }
-
-      if (value >= 1) {
-
-        return "$" + value.toLocaleString(
-          "en-US",
-          {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 4
-          }
-        );
-
-      }
-
-      return "$" + value.toLocaleString(
-        "en-US",
-        {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 6
-        }
-      );
-
-    }
-
-    function formatChange(change) {
-
-      if (
-        change === null ||
-        change === undefined ||
-        Number.isNaN(Number(change))
-      ) {
-
-        return "--";
-
-      }
-
-      const value = Number(change);
-
-      const sign =
-        value >= 0 ? "+" : "";
-
-      return sign +
-        value.toFixed(2) +
-        "%";
-
-    }
-
-    function getChangeClass(change) {
-
-      const value = Number(change);
-
-      if (value > 0) {
-
-        return "change-positive";
-
-      }
-
-      if (value < 0) {
-
-        return "change-negative";
-
-      }
-
-      return "";
-
-    }
-
-    function updateMarketStatus(
-      text,
-      error = false
-    ) {
-
-      const status =
-        document.getElementById(
-          "marketStatus"
-        );
-
-      const statusText =
-        document.getElementById(
-          "marketStatusText"
-        );
-
-      if (!status || !statusText) return;
-
-      statusText.textContent = text;
-
-      if (error) {
-
-        status.classList.add("error");
-
-      } else {
-
-        status.classList.remove("error");
-
-      }
-
-    }
-
-    function renderMarkets(apiData) {
-
-      const table =
-        document.getElementById(
-          "marketTableBody"
-        );
-
-      const ticker1 =
-        document.getElementById(
-          "tickerTrack1"
-        );
-
-      const ticker2 =
-        document.getElementById(
-          "tickerTrack2"
-        );
-
-      if (!table || !ticker1 || !ticker2) {
-        return;
-      }
-
-      const rows = [];
-      const tickerItems = [];
-
-      MARKET_ASSETS.forEach(asset => {
-
-        const item =
-          apiData?.data?.[asset.symbol];
-
-        if (!item) return;
-
-        const quote =
-          item.quote?.USD;
-
-        if (!quote) return;
-
-        const price =
-          quote.price;
-
-        const change =
-          quote.percent_change_24h;
-
-        const changeClass =
-          getChangeClass(change);
-
-        rows.push(`
-          <tr>
-            <td>
-              <div class="asset-name">
-                ${asset.symbol}
-              </div>
-              <div class="asset-sub">
-                ${asset.name}
-              </div>
-            </td>
-
-            <td>
-              ${formatPrice(price)}
-            </td>
-
-            <td class="${changeClass}">
-              ${formatChange(change)}
-            </td>
-
-            <td>
-              Live
-            </td>
-          </tr>
-        `);
-
-        tickerItems.push(`
-          <div class="ticker-item">
-
-            <div class="ticker-symbol">
-              ${asset.symbol}
-            </div>
-
-            <span class="ticker-price">
-              ${formatPrice(price)}
-            </span>
-
-            <span
-              class="ticker-change ${changeClass === "change-negative" ? "negative" : ""}"
-            >
-              ${formatChange(change)}
-            </span>
-
-          </div>
-        `);
-
-      });
-
-      if (rows.length === 0) {
-
-        table.innerHTML = `
-          <tr>
-            <td colspan="4">
-              Market data is temporarily unavailable.
-            </td>
-          </tr>
-        `;
-
-        return;
-
-      }
-
-      table.innerHTML =
-        rows.join("");
-
-      const tickerHTML =
-        tickerItems.join("");
-
-      ticker1.innerHTML =
-        tickerHTML;
-
-      ticker2.innerHTML =
-        tickerHTML;
-
-    }
-
-    async function loadMarkets() {
-
-      let timeout;
-
-      try {
-
-        updateMarketStatus(
-          "Connecting to live market data..."
-        );
-
-        const controller =
-          new AbortController();
-
-        timeout =
-          setTimeout(
-            () => controller.abort(),
-            10000
-          );
-
-        const response =
-          await fetch(
-            MARKET_API_URL,
-            {
-              method: "GET",
-              headers: {
-                "Accept": "application/json"
-              },
-              cache: "no-store",
-              signal: controller.signal
-            }
-          );
-
-        clearTimeout(timeout);
-
-        if (!response.ok) {
-
-          throw new Error(
-            "Market API returned HTTP " +
-            response.status
-          );
-
-        }
-
-        const data =
-          await response.json();
-
-        if (
-          !data ||
-          typeof data !== "object"
-        ) {
-
-          throw new Error(
-            "Invalid market API response."
-          );
-
-        }
-
-        renderMarkets(data);
-
-        updateMarketStatus(
-          "Live cryptocurrency market data"
-        );
-
-        const updated =
-          document.getElementById(
-            "marketUpdated"
-          );
-
-        if (updated) {
-
-          updated.textContent =
-            "Updated " +
-            new Date().toLocaleTimeString();
-
-        }
-
-      } catch (error) {
-
-        console.error(
-          "Market data error:",
-          error
-        );
-
-        updateMarketStatus(
-          "Market data temporarily unavailable",
-          true
-        );
-
-        const table =
-          document.getElementById(
-            "marketTableBody"
-          );
-
-        if (table) {
-
-          table.innerHTML = `
-            <tr>
-              <td colspan="4">
-                Live market data could not be loaded.
-                Please try again shortly.
-              </td>
-            </tr>
-          `;
-
-        }
-
-      } finally {
-
-        if (timeout) {
-          clearTimeout(timeout);
-        }
-
-      }
-
-    }
-
-    /* =====================================================
-       MOBILE MENU
-    ===================================================== */
-
-    function toggleMobileMenu() {
-
-      const links =
-        document.querySelector(
-          ".nav-links"
-        );
-
-      if (!links) return;
-
-      const currentlyVisible =
-        getComputedStyle(links).display !==
-        "none";
-
-      if (currentlyVisible) {
-
-        links.style.display = "none";
-
-      } else {
-
-        links.style.display = "flex";
-        links.style.position = "absolute";
-        links.style.top = "78px";
-        links.style.left = "0";
-        links.style.right = "0";
-        links.style.padding = "20px";
-        links.style.flexDirection = "column";
-        links.style.background = "#18181b";
-        links.style.borderBottom =
-          "1px solid rgba(245,245,244,.08)";
-
-      }
-
-    }
-
-    /* =====================================================
-       SUPABASE AUTH STATE
-    ===================================================== */
-
-    function setupAuthListener() {
-
-      if (!supabaseClient) return;
-
-      try {
-
-        supabaseClient.auth.onAuthStateChange(
-          async (event, session) => {
-
-            console.log(
-              "AUREUM auth event:",
-              event
-            );
-
-            if (
-              event === "SIGNED_IN" &&
-              session?.user
-            ) {
-
-              const user =
-                session.user;
-
-              const fullName =
-                user.user_metadata?.full_name ||
-                "";
-
-              await createProfile(
-                user,
-                fullName,
-                user.email || ""
-              );
-
-            }
-
-          }
-        );
-
-      } catch (error) {
-
-        console.error(
-          "Auth listener error:",
-          error
-        );
-
-      }
-
-    }
-
-    /* =====================================================
-       START APPLICATION
-    ===================================================== */
-
-    async function initializeApp() {
-
-      try {
-
-        initializeSupabase();
-
-        setupAuthListener();
-
-        await checkSession();
-
-      } catch (error) {
-
-        console.error(
-          "Application initialization error:",
-          error
-        );
-
-      } finally {
-
+      setTimeout(() => {
         hideLoader();
+      }, 300);
 
-      }
-
-      loadMarkets();
-
-      setInterval(
-        loadMarkets,
-        60000
-      );
-
-    }
-
-    /* =====================================================
-       DOM READY
-    ===================================================== */
-
-    document.addEventListener(
-      "DOMContentLoaded",
-      () => {
-
-        document
-          .getElementById("loginForm")
-          ?.addEventListener(
-            "submit",
-            handleLogin
-          );
-
-        document
-          .getElementById("signupForm")
-          ?.addEventListener(
-            "submit",
-            handleSignup
-          );
-
-        initializeApp();
-
-      }
-    );
-
-    window.addEventListener(
-      "load",
-      () => {
-
-        setTimeout(
-          hideLoader,
-          300
-        );
-
-      }
-    );
+    });
 
   </script>
 
 </body>
-              </html>
+  </html>
